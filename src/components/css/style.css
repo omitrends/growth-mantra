@@ -1,0 +1,304 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  color: #000000;
+  background-color: #ffffff;
+}
+.custom_dark-btn,
+.custom_orange-btn {
+  display: inline-block;
+  padding: 10px 0;
+  text-align: center;
+  width: 145px;
+  outline: none;
+  color: #f7f7f7;
+  border: 1px solid transparent;
+}
+
+.custom_dark-btn {
+  background-color: #000000;
+}
+
+.custom_dark-btn:hover {
+  border: 1px solid #000000;
+  color: #000000;
+  background-color: transparent;
+}
+
+.custom_orange-btn {
+  background-color: #7ca982;
+}
+
+.custom_orange-btn:hover {
+  border: 1px solid #7ca982;
+  color: #7ca982;
+  background-color: transparent;
+}
+
+/* .custom_heading {
+  text-align: center;
+  font-weight: bold;
+} */
+
+/* .custom_heading-text {
+  text-align: center;
+} */
+
+
+/*header section*/
+/* .hero_area {
+  height: 98vh;
+  background-color: #f1f7ed;
+}
+
+.hero_area.sub_pages {
+  height: auto;
+} */
+
+/* .header_section {} */
+
+.header_section .container-fluid {
+  padding-right: 25px;
+  padding-left: 25px;
+}
+
+.header_section .nav_container {
+  margin: 0 auto;
+}
+
+.custom_nav-container.navbar-expand-lg .navbar-nav .nav-link {
+  padding: 10px 30px;
+  color: #343434;
+  text-align: center;
+  /* font-size: 15px; */
+  
+}
+
+a,
+a:hover,
+a:focus {
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  color: initial;
+}
+
+.btn,
+.btn:focus {
+  outline: none !important;
+  box-shadow: none;
+}
+
+.navbar-brand,
+.navbar-brand:hover {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 24px;
+  color: #fafcfd;
+}
+
+/* .navbar-brand {
+  display: flex;
+  align-items: center;
+} */
+
+.navbar-brand img {
+  width: 60px;
+  margin-right: 10px;
+}
+
+.navbar-brand span {
+  font-size: 25px;
+  font-weight: 700;
+  color: #2e2e2d;
+  margin-top: 5px;
+}
+
+/* .custom_nav-container {
+  z-index: 99999;
+  padding: 15px 0;
+} */
+
+/* .custom_nav-container .navbar-toggler {
+  outline: none;
+} */
+
+/* .custom_nav-container .navbar-toggler .navbar-toggler-icon {
+  background-image: url(../images/menu.png);
+  background-size: 55px;
+} */
+
+.quote_btn-container a {
+  display: inline-block;
+  padding: 5px 15px;
+  background-color: #7ca982;
+  color: #343434;
+  font-weight: 550;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+/*end header section*/
+
+/* slider section */
+.slider_section {
+  padding-top: 8%;
+}
+
+.slider_item-box {
+  width: 100%;
+  height: 100%;
+}
+
+.slider_item-box .container {
+  height: 100%;
+}
+
+.slider_img-box {
+  width: 85%;
+  margin: 0 auto;
+}
+
+.slider_img-box img {
+  width: 100%;
+}
+
+.slider_item-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+}
+
+/* .slider_item-container .slider_item-detail {} */
+
+.slider_item-detail h1 {
+  font-weight: 700;
+  font-size: 60px;
+  width: 95%;
+}
+
+.slider_item-detail p {
+  margin: 45px 0;
+}
+
+.slider_call-btn {
+  display: inline-block;
+  padding: 8px 20px;
+  background-color: #edb040;
+  color: #fefdfd;
+  border-radius: 20px;
+}
+
+.slider_section #carouselExampleControls,
+.carousel-inner,
+.carousel-item {
+  height: 100%;
+}
+
+.slider_section .custom_carousel-control {
+  position: absolute;
+  top: 50%;
+  left: 2%;
+  width: 105px;
+  transform: translateY(-50%);
+}
+
+.slider_section .custom_carousel-control .carousel-control-prev,
+.slider_section .custom_carousel-control .carousel-control-next {
+  margin: 10px 0;
+  position: relative;
+  width: 45px;
+  height: 45px;
+  border: none;
+  opacity: 1;
+  background-repeat: no-repeat;
+  background-size: 12px;
+  background-position: center;
+}
+
+/* .slider_section .custom_carousel-control .carousel-control-prev {
+  background-image: url(../../assets/images/prev.png);
+  background-color: #7ca982;
+}
+
+.slider_section .custom_carousel-control .carousel-control-next {
+  background-image: url(../../assets/images/next.png);
+  background-color: #000000;
+} */
+
+/* end slider section */
+
+
+/* Custom Carousel Controls */
+/* Carousel Container */
+.slider_section {
+  height: 600px; /* Set a fixed height for the carousel container */
+  position: relative;
+  overflow: hidden; /* Ensure content doesn't overflow */
+}
+
+/* Carousel Inner */
+.carousel-inner {
+  height: 100%; /* Ensure inner content takes full height */
+}
+
+/* Slide Content */
+.slider_item-box {
+  height: 100%; /* Ensure each slide takes full height */
+  display: flex;
+  align-items: center;
+}
+
+/* Fixed Navigation Arrows */
+.custom_carousel-control {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none; /* Ensure clicks pass through to the carousel */
+  z-index: 10; /* Ensure arrows are above the slides */
+}
+
+.custom_carousel-control a {
+  pointer-events: auto; /* Re-enable clicks for the arrows */
+  background-color: rgba(0, 0, 0, 0.5); /* Optional: Add background for better visibility */
+  padding: 10px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
+.custom_carousel-control a:hover {
+  background-color: rgba(0, 0, 0, 0.7); /* Optional: Hover effect */
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: brightness(0) invert(1); /* Ensure arrows are visible */
+}
+.custom_carousel-control .carousel-control-prev {
+  left: 20px; /* Adjust this value to move the left arrow */
+}
+
+.custom_carousel-control .carousel-control-next {
+  left: 1350px; /* Adjust this value to move the right arrow */
+}
+/* Add this to your CSS file */
+.fixed-buttons {
+  position: fixed;
+  bottom: 125px; /* Adjust this value to move the buttons up or down */
+  left: 23.5%;
+  transform: translateX(-50%);
+  z-index: 1000; /* Ensure the buttons are above other content */
+  display: flex;
+  gap: 10px; /* Space between buttons */
+}
