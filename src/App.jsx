@@ -1,12 +1,21 @@
-import Navbar from "./components/Navbar"
-import Slider from "./components/Slider"
-
-function App(){
+import CreateAccount from "./components/CreateAccount";
+import Navbar from "./components/Navbar";
+import Home from "./components/Home";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ForgetPass from "./components/forgetPass";
+function App() {
   return (
-  <div>
-    <Navbar />
-    <Slider/>
-  </div>
+    <div>
+      <Router>
+        <Navbar/>
+        <Routes>
+          <Route>
+            <Route index element={<Home/>} />
+            <Route path="/register" element={<CreateAccount/>}/>
+          </Route>
+        </Routes>
+      </Router>
+    </div>
   );
 }
 
