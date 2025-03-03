@@ -2,7 +2,7 @@ import CreateAccount from "./components/CreateAccount";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import ForgetPass from "./components/forgetPass";
+// import ForgetPass from "./components/forgetPass";
 function App() {
   return (
     <div>
