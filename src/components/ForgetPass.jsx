@@ -1,16 +1,7 @@
 import Logo from "../assets/images/logo.png";
 function ForgetPass() {
   return (
-    // <div className=' vh-100'>
-    //     <div>
-    //         <img src={Logo} alt="" />
-    //     </div>
-    //     <div>
-    //         <h3>Forget Password</h3>
-    //         <h5>Enter your emailId</h5>
-    //         <input type="text" />
-    //     </div>
-    // </div>
+   
     <div className=" d-flex justify-content-center align-items-center w-auto h-auto  " >
       <div className="text-center">
         {/* Logo */}
