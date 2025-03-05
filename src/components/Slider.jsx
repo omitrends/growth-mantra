@@ -1,10 +1,10 @@
-import React from 'react';
-import "./css/style.css";
+import "./css/style.css"; 
 import "./css/bootstrap.css";
 import "./css/responsive.css";
 import MW from "../assets/images/MW.png";
 import Fit from "../assets/images/Fit.png";
 import Nut from "../assets/images/Nut.png";
+import {useNavigate} from 'react-router-dom';
 
 function Slider() {
   // Slide data
@@ -31,7 +31,15 @@ function Slider() {
       alt: "Fitness Illustration",
     },
   ];
-
+  const navigate =useNavigate();
+  const handleregisterclick=(event)=>{
+    event.preventDefault();
+    navigate('/register');
+  };
+  const handlloginclick=(event)=>{
+    event.preventDefault();
+    navigate('/login');
+  };
   return (
     <section className="slider_section position-relative">
       <div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
@@ -92,10 +100,10 @@ function Slider() {
 
       {/* Fixed Login and Registration Buttons */}
       <div className="fixed-buttons">
-        <a href="/login" className="text-uppercase custom_orange-btn mr-3">
+        <a href="/login" onClick={handlloginclick} className="text-uppercase custom_orange-btn mr-3">
           Login
         </a>
-        <a href="/register" className="text-uppercase custom_dark-btn">
+        <a href="/register" onClick={handleregisterclick} className="text-uppercase custom_dark-btn">
           Register
         </a>
       </div>
