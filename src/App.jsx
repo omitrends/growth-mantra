@@ -2,6 +2,7 @@ import CreateAccount from "./components/CreateAccount";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./components/Login";
 // import ForgetPass from "./components/forgetPass";
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
           <Route>
             <Route index element={<Home/>} />
             <Route path="/register" element={<CreateAccount/>}/>
+            <Route path="/login" element={<Login/>}/>
           </Route>
         </Routes>
       </Router>

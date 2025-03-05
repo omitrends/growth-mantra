@@ -1,11 +1,17 @@
-import React from "react";
+// import React from "react";
 import "./Login.css";
 import logo from "../assets/images/logo.png"; 
 import googleLogo from "../assets/images/google-logo.png";
 // import user from "../assets/images/user.png";
 // import passkey from "../assets/images/passkey.png";
-
+import { useNavigate } from "react-router-dom";
 const Login = () => {
+  const navigate =useNavigate();
+
+  const handlregisterclick=(event)=>{
+    event.preventDefault();
+    navigate('/register');
+  };
   return (
     <div className="login-container">
       {/* Left Section with Logo */}
@@ -49,7 +55,7 @@ const Login = () => {
         </button>
 
         <p className="register-text">
-          Don’t have an account? <a href="/register">Register</a>
+          Don’t have an account? <a href="/register" onClick={handlregisterclick}>Register</a>
         </p>
       </div>
     </div>
