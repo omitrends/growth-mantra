@@ -28,12 +28,12 @@ const Login = () => {
 
         <div className="input-group">
           {/* <img src={user} alt="User" classname="input-icon" /> */}
-          <input type="text" placeholder="Enter Username" className="input-field" />
+          <input type="text" placeholder="Enter Username" className="input-field" style={styles.input} />
         </div>
 
         <div className="input-group">
           {/* <img src={passkey} alt="Pass" classname="input-icon" /> */}
-          <input type="password" placeholder="Enter Password" className="input-field" />
+          <input type="password" placeholder="Enter Password" className="input-field"style={styles.input} />
         </div>
 
         <button className="login-button">LOGIN</button>
@@ -61,5 +61,13 @@ const Login = () => {
     </div>
   );
 };
-
+const styles={
+  input: {
+    width: "100%",
+    padding: "10px",
+    border: "1px solid #ddd",
+    borderRadius: "4px",
+    fontSize: "14px",
+  },
+};
 export default Login;
