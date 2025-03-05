@@ -1,6 +1,6 @@
 // import React from "react";
 import "./Login.css";
-import logo from "../assets/images/logo.png"; 
+import login from "../assets/images/login.jpg"; 
 import googleLogo from "../assets/images/google-logo.png";
 // import user from "../assets/images/user.png";
 // import passkey from "../assets/images/passkey.png";
@@ -17,8 +17,8 @@ const Login = () => {
       {/* Left Section with Logo */}
       <div className="left-section">
         <div className="logo-container">
-          <img src={logo} alt="Growth Mantra" className="logo" />
-          <h1 className="title">GROWTH MANTRA</h1>
+          <img  src={login} alt="Growth Mantra" className="login-img" />
+          {/* <h1 className="title">GROWTH MANTRA</h1> */}
         </div>
       </div>
 
@@ -28,12 +28,12 @@ const Login = () => {
 
         <div className="input-group">
           {/* <img src={user} alt="User" classname="input-icon" /> */}
-          <input type="text" placeholder="Enter Username" className="input-field" />
+          <input type="text" placeholder="Enter Username" className="input-field" style={styles.input} />
         </div>
 
         <div className="input-group">
           {/* <img src={passkey} alt="Pass" classname="input-icon" /> */}
-          <input type="password" placeholder="Enter Password" className="input-field" />
+          <input type="password" placeholder="Enter Password" className="input-field"style={styles.input} />
         </div>
 
         <button className="login-button">LOGIN</button>
@@ -61,5 +61,13 @@ const Login = () => {
     </div>
   );
 };
-
+const styles={
+  input: {
+    width: "100%",
+    padding: "10px",
+    border: "1px solid #ddd",
+    borderRadius: "4px",
+    fontSize: "14px",
+  },
+};
 export default Login;
