@@ -19,26 +19,16 @@ connection.connect((err) => {
 function createTables() {
   const tables = [
     `CREATE TABLE IF NOT EXISTS Register (
-      userId INT AUTO_INCREMENT PRIMARY KEY,
-      userEmail VARCHAR(100) NOT NULL,
-      userPassword VARCHAR(100) UNIQUE NOT NULL
+      UserId INT AUTO_INCREMENT PRIMARY KEY,
+      UserEmail VARCHAR(100) NOT NULL,
+      Password VARCHAR(100) UNIQUE NOT NULL
     );`,
 
-    `CREATE TABLE IF NOT EXISTS Profile (
-      profileId INT AUTO_INCREMENT PRIMARY KEY,
-      userId INT NOT NULL,
-      fullName VARCHAR(100) NOT NULL,
-      age INT,
-      FOREIGN KEY (userId) REFERENCES Register(userId) ON DELETE CASCADE
+    `CREATE TABLE IF NOT EXISTS Login (
+      LoginId INT AUTO_INCREMENT PRIMARY KEY,
+      UserId INT,
+      FOREIGN KEY (UserId) REFERENCES Register(UserId)
     );`,
-
-    `CREATE TABLE IF NOT EXISTS Posts (
-      postId INT AUTO_INCREMENT PRIMARY KEY,
-      userId INT NOT NULL,
-      postContent TEXT NOT NULL,
-      createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (userId) REFERENCES Register(userId) ON DELETE CASCADE
-    );`
   ];
 
   executeQueries(tables);
