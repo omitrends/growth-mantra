@@ -1,6 +1,6 @@
 // import React from "react";
 import "./Login.css";
-import logo from "../assets/images/logo.png"; 
+import login from "../assets/images/login.jpg"; 
 import googleLogo from "../assets/images/google-logo.png";
 // import user from "../assets/images/user.png";
 // import passkey from "../assets/images/passkey.png";
@@ -17,8 +17,8 @@ const Login = () => {
       {/* Left Section with Logo */}
       <div className="left-section">
         <div className="logo-container">
-          <img src={logo} alt="Growth Mantra" className="logo" />
-          <h1 className="title">GROWTH MANTRA</h1>
+          <img  src={login} alt="Growth Mantra" className="login-img" />
+          {/* <h1 className="title">GROWTH MANTRA</h1> */}
         </div>
       </div>
 
