@@ -1,17 +1,19 @@
-import React, { useState } from "react";
-import logo from "../assets/images/rb_26614.png";
-import Validation from './RegisterValidation.cjs';
+import React, { useState } from 'react';
+import logo from '../assets/images/rb_26614.png'; // Adjust path as necessary
+import Validation from './RegisterValidation.cjs'; // Ensure this is in the correct path
 
 const CreateAccount = () => {
   const [values, setValues] = useState({
-    username: "",
-    email: "",
-    dob: "",
-    password: "",
-    confirmPassword: "",
+    username: '',
+    email: '',
+    dob: '',
+    password: '',
+    confirmPassword: '',
   });
 
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false); // Track loading state
+  const [message, setMessage] = useState(''); // To store success/error message
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -24,26 +26,57 @@ const CreateAccount = () => {
     setErrors(Validation({ ...values, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+  
     const validationErrors = Validation(values);
     setErrors(validationErrors);
-
+  
     // Only submit the form if there are no validation errors
     if (Object.keys(validationErrors).length === 0) {
-      console.log("Form submitted successfully", values);
+      try {
+        setLoading(true);
+        setMessage(''); // Reset message before sending request
+  
+        // Sending data to backend to register user
+        const response = await fetch('http://localhost:5000/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            username: values.username,
+            email: values.email,
+            password: values.password,
+            dateOfBirth: values.dob,  // Ensure dob is included here
+          }),
+        });
+  
+        const data = await response.json();
+  
+        if (response.ok) {
+          setMessage('Registration successful!');
+          setTimeout(() => {
+            window.location.href = '/dashboard'; // Redirect to Dashboard
+          }, 1500);
+        } else {
+          setMessage(data.message || 'Something went wrong, please try again.');
+        }
+      } catch (error) {
+        setMessage('Error occurred during registration, please try again.');
+      } finally {
+        setLoading(false);
+      }
     }
   };
+  
+  
 
   return (
     <div>
       <div style={styles.container}>
         <div style={styles.leftPane}>
-          <img
-            src={logo}
-            alt="Growth Mantra Logo"
-            style={styles.logo}
-          />
+          <img src={logo} alt="Growth Mantra Logo" style={styles.logo} />
         </div>
         <div style={styles.rightPane}>
           <h2 style={styles.heading}>CREATE ACCOUNT</h2>
@@ -52,7 +85,6 @@ const CreateAccount = () => {
           </p>
           <form style={styles.form} onSubmit={handleSubmit}>
             <div style={styles.inputContainer}>
-              <i className="fa fa-user" style={styles.icon}></i>
               <input
                 type="text"
                 placeholder="Enter Username"
@@ -64,7 +96,6 @@ const CreateAccount = () => {
               {errors.username && <span style={styles.error}>{errors.username}</span>}
             </div>
             <div style={styles.inputContainer}>
-              <i className="fa fa-envelope" style={styles.icon}></i>
               <input
                 type="email"
                 placeholder="Enter Email"
@@ -76,7 +107,6 @@ const CreateAccount = () => {
               {errors.email && <span style={styles.error}>{errors.email}</span>}
             </div>
             <div style={styles.inputContainer}>
-              <i className="fa fa-calendar" style={styles.icon}></i>
               <input
                 type="date"
                 placeholder="Enter Date of Birth"
@@ -88,7 +118,6 @@ const CreateAccount = () => {
               {errors.dob && <span style={styles.error}>{errors.dob}</span>}
             </div>
             <div style={styles.inputContainer}>
-              <i className="fa fa-key" style={styles.icon}></i>
               <input
                 type="password"
                 placeholder="Enter Password"
@@ -100,7 +129,6 @@ const CreateAccount = () => {
               {errors.password && <span style={styles.error}>{errors.password}</span>}
             </div>
             <div style={styles.inputContainer}>
-              <i className="fa fa-lock" style={styles.icon}></i>
               <input
                 type="password"
                 placeholder="Confirm Password"
@@ -111,9 +139,10 @@ const CreateAccount = () => {
               />
               {errors.confirmPassword && <span style={styles.error}>{errors.confirmPassword}</span>}
             </div>
-            <button type="submit" style={styles.button}>
-              REGISTER
+            <button type="submit" style={styles.button} disabled={loading}>
+              {loading ? 'Registering...' : 'REGISTER'}
             </button>
+            {message && <p style={styles.message}>{message}</p>}
           </form>
         </div>
       </div>
@@ -123,85 +152,76 @@ const CreateAccount = () => {
 
 const styles = {
   container: {
-    display: "flex",
-    flexDirection: "row",
-    height: "80vh",
-    backgroundColor: "#f9f9f9",
+    display: 'flex',
+    height: '80vh',
+    backgroundColor: '#f9f9f9',
   },
   leftPane: {
     flex: 1,
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#f9f9f9",
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
   },
   logo: {
-    width: "500px",
+    width: '500px',
   },
   rightPane: {
     flex: 1,
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#ffffff",
-    padding: "20px",
-    borderLeft: "1px solid #ddd",
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: '20px',
+    borderLeft: '1px solid #ddd',
+    backgroundColor: 'white',
   },
   heading: {
-    fontSize: "28px",
-    marginBottom: "10px",
+    fontSize: '28px',
+    marginBottom: '10px',
   },
   loginText: {
-    fontSize: "14px",
-    marginBottom: "20px",
+    fontSize: '14px',
+    marginBottom: '20px',
   },
   loginLink: {
-    color: "#007bff",
-    textDecoration: "none",
+    color: '#007bff',
+    textDecoration: 'none',
   },
   form: {
-    width: "100%",
-    maxWidth: "400px",
+    width: '100%',
+    maxWidth: '400px',
   },
   inputContainer: {
-    display: "flex",
-    flexDirection: "column",  // Stacks the input and error message vertically
-    alignItems: "flex-start", // Align the input and error message to the left
-    marginBottom: "15px",     // Adds space between the inputs
-  },
-  icon: {
-    marginRight: "10px",
-    fontSize: "18px",
-    color: "#888",
+    marginBottom: '15px',
   },
   input: {
-    width: "100%",
-    padding: "10px",
-    border: "1px solid #ddd",
-    borderRadius: "4px",
-    fontSize: "14px",
+    width: '100%',
+    padding: '10px',
+    border: '1px solid #ddd',
+    borderRadius: '4px',
+    fontSize: '14px',
   },
   button: {
-    width: "100%",
-    padding: "12px",
-    backgroundColor: "#28a745",
-    color: "#ffffff",
-    border: "none",
-    borderRadius: "4px",
-    fontSize: "16px",
-    cursor: "pointer",
+    width: '100%',
+    padding: '12px',
+    backgroundColor: '#28a745',
+    color: '#ffffff',
+    border: 'none',
+    borderRadius: '4px',
+    fontSize: '16px',
+    cursor: 'pointer',
   },
   error: {
-    color: "#ff4545",
-    fontSize: "14px",
-    display: "block",
-    width: "100%",
-    marginBottom: "10px",
-    margin: "2px",
-    padding: "2px"
-  }
+    color: '#ff4545',
+    fontSize: '14px',
+  },
+  message: {
+    color: 'green',
+    fontSize: '14px',
+    marginBottom: '10px',
+  },
 };
+
 
 export default CreateAccount;

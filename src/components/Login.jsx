@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-import "./Login.css";
-import login from "../assets/images/login.jpg";
-import googleLogo from "../assets/images/google-logo.png";
-import { useNavigate } from "react-router-dom";
-import Validation from './LoginValidation.cjs';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './Login.css';
+import login from '../assets/images/login.jpg';
+import googleLogo from '../assets/images/google-logo.png';
 
 const Login = () => {
   // State for email and password
@@ -12,6 +11,8 @@ const Login = () => {
     password: ''
   });
 
+  const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false); // Track loading state
   const navigate = useNavigate();
 
   const handleRegisterClick = (event) => {
@@ -19,44 +20,69 @@ const Login = () => {
     navigate('/register');
   };
 
-  const[errors,setErrors]=useState({})
-
   const handleInput = (event) => {
-    setValues(prev=>({...prev, [event.target.name]:[event.target.value]}))
+    setValues((prev) => ({ ...prev, [event.target.name]: event.target.value }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const ValidationErrors=Validation(values);
-    setErrors(ValidationErrors);
+
+    // Send login data to backend for authentication
+    try {
+      setLoading(true); // Set loading to true when starting the API request
+      setMessage(''); // Clear any previous message before submitting
+
+      const response = await fetch('http://localhost:5000/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: values.email,
+          password: values.password
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setMessage('Login successful!');
+        setTimeout(() => {
+          navigate('/dashboard'); // Redirect to dashboard after a successful login
+        }, 1500); // Optional delay before redirect
+      } else {
+        setMessage(data.message || 'Invalid credentials'); // Show backend error message
+      }
+    } catch (error) {
+      setMessage('Error occurred during login, please try again.');
+    } finally {
+      setLoading(false); // Reset loading state after API call
+    }
   };
 
   return (
     <div className="login-container">
-      {/* Left Section with Logo */}
       <div className="left-section">
         <div className="logo-container">
           <img src={login} alt="Growth Mantra" className="login-img" />
-          {/* <h1 className="title">GROWTH MANTRA</h1> */}
         </div>
       </div>
 
-      {/* Right Section with Login Form */}
       <div className="right-section">
         <h2 className="login-title">LOGIN</h2>
 
-        <form action="" onSubmit={handleSubmit}>
+        {message && <p className="message">{message}</p>}
+
+        <form onSubmit={handleSubmit}>
           <div className="input-group">
             <input
               type="text"
               name="email"
               value={values.email}
               onChange={handleInput}
-              placeholder="Enter Username"
+              placeholder="Enter Email"
               className="input-field"
-              style={styles.input}
             />
-            {errors.email && <span className="text-red">{errors.email}</span>}
           </div>
 
           <div className="input-group">
@@ -67,13 +93,12 @@ const Login = () => {
               onChange={handleInput}
               placeholder="Enter Password"
               className="input-field"
-              style={styles.input}
             />
-            {errors.password && <span className="text-red">{errors.password}</span>}
-
           </div>
 
-          <button type="submit" className="login-button">LOGIN</button>
+          <button type="submit" className="login-button" disabled={loading}>
+            {loading ? 'Logging in...' : 'LOGIN'}
+          </button>
         </form>
 
         <div className="extra-options">
@@ -97,16 +122,6 @@ const Login = () => {
       </div>
     </div>
   );
-};
-
-const styles = {
-  input: {
-    width: "100%",
-    padding: "10px",
-    border: "1px solid #ddd",
-    borderRadius: "4px",
-    fontSize: "14px",
-  },
 };
 
 export default Login;
