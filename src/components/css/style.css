@@ -112,7 +112,8 @@ a:focus {
 
 .slider_img-box {
   width: 85%;
-  margin: 0 auto;
+  /* margin: 0 auto; */
+
 }
 
 .slider_img-box img {
