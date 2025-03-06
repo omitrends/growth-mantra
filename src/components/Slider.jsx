@@ -60,7 +60,7 @@ function Slider() {
                           <p>{slide.description}</p>
                         </div>
                       </div>
-                      <div className="col-md-6">
+                      <div className="col-md-6 customimg">
                         <div className="slider_img-box">
                           <img src={slide.image} alt={slide.alt} />
                         </div>

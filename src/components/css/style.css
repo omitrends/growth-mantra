@@ -112,13 +112,29 @@ a:focus {
 
 .slider_img-box {
   width: 85%;
+  height: 100%;
+  display: flex;
+  justify-self: center;
+  align-self: center;
+  justify-content: center;
+  padding-bottom: 400px;
+}
+
+.customimg{
+  display: block;
+  /* justify-content: center; */
+  /* padding-bottom: 50px; */
+  /* align-items:start; */
+  padding-top: 0px;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .slider_img-box img {
   width: 100%;
-  /* margin-top: auto;
-  margin-bottom: auto; */
-  padding: auto;
+  /* margin-top: auto; */
+  /* margin-bottom: 300px; */
+  /* padding: auto; */
   align-items: center;
 }
 
