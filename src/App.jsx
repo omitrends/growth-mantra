@@ -12,6 +12,7 @@ function App(){
     <Slider/>
     <Login />
     <Fitness />
+    {/* <Nutrition /> */}
   </div>
   );
 }
