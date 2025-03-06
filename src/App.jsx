@@ -2,6 +2,8 @@ import Navbar from "./components/Navbar"
 import Slider from "./components/Slider"
 import Login from "./components/Login"
 import "./components/Login.css";
+import Fitness from "./components/Fitness"
+import "./components/Fitness.css";
 
 function App(){
   return (
@@ -9,6 +11,7 @@ function App(){
     <Navbar />
     <Slider/>
     <Login />
+    <Fitness />
   </div>
   );
 }
