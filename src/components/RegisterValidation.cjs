@@ -18,15 +18,15 @@ function Validation(values) {
     }
   
     // Date of Birth Validation
-    if (values.dob === "") {
-      error.dob = "Date of birth is required";
-    } else {
-      const dob = new Date(values.dob);
-      const age = new Date().getFullYear() - dob.getFullYear();
-      if (age < 18) {
-        error.dob = "You must be at least 18 years old";
-      }
-    }
+    // if (values.dob === "") {
+    //   error.dob = "Date of birth is required";
+    // } else {
+    //   const dob = new Date(values.dob);
+    //   const age = new Date().getFullYear() - dob.getFullYear();
+    //   if (age < 10) {
+    //     error.dob = "You must be at least 10 years old";
+    //   }
+    // }
   
     // Password Validation with individual checks
     if (values.password === "") {

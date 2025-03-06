@@ -24,7 +24,6 @@ const createRegisterTable = `
     UserId INT AUTO_INCREMENT PRIMARY KEY,
     Username VARCHAR(100) NOT NULL,
     UserEmail VARCHAR(100) NOT NULL UNIQUE,
-    DateOfBirth DATE NOT NULL,
     Password VARCHAR(255) NOT NULL
   );
 `;

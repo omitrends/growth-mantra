@@ -6,7 +6,6 @@ const CreateAccount = () => {
   const [values, setValues] = useState({
     username: '',
     email: '',
-    dob: '',
     password: '',
     confirmPassword: '',
   });
@@ -48,7 +47,6 @@ const CreateAccount = () => {
             username: values.username,
             email: values.email,
             password: values.password,
-            dateOfBirth: values.dob,  // Ensure dob is included here
           }),
         });
   
@@ -105,17 +103,6 @@ const CreateAccount = () => {
                 style={styles.input}
               />
               {errors.email && <span style={styles.error}>{errors.email}</span>}
-            </div>
-            <div style={styles.inputContainer}>
-              <input
-                type="date"
-                placeholder="Enter Date of Birth"
-                name="dob"
-                value={values.dob}
-                onChange={handleInputChange}
-                style={styles.input}
-              />
-              {errors.dob && <span style={styles.error}>{errors.dob}</span>}
             </div>
             <div style={styles.inputContainer}>
               <input
