@@ -12,21 +12,21 @@ function Slider() {
     {
       title: "Mental Wellbeing",
       description:
-        "Pause, reflect, and renew. Journaling helps you cultivate mindfulness and presence. Reduce stress and increase clarity through this mindful practice.",
+        "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.",
       image: MW,
       alt: "Mental Wellbeing Illustration",
     },
     {
       title: "Nutrition",
       description:
-        "Kickstart your nutrition journey today. Explore personalized meal plans, track your progress, and fuel your success. With expert guidance and easy tracking, you’ll have everything you need to nourish your body and reach your goals.",
+        "Your fitness journey starts here. Explore workouts, track progress, and reach new heights. With personalized plans, expert guidance, and progress tracking, you'll have everything you need to succeed.",
       image: Nut,
       alt: "Nutrition Illustration",
     },
     {
       title: "Fitness",
       description:
-      "Your fitness journey starts here. Explore workouts, track progress, and reach new heights. With personalized plans, expert guidance, and progress tracking, you'll have everything you need to succeed.",
+        "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.",
       image: Fit,
       alt: "Fitness Illustration",
     },
