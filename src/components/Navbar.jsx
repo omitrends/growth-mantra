@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/images/logo.png'; // Import the image
 import './css/style.css';
@@ -13,10 +13,7 @@ function Navbar() {
     navigate('/get-started');
   };
 
-  const set = (event) => {
-    event.preventDefault();
-    navigate('/setup');
-  };
+
 
   const handleDashboard = (event) => {
     event.preventDefault();
@@ -58,7 +55,7 @@ function Navbar() {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/setup" onClick={set}>
+                  <Link className="nav-link">
                     Contact us
                   </Link>
                 </li>

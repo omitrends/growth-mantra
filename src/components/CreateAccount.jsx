@@ -1,6 +1,7 @@
 // import React from "react";
 import logo from "../assets/images/rb_26614.png";
 import { useNavigate } from "react-router-dom";
+// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 const CreateAccount = () => {
 
@@ -9,9 +10,10 @@ const CreateAccount = () => {
     event.preventDefault();
     navigate('/set-up');
   };
+  
   return (
     <div>
-
+      
          {/* <Navbar/> */}
     <div style={styles.container}>
       <div style={styles.leftPane}>

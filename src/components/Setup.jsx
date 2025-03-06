@@ -1,145 +1,123 @@
-import React from 'react';
-import './Setup.css';
+// import React from 'react';
 
 function Setup() {
   return (
-    <div className="bg-gray-100 flex items-center justify-center min-h-screen">
-      <div className="w-full max-w-4xl bg-white p-8 rounded-lg shadow-md">
-        <div className="text-center mb-8">
-          <button className="bg-green-500 text-white font-bold py-2 px-4 rounded-full w-full">
+    <div className="bg-light d-flex align-items-center justify-content-center min-vh-100">
+      <div className="w-100 max-w-4xl bg-white p-5 rounded shadow">
+        <div className="text-center mb-5">
+          <button className="btn btn-success btn-lg w-100 rounded-pill">
             SETUP YOUR ACCOUNT
           </button>
         </div>
-        <form className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label htmlFor="fullName" className="block text-gray-700">
+        <form className="needs-validation" noValidate>
+          <div className="row g-3">
+            <div className="col-md-6">
+              <label htmlFor="fullName" className="form-label">
                 Full Name
               </label>
               <input
                 type="text"
                 id="fullName"
                 placeholder="Your Full Name"
-                className="w-full mt-2 p-3 border rounded-lg bg-gray-100"
+                className="form-control"
+                required
               />
             </div>
-            <div>
-              <label htmlFor="weight" className="block text-gray-700">
+            <div className="col-md-6">
+              <label htmlFor="weight" className="form-label">
                 Weight
               </label>
               <input
                 type="text"
                 id="weight"
                 placeholder="Weight"
-                className="w-full mt-2 p-3 border rounded-lg bg-gray-100"
+                className="form-control"
+                required
               />
             </div>
-            <div>
-              <label htmlFor="phoneNumber" className="block text-gray-700">
+            <div className="col-md-6">
+              <label htmlFor="phoneNumber" className="form-label">
                 Phone Number
               </label>
               <input
                 type="text"
                 id="phoneNumber"
                 placeholder="Phone no"
-                className="w-full mt-2 p-3 border rounded-lg bg-gray-100"
+                className="form-control"
+                required
               />
             </div>
-            <div>
-              <label htmlFor="height" className="block text-gray-700">
+            <div className="col-md-6">
+              <label htmlFor="height" className="form-label">
                 Height
               </label>
               <input
                 type="text"
                 id="height"
                 placeholder="Height"
-                className="w-full mt-2 p-3 border rounded-lg bg-gray-100"
+                className="form-control"
+                required
               />
             </div>
-            <div>
-              <label htmlFor="gender" className="block text-gray-700">
+            <div className="col-md-6">
+              <label htmlFor="gender" className="form-label">
                 Gender
               </label>
-              <div className="relative">
-                <select
-                  id="gender"
-                  className="w-full mt-2 p-3 border rounded-lg bg-gray-100 appearance-none"
-                >
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                </select>
-                <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-                  <i className="fas fa-chevron-down"></i>
-                </div>
-              </div>
+              <select id="gender" className="form-select" required>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
             </div>
-            <div>
-              <label htmlFor="bmi" className="block text-gray-700">
+            <div className="col-md-6">
+              <label htmlFor="bmi" className="form-label">
                 BMI
               </label>
               <input
                 type="text"
                 id="bmi"
                 placeholder="BMI"
-                className="w-full mt-2 p-3 border rounded-lg bg-gray-100"
+                className="form-control"
+                required
               />
             </div>
-            <div>
-              <label htmlFor="age" className="block text-gray-700">
+            <div className="col-md-6">
+              <label htmlFor="age" className="form-label">
                 Age
               </label>
               <input
                 type="text"
                 id="age"
                 placeholder="Your Age"
-                className="w-full mt-2 p-3 border rounded-lg bg-gray-100"
+                className="form-control"
+                required
               />
             </div>
-            <div>
-              <label htmlFor="fitnessGoal" className="block text-gray-700">
+            <div className="col-md-6">
+              <label htmlFor="fitnessGoal" className="form-label">
                 Fitness Goal
               </label>
-              <div className="relative">
-                <select
-                  id="fitnessGoal"
-                  className="w-full mt-2 p-3 border rounded-lg bg-gray-100 appearance-none"
-                >
-                  <option value="Weight loss">Weight Loss</option>
-                  <option value="Weight Gain">Weight Gain</option>
-                  <option value="Muscle Gain">Muscle Gain</option>
-                  <option value="General Fitness">General Fitness</option>
-                </select>
-                <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-                  <i className="fas fa-chevron-down"></i>
-                </div>
-              </div>
+              <select id="fitnessGoal" className="form-select" required>
+                <option value="Weight loss">Weight Loss</option>
+                <option value="Weight Gain">Weight Gain</option>
+                <option value="Muscle Gain">Muscle Gain</option>
+                <option value="General Fitness">General Fitness</option>
+              </select>
             </div>
-          </div>
-          <div>
-            <label htmlFor="lifeStyle" className="block text-gray-700">
-              Life Style
-            </label>
-            <div className="relative">
-              <select
-                id="lifeStyle"
-                className="w-full mt-2 p-3 border rounded-lg bg-gray-100 appearance-none"
-              >
+            <div className="col-12">
+              <label htmlFor="lifeStyle" className="form-label">
+                Life Style
+              </label>
+              <select id="lifeStyle" className="form-select" required>
                 <option value="Sedentary">Sedentary</option>
                 <option value="Moderate">Moderate</option>
                 <option value="Active">Active</option>
               </select>
-              <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-                <i className="fas fa-chevron-down"></i>
-              </div>
             </div>
-          </div>
-          <div className="text-center">
-            <button
-              type="submit"
-              className="bg-green-500 text-white font-bold py-2 px-4 rounded-full"
-            >
-              SAVE
-            </button>
+            <div className="col-12 text-center">
+              <button type="submit" className="btn btn-success btn-lg rounded-pill">
+                SAVE
+              </button>
+            </div>
           </div>
         </form>
       </div>
