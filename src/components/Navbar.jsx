@@ -1,11 +1,16 @@
-import React from 'react';
+
 import "./css/style.css";
 import "./css/bootstrap.css";
 import "./css/responsive.css";
 import "./js/bootstrap.js";
 import "./js/jquery-3.4.1.min.js";
-
+import { useNavigate } from "react-router-dom";
 function Navbar() {
+  const navigate =useNavigate();
+  const clickonGetStarted=(event)=>{
+    event.preventDefault();
+    navigate('/get-started');
+  };
   return (
     <header className="header_section">
       <div className="container">
@@ -47,7 +52,7 @@ function Navbar() {
               </ul>
             </div>
             <div className="quote_btn-container ml-0 ml-lg-4 d-flex justify-content-center">
-              <a href="/get-started">Get Started</a>
+              <a href="/get-started" onClick={clickonGetStarted}>Get Started</a>
             </div>
           </div>
         </nav>

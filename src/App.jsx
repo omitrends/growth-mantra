@@ -1,19 +1,27 @@
-import Navbar from "./components/Navbar"
-import Slider from "./components/Slider"
-import Login from "./components/Login"
-import "./components/Login.css";
-import Fitness from "./components/Fitness"
-import "./components/Fitness.css";
-
-function App(){
+import CreateAccount from "./components/CreateAccount";
+import Navbar from "./components/Navbar";
+import Home from "./components/Home";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./components/Login";
+import Dashboard from "./components/dashboard";
+// import ForgetPass from "./components/forgetPass";
+function App() {
   return (
-  <div>
-    <Navbar />
-    <Slider/>
-    <Login />
-    <Fitness />
-    {/* <Nutrition /> */}
-  </div>
+    <div>
+      <Router>
+        <Navbar/>
+        <Routes>
+          <Route>
+            <Route index element={<Home/>} />
+            <Route path="/register" element={<CreateAccount/>}/>
+            <Route path="/login" element={<Login/>}/>
+            <Route path="/get-started" element={<CreateAccount/>}></Route>
+            <Route path="/dashboard" element={<Dashboard/>}></Route>
+
+          </Route>
+        </Routes>
+      </Router>
+    </div>
   );
 }
 

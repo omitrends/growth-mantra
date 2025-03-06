@@ -34,28 +34,6 @@ body {
   background-color: transparent;
 }
 
-/* .custom_heading {
-  text-align: center;
-  font-weight: bold;
-} */
-
-/* .custom_heading-text {
-  text-align: center;
-} */
-
-
-/*header section*/
-/* .hero_area {
-  height: 98vh;
-  background-color: #f1f7ed;
-}
-
-.hero_area.sub_pages {
-  height: auto;
-} */
-
-/* .header_section {} */
-
 .header_section .container-fluid {
   padding-right: 25px;
   padding-left: 25px;
@@ -69,7 +47,6 @@ body {
   padding: 10px 30px;
   color: #343434;
   text-align: center;
-  /* font-size: 15px; */
   
 }
 
@@ -98,11 +75,6 @@ a:focus {
   color: #fafcfd;
 }
 
-/* .navbar-brand {
-  display: flex;
-  align-items: center;
-} */
-
 .navbar-brand img {
   width: 60px;
   margin-right: 10px;
@@ -115,20 +87,6 @@ a:focus {
   margin-top: 5px;
 }
 
-/* .custom_nav-container {
-  z-index: 99999;
-  padding: 15px 0;
-} */
-
-/* .custom_nav-container .navbar-toggler {
-  outline: none;
-} */
-
-/* .custom_nav-container .navbar-toggler .navbar-toggler-icon {
-  background-image: url(../images/menu.png);
-  background-size: 55px;
-} */
-
 .quote_btn-container a {
   display: inline-block;
   padding: 5px 15px;
@@ -139,9 +97,6 @@ a:focus {
   text-transform: uppercase;
 }
 
-/*end header section*/
-
-/* slider section */
 .slider_section {
   padding-top: 8%;
 }
@@ -157,11 +112,14 @@ a:focus {
 
 .slider_img-box {
   width: 85%;
-  margin: 0 auto;
 }
 
 .slider_img-box img {
   width: 100%;
+  /* margin-top: auto;
+  margin-bottom: auto; */
+  padding: auto;
+  align-items: center;
 }
 
 .slider_item-container {
@@ -171,8 +129,6 @@ a:focus {
   height: 100%;
   background-repeat: no-repeat;
 }
-
-/* .slider_item-container .slider_item-detail {} */
 
 .slider_item-detail h1 {
   font-weight: 700;
@@ -218,24 +174,8 @@ a:focus {
   background-size: 12px;
   background-position: center;
 }
-
-/* .slider_section .custom_carousel-control .carousel-control-prev {
-  background-image: url(../../assets/images/prev.png);
-  background-color: #7ca982;
-}
-
-.slider_section .custom_carousel-control .carousel-control-next {
-  background-image: url(../../assets/images/next.png);
-  background-color: #000000;
-} */
-
-/* end slider section */
-
-
-/* Custom Carousel Controls */
-/* Carousel Container */
 .slider_section {
-  height: 600px; /* Set a fixed height for the carousel container */
+  height: 600px; 
   position: relative;
   overflow: hidden; /* Ensure content doesn't overflow */
 }

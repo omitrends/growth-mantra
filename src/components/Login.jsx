@@ -1,36 +1,105 @@
-import React from "react";
-import "./Login.css";
-import logo from "../assets/images/logo.png"; 
-import googleLogo from "../assets/images/google-logo.png";
-// import user from "../assets/images/user.png";
-// import passkey from "../assets/images/passkey.png";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './Login.css';
+import login from '../assets/images/login.jpg';
+import googleLogo from '../assets/images/google-logo.png';
 
 const Login = () => {
+  // State for email and password
+  const [values, setValues] = useState({
+    email: '',
+    password: ''
+  });
+
+  const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false); // Track loading state
+  const navigate = useNavigate();
+
+  const handleRegisterClick = (event) => {
+    event.preventDefault();
+    navigate('/register');
+  };
+
+  const handleInput = (event) => {
+    setValues((prev) => ({ ...prev, [event.target.name]: event.target.value }));
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    // Send login data to backend for authentication
+    try {
+      setLoading(true); // Set loading to true when starting the API request
+      setMessage(''); // Clear any previous message before submitting
+
+      const response = await fetch('http://localhost:5000/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: values.email,
+          password: values.password
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setMessage('Login successful!');
+        setTimeout(() => {
+          navigate('/dashboard'); // Redirect to dashboard after a successful login
+        }, 1500); // Optional delay before redirect
+      } else {
+        setMessage(data.message || 'Invalid credentials'); // Show backend error message
+      }
+    } catch (error) {
+      setMessage('Error occurred during login, please try again.');
+    } finally {
+      setLoading(false); // Reset loading state after API call
+    }
+  };
+
   return (
     <div className="login-container">
-      {/* Left Section with Logo */}
       <div className="left-section">
         <div className="logo-container">
-          <img src={logo} alt="Growth Mantra" className="logo" />
-          <h1 className="title">GROWTH MANTRA</h1>
+          <img src={login} alt="Growth Mantra" className="login-img" />
         </div>
       </div>
 
-      {/* Right Section with Login Form */}
       <div className="right-section">
         <h2 className="login-title">LOGIN</h2>
 
-        <div className="input-group">
-          {/* <img src={user} alt="User" classname="input-icon" /> */}
-          <input type="text" placeholder="Enter Username" className="input-field" />
-        </div>
+        {message && <p className="message">{message}</p>}
 
-        <div className="input-group">
-          {/* <img src={passkey} alt="Pass" classname="input-icon" /> */}
-          <input type="password" placeholder="Enter Password" className="input-field" />
-        </div>
+        <form onSubmit={handleSubmit}>
+          <div className="input-group">
+            <input
+              type="text"
+              name="email"
+              value={values.email}
+              onChange={handleInput}
+              placeholder="Enter Email"
+              className="input-field"
+            />
+          </div>
 
-        <button className="login-button">LOGIN</button>
+          <div className="input-group">
+            <input
+              type="password"
+              name="password"
+              value={values.password}
+              onChange={handleInput}
+              placeholder="Enter Password"
+              className="input-field"
+            />
+          </div>
+
+          <button type="submit" className="login-button" disabled={loading}>
+            {loading ? 'Logging in...' : 'LOGIN'}
+          </button>
+        </form>
 
         <div className="extra-options">
           <label>
@@ -41,7 +110,6 @@ const Login = () => {
 
         <hr className="divider" />
         <p className="or-text">or login with</p>
-        
 
         <button className="google-login">
           <img src={googleLogo} alt="Google" className="google-icon" />
@@ -49,7 +117,7 @@ const Login = () => {
         </button>
 
         <p className="register-text">
-          Don’t have an account? <a href="/register">Register</a>
+          Don’t have an account? <a href="/register" onClick={handleRegisterClick}>Register</a>
         </p>
       </div>
     </div>

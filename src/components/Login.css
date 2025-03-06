@@ -1,10 +1,12 @@
 /* Full Page Container */
+
 .login-container {
     display: flex;
-    height: 100vh;
-    background-color: #f1f7ed;
+    height: 85vh;
+    /* background-color: #f1f7ed; */
     font-family: Arial, sans-serif;
   }
+
   
   /* Left Section - Logo & Title */
   .left-section {
@@ -13,7 +15,7 @@
     display: flex;
     align-items: center;
     justify-content: center; 
-    background-color: #f1f7ed; 
+    /* background-color: #f1f7ed;  */
     border-radius: 10px;
     margin-bottom: 200px;
     margin-top: 30px;
@@ -22,10 +24,12 @@
   .logo-container {
     text-align: center;
     margin-top: 80px;
+    border: "1px solid #ddd",
+
   }
   
-  .logo {
-    width: 400px;
+  .login-img {
+    width: 500px;
     height: auto;
     background-color: white;
   }
@@ -44,7 +48,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #f1f7ed;
+    /* background-color: #f1f7ed; */
     margin-top: 50px;
     margin-bottom: 100px;
   }
@@ -52,7 +56,7 @@
   /* Login Title */
   .login-title {
     font-size: 30px;
-    font-weight: bold;
+    /* font-weight: bold; */
     margin-bottom: 40px;
   }
   
@@ -60,8 +64,8 @@
   .input-group {
     display: flex;
     align-items: center;
-    border-bottom: 1px solid #aaa;
-    width: 250px;
+    /* border-bottom: 1px solid #aaa; */
+    width: 350px;
     /*max-width: 350px;*/
     margin-bottom: 15px;
     padding: 5px;
@@ -88,23 +92,21 @@
   
   /* Login Button */
   .login-button {
-    background-color: #6dbf69;
-    padding: 10px;
-    width: 200px;
-    max-width: 350px;
-    border: none;
+    background-color: #28a745;
+    color: white;
+    padding: 8px;
+    width: 350px;
     font-size: 20px;
     cursor: pointer;
     border: 1px solid #ddd;
     border-radius: 5px;
     align-items: center;
-    justify-content: center;
-    margin-top: 20px;
+    justify-self: center;
   }
   
-  .login-button:hover {
+  /* .login-button:hover {
     background-color: #45a049;
-  }
+  } */
   
   /* Extra Options */
   .extra-options {
@@ -136,7 +138,7 @@
   
   /* Google Login */
   .google-login {
-    background-color: #6dbf69;
+    background-color: #28a745;
     color: black;
     padding: 10px;
     width: 200px;
@@ -150,10 +152,10 @@
     justify-content: center;
     gap: 10px;
   }
-
+/* 
   .google-login:hover {
     background-color: #45a049;
-  }
+  } */
   
   .google-icon {
     width: 30px;
@@ -172,3 +174,13 @@
     color: #007bff;
     font-weight: bold;
   }
+
+.text-red {
+  color: #ff4545;
+  font-size: 14px;
+  margin-top: 5px;
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 5px;
+}
