@@ -23,8 +23,8 @@ function Validation(values) {
     } else {
       const dob = new Date(values.dob);
       const age = new Date().getFullYear() - dob.getFullYear();
-      if (age < 18) {
-        error.dob = "You must be at least 18 years old";
+      if (age < 10) {
+        error.dob = "You must be at least 10 years old";
       }
     }
   
