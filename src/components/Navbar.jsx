@@ -18,6 +18,12 @@ function Navbar() {
     navigate('/setup');
   };
 
+  const handleDashboard = (event) => {
+    event.preventDefault();
+    navigate('/dashboard');
+  };
+
+
   return (
     <header className="header_section">
       <div className="container">
@@ -47,7 +53,7 @@ function Navbar() {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/community">
+                  <Link className="nav-link" to="/dashboard" onClick={handleDashboard}>
                     Community
                   </Link>
                 </li>

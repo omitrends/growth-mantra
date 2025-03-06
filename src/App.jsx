@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./components/Login";
 // import ForgetPass from "./components/forgetPass";
 // import Setup from "./components/Setup";
+// import DashBoard from "./components/DashBoard";
 function App() {
   return (
     <div>
@@ -15,6 +16,7 @@ function App() {
             <Route index element={<Home/>} />
             <Route path="/register" element={<CreateAccount/>}/>
             <Route path="/login" element={<Login/>}/>
+            {/* <Route path="/dashboard" element={<DashBoard/>}/> */}
             <Route path="/get-started" element={<CreateAccount/>}></Route>
           </Route>
         </Routes>
