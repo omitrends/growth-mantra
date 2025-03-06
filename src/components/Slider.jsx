@@ -31,7 +31,7 @@ function Slider() {
       alt: "Fitness Illustration",
     },
   ];
-  const navigate =useNavigate();
+  const navigate = useNavigate();
   const handleregisterclick=(event)=>{
     event.preventDefault();
     navigate('/register');
