@@ -3,8 +3,8 @@ import logo from "../assets/images/rb_26614.png";
 import { useNavigate } from "react-router-dom";
 // import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import React, { useState } from 'react';
-import logo from '../assets/images/rb_26614.png'; // Adjust path as necessary
+import { useState } from 'react';
+// import logo from '../assets/images/rb_26614.png'; // Adjust path as necessary
 import Validation from './RegisterValidation.cjs'; // Ensure this is in the correct path
 
 const CreateAccount = () => {
