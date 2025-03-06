@@ -1,6 +1,14 @@
 // import React from "react";
 import logo from "../assets/images/rb_26614.png";
+import { useNavigate } from "react-router-dom";
+
 const CreateAccount = () => {
+
+  const navigate = useNavigate();
+  const setupPage=(event)=>{
+    event.preventDefault();
+    navigate('/set-up');
+  };
   return (
     <div>
 
@@ -67,7 +75,7 @@ const CreateAccount = () => {
                         style={styles.input}
                 />
           </div>
-          <button type="submit" style={styles.button}>
+          <button onClick={setupPage} type="submit" style={styles.button}>
             REGISTER
           </button>
         </form>

@@ -4,6 +4,7 @@ import Home from "./components/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./components/Login";
 // import ForgetPass from "./components/forgetPass";
+// import Setup from "./components/Setup";
 function App() {
   return (
     <div>
