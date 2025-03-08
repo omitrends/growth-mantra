@@ -113,11 +113,20 @@ a:focus {
 .slider_img-box {
   width: 85%;
   /* margin: 0 auto; */
+  height: 500px;
+  padding-top: 100px;
+  margin-top: 0px;
+  margin-bottom: 500px;
+  /* border: 1px solid black; */
+
 
 }
 
 .slider_img-box img {
   width: 100%;
+  margin-top: -170px;
+  /* border: 1px solid black; */
+
 }
 
 .slider_item-container {
