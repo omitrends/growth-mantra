@@ -54,9 +54,13 @@ const CreateAccount = () => {
   
         if (response.ok) {
           setMessage('Registration successful!');
+          
+          // Store the JWT token in localStorage or sessionStorage
+          localStorage.setItem('token', data.token);
+
           setTimeout(() => {
-            window.location.href = '/dashboard'; // Redirect to Dashboard
-          }, 1500);
+            window.location.href = '/dashboard'; // Redirect to Dashboard after successful registration
+          }, 1500); // Optional delay before redirect
         } else {
           setMessage(data.message || 'Something went wrong, please try again.');
         }
@@ -67,8 +71,7 @@ const CreateAccount = () => {
       }
     }
   };
-  
-  
+ 
 
   return (
     <div>

@@ -47,8 +47,13 @@ const Login = () => {
 
       if (response.ok) {
         setMessage('Login successful!');
+        
+        // Store the JWT token in localStorage
+        localStorage.setItem('authToken', data.token);
+        
+        // Redirect to dashboard after a successful login
         setTimeout(() => {
-          navigate('/dashboard'); // Redirect to dashboard after a successful login
+          navigate('/dashboard');
         }, 1500); // Optional delay before redirect
       } else {
         setMessage(data.message || 'Invalid credentials'); // Show backend error message

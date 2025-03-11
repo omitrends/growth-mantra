@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const connection = require('./databases.cjs');
+const connection = require('./databases.cjs'); // Assuming this file handles your DB connection
 
 const app = express();
 const port = 5000;
@@ -12,7 +12,7 @@ const port = 5000;
 app.use(cors({
   origin: 'http://localhost:5173', // Frontend URL (adjust if different)
   methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type']
+  allowedHeaders: ['Content-Type', 'Authorization'] // Make sure Authorization is allowed
 }));
 
 // Middleware setup
@@ -47,7 +47,7 @@ app.post('/register', async (req, res) => {
     const { username, email, password } = req.body;
 
     if (!username || !email || !password) {
-      return res.status(400).json({ message: 'All fields are required' });
+        return res.status(400).json({ message: 'All fields are required' });
     }
 
     try {
@@ -65,7 +65,6 @@ app.post('/register', async (req, res) => {
             const hashedPassword = await bcrypt.hash(password, 10);
             const registerQuery = `INSERT INTO Register (Username, UserEmail, Password) VALUES (?, ?, ?)`;
 
-            // Insert the user data into the database
             connection.query(registerQuery, [username, email, hashedPassword], (err, result) => {
                 if (err) {
                     console.error('Error registering user:', err.message);
@@ -89,13 +88,11 @@ app.post('/register', async (req, res) => {
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
-    // Basic validation to ensure email and password are provided
     if (!email || !password) {
         return res.status(400).json({ message: 'Email and password are required' });
     }
 
     try {
-        // Query to find the user by email
         const loginQuery = 'SELECT * FROM Register WHERE UserEmail = ?';
 
         connection.query(loginQuery, [email], async (err, result) => {
@@ -115,7 +112,7 @@ app.post('/login', async (req, res) => {
 
             if (passwordMatch) {
                 // Create JWT token after successful login
-                const jwtToken = jwt.sign({ username: user.Username, email: user.UserEmail, dateOfBirth: user.DateOfBirth }, JWT_SECRET, { expiresIn: '1h' });
+                const jwtToken = jwt.sign({ username: user.Username, email: user.UserEmail }, JWT_SECRET, { expiresIn: '1h' });
 
                 return res.status(200).json({ message: 'Login successful', token: jwtToken });
             } else {
@@ -128,7 +125,7 @@ app.post('/login', async (req, res) => {
     }
 });
 
-// Protect the dashboard route with JWT authentication middleware
+// Protected Dashboard Route (GET method)
 app.get('/dashboard', authenticateJWT, (req, res) => {
     // Only authenticated users will reach this point
     res.status(200).json({ message: 'Welcome to the dashboard', user: req.user });

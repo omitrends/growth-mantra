@@ -120,16 +120,6 @@ a:focus {
   padding-bottom: 400px;
 }
 
-.customimg{
-  display: block;
-  /* justify-content: center; */
-  /* padding-bottom: 50px; */
-  /* align-items:start; */
-  padding-top: 0px;
-  margin-top: auto;
-  margin-bottom: auto;
-}
-
 .slider_img-box img {
   width: 100%;
   /* margin-top: auto; */
