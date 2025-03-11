@@ -5,7 +5,7 @@ const mysql = require('mysql2');
 const connection = mysql.createConnection({
   host: 'localhost', // Database host (usually 'localhost' for local setup)
   user: 'root', // Database username
-  password: 'root', // Database password (modify as per your setup)
+  password: 'amruta123', // Database password (modify as per your setup)
   database: 'growthmantra', // Name of your database
 });
 
@@ -36,6 +36,28 @@ const createLoginTable = `
   );
 `;
 
+const createSetupTable = `
+  CREATE TABLE IF NOT EXISTS Setup ( SetupId int  AUTO_INCREMENT primary key,
+    Name CHAR(30),
+    PhoneNo INT,
+    Age INT,
+    Height INT,
+    Weight INT,
+    BMI DECIMAL(5,2) AS (Weight / (Height * Height)*10000) STORED,
+    LifeStyle ENUM('Active', 'Moderate', 'Sedentary'),
+    FitnessGoal ENUM('Muscle Gain', 'Fat Loss'),
+    Gender ENUM('Male', 'Female', 'Other'),
+    UserId INT,
+    FOREIGN KEY (UserId) REFERENCES Register(UserId)
+  );
+`;
+
+const query = `
+SELECT s.*, r.UserEmail, r.Username FROM Setup AS s INNER JOIN register as r ON (s.UserId=r.UserId);
+`;
+
+
+
 // Execute table creation queries
 connection.query(createRegisterTable, (err, result) => {
   if (err) {
@@ -53,4 +75,19 @@ connection.query(createLoginTable, (err, result) => {
   console.log('Login table created successfully');
 });
 
+connection.query(createSetupTable, (err, result) => {
+  if (err) {
+    console.error('Error creating Setup table:', err.message);
+    return;
+  }
+  console.log('Setup table created successfully');
+});
+
+connection.execute(query, (err, result) => {
+  if (err) {
+    console.error('error executing query' , err.message );
+    return;
+  }
+  console.log(result);
+});
 module.exports = connection; // Export the connection to use in other files
