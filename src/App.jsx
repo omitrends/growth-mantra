@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./components/Login";
 import Dashboard from "./components/dashboard";
 // import ForgetPass from "./components/forgetPass";
-// import Setup from "./components/Setup";
+import Setup from "./components/Setup";
 // import DashBoard from "./components/DashBoard";
 function App() {
   return (
@@ -20,6 +20,7 @@ function App() {
             {/* <Route path="/dashboard" element={<DashBoard/>}/> */}
             <Route path="/get-started" element={<CreateAccount/>}></Route>
             <Route path="/dashboard" element={<Dashboard/>}></Route>
+            <Route path="/setup" element={<Setup/>}></Route>
 
           </Route>
         </Routes>
