@@ -53,7 +53,7 @@ const Login = () => {
         
         // Redirect to dashboard after a successful login
         setTimeout(() => {
-          navigate('/dashboard');
+          navigate('/setup');
         }, 1500); // Optional delay before redirect
       } else {
         setMessage(data.message || 'Invalid credentials'); // Show backend error message

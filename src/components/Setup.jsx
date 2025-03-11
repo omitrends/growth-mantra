@@ -1,5 +1,5 @@
 import './Setup.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import validate from './SetupValidation.cjs';
 
@@ -11,14 +11,31 @@ function Setup() {
     height: '',
     weight: '',
     bmi: '',
-    lifestyle: '',
+    lifestyle: '',  
     fitnessgoal: '',
-    gender: '',
+    gender: '',  
   });
 
   const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false); // Track loading state
-  const [message, setMessage] = useState(''); // To store success/error message
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
+
+  // Function to calculate BMI
+  const calculateBMI = (weight, height) => {
+    if (weight && height) {
+      return (weight / ((height / 100) ** 2)).toFixed(2);
+    }
+    return '';
+  };
+
+  // Recalculate BMI when weight or height changes
+  useEffect(() => {
+    const bmi = calculateBMI(values.weight, values.height);
+    setValues((prevState) => ({
+      ...prevState,
+      bmi: bmi,
+    }));
+  }, [values.weight, values.height]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -26,25 +43,29 @@ function Setup() {
       ...values,
       [name]: value,
     });
-
-    // Update errors when the value changes, only validate the field changed
-    setErrors(validate({ ...values, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Validate the entire form
+
     const validationErrors = validate(values);
     setErrors(validationErrors);
 
-    // Only submit the form if there are no validation errors
     if (Object.keys(validationErrors).length === 0) {
       try {
         setLoading(true);
-        setMessage(''); // Reset message before sending request
+        setMessage('');
 
-        // Sending data to backend to register user
+        // Retrieve email from localStorage
+        const email = localStorage.getItem('userEmail'); // Ensure the email is stored on login
+
+        if (!email) {
+          setMessage('Email not found. Please log in again.');
+          setLoading(false);
+          return;
+        }
+
+        // Send email along with other form data
         const response = await fetch('http://localhost:5000/setup', {
           method: 'POST',
           headers: {
@@ -56,24 +77,26 @@ function Setup() {
             age: values.age,
             height: values.height,
             weight: values.weight,
-            bmi: values.bmi,
             lifestyle: values.lifestyle,
             fitnessgoal: values.fitnessgoal,
             gender: values.gender,
+            email: email, // Send the email in the body
           }),
         });
 
         const data = await response.json();
 
         if (response.ok) {
-          setMessage('Setup successful!');
+          setMessage('Setup data saved successfully!');
           setTimeout(() => {
-            window.location.href = '/dashboard'; // Redirect to Dashboard
+            window.location.href = '/dashboard'; // Redirect to dashboard after setup
           }, 1500);
         } else {
-          setMessage(data.message || 'Something went wrong, please try again.');
+          setMessage(data.message || 'Error saving setup data.');
+          console.log('Error data from backend:', data); // Log error data
         }
       } catch (error) {
+        console.error('Error during setup submission:', error); // Log full error
         setMessage('Error occurred during Setup, please try again.');
       } finally {
         setLoading(false);
@@ -81,11 +104,8 @@ function Setup() {
     }
   };
 
-  const navigate = useNavigate();
-  const setupPage = (event) => {
-    event.preventDefault();
-    navigate('/set-up');
-  };
+  
+
 
   return (
     <div className="bg-gray-100 flex items-center justify-center min-h-screen">
@@ -105,106 +125,64 @@ function Setup() {
                 placeholder="Your Full Name"
                 name="name"
                 className="w-full mt-2 p-3 border rounded-lg bg-gray-100"
-                value={formData.name}
-                onChange={handleChange}
                 value={values.name}
                 onChange={handleInputChange}
               />
               {errors.name && <p className="text-red-500">{errors.name}</p>}
-              {errors.name && (
-                <span style={{ color: 'red', fontSize: '12px' }}>
-                  {errors.name}
-                </span>
-              )}
             </div>
             <div>
-              <label htmlFor="weight" className="block text-gray-700">
-                Weight(in kg)
-              </label>
-              <label htmlFor="weight" className="text-gray-700">Weight</label>
+              <label htmlFor="weight" className="block text-gray-700">Weight (kg)</label>
               <input
                 type="text"
                 id="weight"
                 placeholder="Weight"
                 className="w-full mt-2 p-3 border rounded-lg bg-gray-100"
-                value={formData.weight}
-                onChange={handleChange}
                 value={values.weight}
                 onChange={handleInputChange}
+                name="weight"
               />
               {errors.weight && <p className="text-red-500">{errors.weight}</p>}
-              {errors.weight && (
-                <span style={{ color: 'red', fontSize: '12px' }}>
-                  {errors.weight}
-                </span>
-              )}
             </div>
             <div>
               <label htmlFor="phoneNumber" className="block text-gray-700">Phone Number</label>
               <input
-                type="text"
+                type="tel"
                 id="phoneNumber"
                 placeholder="Phone no"
                 className="w-full mt-2 p-3 border rounded-lg bg-gray-100"
-                value={formData.phoneNumber}
-                onChange={handleChange}
                 value={values.phoneNo}
                 onChange={handleInputChange}
+                name="phoneNo"
               />
-              {errors.phoneNumber && <p className="text-red-500">{errors.phoneNumber}</p>}
-              {errors.phoneNo && (
-                <span style={{ color: 'red', fontSize: '12px' }}>
-                  {errors.phoneNo}
-                </span>
-              )}
+              {errors.phoneNo && <p className="text-red-500">{errors.phoneNo}</p>}
             </div>
             <div>
-              <label htmlFor="height" className="block text-gray-700">
-                Height(in cm)
-              </label>
-              <label htmlFor="height" className="block text-gray-700">Height</label>
+              <label htmlFor="height" className="block text-gray-700">Height (cm)</label>
               <input
                 type="text"
                 id="height"
                 placeholder="Height"
                 className="w-full mt-2 p-3 border rounded-lg bg-gray-100"
-                value={formData.height}
-                onChange={handleChange}
                 value={values.height}
                 onChange={handleInputChange}
+                name="height"
               />
               {errors.height && <p className="text-red-500">{errors.height}</p>}
-              {errors.height && (
-                <span style={{ color: 'red', fontSize: '12px' }}>
-                  {errors.height}
-                </span>
-              )}
             </div>
             <div>
               <label htmlFor="gender" className="block text-gray-700">Gender</label>
-              <div className="relative">
-                <select
-                  id="gender"
-                  className="w-full mt-2 p-3 border rounded-lg bg-gray-100 appearance-none"
-                  value={formData.gender}
-                  onChange={handleChange}
-                  value={values.gender}
-                  onChange={handleInputChange}
-                >
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Other">Other</option>
-                </select>
-                {errors.gender && <p className="text-red-500">{errors.gender}</p>}
-                <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-                  <i className="fas fa-chevron-down"></i>
-                </div>
-                {errors.gender && (
-                  <span style={{ color: 'red', fontSize: '12px' }}>
-                    {errors.gender}
-                  </span>
-                )}
-              </div>
+              <select
+                id="gender"
+                className="w-full mt-2 p-3 border rounded-lg bg-gray-100"
+                value={values.gender}
+                onChange={handleInputChange}
+                name="gender"
+              >
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+              {errors.gender && <p className="text-red-500">{errors.gender}</p>}
             </div>
             <div>
               <label htmlFor="bmi" className="block text-gray-700">BMI</label>
@@ -213,83 +191,57 @@ function Setup() {
                 id="bmi"
                 placeholder="BMI"
                 className="w-full mt-2 p-3 border rounded-lg bg-gray-100"
-                value={formData.bmi}
-                disabled // Disable the BMI field as it's auto-calculated
                 value={values.bmi}
-                onChange={handleInputChange}
+                disabled
               />
               {errors.bmi && <p className="text-red-500">{errors.bmi}</p>}
-              {errors.bmi && (
-                <span style={{ color: 'red', fontSize: '12px' }}>
-                  {errors.bmi}
-                </span>
-              )}
             </div>
             <div>
               <label htmlFor="age" className="block text-gray-700">Age</label>
               <input
                 type="text"
                 id="age"
+                name="age"
                 placeholder="Your Age"
                 className="w-full mt-2 p-3 border rounded-lg bg-gray-100"
-                value={formData.age}
-                onChange={handleChange}
                 value={values.age}
                 onChange={handleInputChange}
               />
               {errors.age && <p className="text-red-500">{errors.age}</p>}
-              {errors.age && (
-                <span style={{ color: 'red', fontSize: '12px' }}>
-                  {errors.age}
-                </span>
-              )}
             </div>
             <div>
               <label htmlFor="fitnessGoal" className="block text-gray-700">Fitness Goal</label>
-              <div className="relative">
-                <select
-                  id="fitnessGoal"
-                  className="w-full mt-2 p-3 border rounded-lg bg-gray-100 appearance-none"
-                  value={formData.fitnessGoal}
-                  onChange={handleChange}
-                  value={values.fitnessgoal}
-                  onChange={handleInputChange}
-                >
-                  <option value="Weight loss">Weight Loss</option>
-                  
-                  <option value="Muscle Gain">Muscle Gain</option>
-                  <option value="General Fitness">General Fitness</option>
-                  {errors.fitnessGoal && <p className="text-red-500">{errors.fitnessGoal}</p>}
-                 
-                </select>
-                {errors.fitnessgoal && (
-                  <span style={{ color: 'red', fontSize: '12px' }}>
-                    {errors.fitnessgoal}
-                  </span>
-                )}
-              </div>
+              <select
+                id="fitnessGoal"
+                className="w-full mt-2 p-3 border rounded-lg bg-gray-100"
+                value={values.fitnessgoal}
+                onChange={handleInputChange}
+                name='fitnessgoal'
+              >
+                <option value="">Select Fitness Goal</option> {/* Removed "Select" option with disabled */}
+                <option value="Fat loss">Fat Loss</option>
+                <option value="Muscle Gain">Muscle Gain</option>
+              </select>
+              {errors.fitnessgoal && <p className="text-red-500">{errors.fitnessgoal}</p>}
             </div>
           </div>
           <div>
             <label htmlFor="lifeStyle" className="block text-gray-700">Life Style</label>
-            <div className="relative">
-              <select
-                id="lifeStyle"
-                className="w-full mt-2 p-3 border rounded-lg bg-gray-100 appearance-none"
-                value={values.lifestyle}
-                onChange={handleInputChange}
-              >
-                <option value="Sedentary">Sedentary</option>
-                <option value="Moderate">Moderate</option>
-                <option value="Active">Active</option>
-              </select>
-              {errors.lifestyle && (
-                <span style={{ color: 'red', fontSize: '12px' }}>
-                  {errors.lifestyle}
-                </span>
-              )}
-            </div>
+            <select
+              id="lifeStyle"
+              className="w-full mt-2 p-3 border rounded-lg bg-gray-100"
+              value={values.lifestyle}
+              onChange={handleInputChange}
+              name='lifestyle'
+            >
+              <option value="">Select Life Style</option> {/* Removed "Select" option with disabled */}
+              <option value="Sedentary">Sedentary</option>
+              <option value="Moderate">Moderate</option>
+              <option value="Active">Active</option>
+            </select>
+            {errors.lifestyle && <p className="text-red-500">{errors.lifestyle}</p>}
           </div>
+
           <div className="text-center">
             <button
               type="submit"

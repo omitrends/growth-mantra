@@ -3,46 +3,18 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const connection = require('./databases.cjs'); // Assuming this file handles your DB connection
-
+const connection = require('./databases.cjs'); 
 const app = express();
 const port = 5000;
 
-// CORS setup to allow frontend to access backend (adjust the URL if needed)
 app.use(cors({
-  origin: 'http://localhost:5173', // Frontend URL (adjust if different)
+  origin: 'http://localhost:5173', 
   methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type', 'Authorization'] // Make sure Authorization is allowed
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-// Middleware setup
-app.use(bodyParser.json()); // Parsing JSON requests
+app.use(bodyParser.json()); 
 
-// Secret key for JWT (store securely in environment variables in production)
-const JWT_SECRET = 'your_jwt_secret_key';
-
-// Middleware to protect routes
-const authenticateJWT = (req, res, next) => {
-    const token = req.headers['authorization']; // Get the token from the Authorization header
-
-    if (!token) {
-        return res.status(403).json({ message: 'Access denied. No token provided.' });
-    }
-
-    // Remove the "Bearer " part if it's included in the token (optional)
-    const tokenWithoutBearer = token.startsWith('Bearer ') ? token.slice(7, token.length) : token;
-
-    jwt.verify(tokenWithoutBearer, JWT_SECRET, (err, user) => {
-        if (err) {
-            return res.status(403).json({ message: 'Invalid or expired token' });
-        }
-
-        req.user = user; // Attach the decoded user info to the request object
-        next(); // Call next to proceed to the route handler
-    });
-};
-
-// Registration Route (POST method)
 app.post('/register', async (req, res) => {
     const { username, email, password } = req.body;
 
@@ -71,11 +43,8 @@ app.post('/register', async (req, res) => {
                     return res.status(500).json({ message: 'Error registering user' });
                 }
 
-                // Create JWT token after successful registration
-                const jwtToken = jwt.sign({ username, email }, JWT_SECRET, { expiresIn: '1h' });
-
                 console.log('User registered successfully');
-                return res.status(200).json({ message: 'User registered successfully', token: jwtToken });
+                return res.status(200).json({ message: 'User registered successfully' });
             });
         });
     } catch (err) {
@@ -84,7 +53,6 @@ app.post('/register', async (req, res) => {
     }
 });
 
-// Login Route (POST method)
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
@@ -107,14 +75,10 @@ app.post('/login', async (req, res) => {
 
             const user = result[0];
 
-            // Compare the entered password with the hashed password in the database
             const passwordMatch = await bcrypt.compare(password, user.Password);
 
             if (passwordMatch) {
-                // Create JWT token after successful login
-                const jwtToken = jwt.sign({ username: user.Username, email: user.UserEmail }, JWT_SECRET, { expiresIn: '1h' });
-
-                return res.status(200).json({ message: 'Login successful', token: jwtToken });
+                return res.status(200).json({ message: 'Login successful' });
             } else {
                 return res.status(400).json({ message: 'Invalid credentials' });
             }
@@ -125,13 +89,52 @@ app.post('/login', async (req, res) => {
     }
 });
 
-// Protected Dashboard Route (GET method)
-app.get('/dashboard', authenticateJWT, (req, res) => {
-    // Only authenticated users will reach this point
-    res.status(200).json({ message: 'Welcome to the dashboard', user: req.user });
+app.post('/setup', async (req, res) => {
+    // Log the request body to see what data is being received
+    console.log('Request Body:', req.body);
+
+    const { name, phoneNo, age, height, weight, lifestyle, fitnessgoal, gender, email } = req.body;
+
+    if (!name || !phoneNo || !age || !height || !weight || !lifestyle || !fitnessgoal || !gender || !email) {
+        return res.status(400).json({ message: 'All fields are required' });
+    }
+
+    // Use email to fetch the UserId (since we no longer have JWT to get user info)
+    const getUserIdQuery = 'SELECT UserId FROM Register WHERE UserEmail = ?';
+
+    connection.query(getUserIdQuery, [email], (err, result) => {
+        if (err) {
+            console.error('Error fetching UserId:', err.message);
+            return res.status(500).json({ message: 'Error fetching UserId' });
+        }
+
+        if (result.length === 0) {
+            return res.status(400).json({ message: 'User not found' });
+        }
+
+        const userId = result[0].UserId;
+
+        const insertQuery = `
+            INSERT INTO Setup (Name, PhoneNo, Age, Height, Weight, LifeStyle, FitnessGoal, Gender, UserId)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `;
+
+        connection.query(
+            insertQuery,
+            [name, phoneNo, age, height, weight, lifestyle, fitnessgoal, gender, userId],
+            (err, result) => {
+                if (err) {
+                    console.error('Error inserting setup data:', err.message);
+                    return res.status(500).json({ message: 'Error saving setup data', error: err.message });
+                }
+
+                return res.status(200).json({ message: 'Setup data saved successfully' });
+            }
+        );
+    });
 });
 
-// Start the server
+
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
