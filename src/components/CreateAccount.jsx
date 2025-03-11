@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import logo from '../assets/images/rb_26614.png'; // Adjust path as necessary
 import Validation from './RegisterValidation.cjs'; // Ensure this is in the correct path
 
+// import React from "react";
+// import logo from "../assets/images/rb_26614.png";
 import { useNavigate } from "react-router-dom";
 
 const CreateAccount = () => {
