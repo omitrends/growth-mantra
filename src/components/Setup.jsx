@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import { toast } from 'react-toastify'; // Assuming you have react-toastify installed
 
 const Setup = () => {
@@ -99,9 +99,9 @@ const Setup = () => {
   };
 
   return (
-    <div className="bg-light d-flex align-items-center justify-content-center min-vh-100 py-5">
-      <div className="container">
-        <div className="bg-white p-4 p-md-5 rounded-lg shadow">
+    <div className=" container d-flex align-items-center justify-content-center py-5 ">
+      <div className=" container d-flex align-items-center justify-content-center">
+        <div className="bg-white w-50 p-4 p-md-5  rounded-lg shadow ">
           <div className="text-center mb-4">
             <h2 className="fw-bold text-success mb-3">Setup Your Account</h2>
             <p className="text-muted">Complete your profile to get personalized fitness recommendations</p>
