@@ -1,1 +1,148 @@
-@import "tailwindcss";
+/* General Styles */
+.dashboard-container {
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
+    background-color: #f8f9fa;
+  }
+  
+  /* Header */
+  .dashboard-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .dashboard-header h1 {
+    font-size: 2.5rem;
+    color: #333;
+  }
+  
+  .dashboard-header p {
+    font-size: 1.2rem;
+    color: #666;
+  }
+  
+  /* Modules Section */
+  .modules-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+  
+  .module {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .module:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .module-icon {
+    margin-bottom: 15px;
+  }
+  
+  .module h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .module p {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  
+  .module-button {
+    background-color: #7ca982;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .module-button:hover {
+    background-color: #6a9770;
+  }
+  
+  /* Progress Overview Section */
+  .progress-overview {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .progress-overview h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .progress-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .progress-bar {
+    margin-bottom: 15px;
+  }
+  
+  .progress-label {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  .progress-track {
+    background: #e0e0e0;
+    border-radius: 5px;
+    height: 10px;
+    overflow: hidden;
+  }
+  
+  .progress-fill {
+    background: #7ca982;
+    height: 100%;
+    border-radius: 5px;
+  }
+  
+  /* Module-Specific Colors */
+  .fitness-module .module-icon {
+    color: #ef4444;
+  }
+  
+  .nutrition-module .module-icon {
+    color: #eab308;
+  }
+  
+  .mental-wellbeing-module .module-icon {
+    color: #2563eb;
+  }
+  
+  .fitness-progress .progress-fill {
+    background: #ef4444;
+  }
+  
+  .nutrition-progress .progress-fill {
+    background: #eab308;
+  }
+  
+  .mental-wellbeing-progress .progress-fill {
+    background: #2563eb;
+  }

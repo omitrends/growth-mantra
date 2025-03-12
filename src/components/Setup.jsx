@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify'; // Assuming you have react-toastify installed
 
 const Setup = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     fullName: '',
     weight: '',
@@ -86,7 +89,9 @@ const Setup = () => {
         await new Promise(resolve => setTimeout(resolve, 1000));
         console.log('Form submitted:', formData);
         toast.success('Profile information saved successfully!');
-        // Here you would typically send the data to your backend
+        
+        // Navigate to the dashboard after successful submission
+        navigate('/dashboard');
       } catch (error) {
         toast.error('Failed to save profile information. Please try again.');
         console.error('Submission error:', error);
@@ -156,15 +161,18 @@ const Setup = () => {
               </div>
               
               <div className="col-md-6">
-              <label htmlFor="gender" className="form-label">Gender</label>
-              <select 
-              className={`form-control ${errors.gender ? 'is-invalid' : ''}`} // Use form-control here
-              id="gender" value={formData.gender} onChange={handleChange}>
-              <option value="">Select Gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              </select>
-              {errors.gender && <div className="invalid-feedback">{errors.gender}</div>}
+                <label htmlFor="gender" className="form-label">Gender</label>
+                <select 
+                  className={`form-control ${errors.gender ? 'is-invalid' : ''}`}
+                  id="gender" 
+                  value={formData.gender}
+                  onChange={handleChange}
+                >
+                  <option value="">Select Gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+                {errors.gender && <div className="invalid-feedback">{errors.gender}</div>}
               </div>
               
               {/* Physical Information Section */}
@@ -228,45 +236,45 @@ const Setup = () => {
               </div>
               
               <div className="col-md-6">
-  <label htmlFor="fitnessGoal" className="form-label">Fitness Goal</label>
-  <select 
-    className={`form-control ${errors.fitnessGoal ? 'is-invalid' : ''}`} // Use form-control here
-    id="fitnessGoal"
-    value={formData.fitnessGoal}
-    onChange={handleChange}
-  >
-    <option value="">Select Fitness Goal</option>
-    <option value="loseWeight">Lose Weight</option>
-    <option value="gainMuscle">Gain Muscle</option>
-    <option value="stayFit">Stay Fit</option>
-    <option value="improveEndurance">Improve Endurance</option>
-  </select>
-  {errors.fitnessGoal && <div className="invalid-feedback">{errors.fitnessGoal}</div>}
-</div>
-
-<div className="col-md-6">
-  <label htmlFor="lifeStyle" className="form-label">Lifestyle</label>
-  <select 
-    className={`form-control ${errors.lifeStyle ? 'is-invalid' : ''}`} // Use form-control here
-    id="lifeStyle"
-    value={formData.lifeStyle}
-    onChange={handleChange}
-  >
-    <option value="">Select Lifestyle</option>
-    <option value="sedentary">Sedentary (little to no exercise)</option>
-    <option value="lightlyActive">Lightly Active (1-3 days/week)</option>
-    <option value="moderatelyActive">Moderately Active (3-5 days/week)</option>
-    <option value="veryActive">Very Active (6-7 days/week)</option>
-    <option value="extremelyActive">Extremely Active (twice per day)</option>
-  </select>
-  {errors.lifeStyle && <div className="invalid-feedback">{errors.lifeStyle}</div>}
-</div>
+                <label htmlFor="fitnessGoal" className="form-label">Fitness Goal</label>
+                <select 
+                  className={`form-control ${errors.fitnessGoal ? 'is-invalid' : ''}`}
+                  id="fitnessGoal"
+                  value={formData.fitnessGoal}
+                  onChange={handleChange}
+                >
+                  <option value="">Select Fitness Goal</option>
+                  <option value="loseWeight">Lose Weight</option>
+                  <option value="gainMuscle">Gain Muscle</option>
+                  <option value="stayFit">Stay Fit</option>
+                  <option value="improveEndurance">Improve Endurance</option>
+                </select>
+                {errors.fitnessGoal && <div className="invalid-feedback">{errors.fitnessGoal}</div>}
+              </div>
+              
+              <div className="col-md-6">
+                <label htmlFor="lifeStyle" className="form-label">Lifestyle</label>
+                <select 
+                  className={`form-control ${errors.lifeStyle ? 'is-invalid' : ''}`}
+                  id="lifeStyle"
+                  value={formData.lifeStyle}
+                  onChange={handleChange}
+                >
+                  <option value="">Select Lifestyle</option>
+                  <option value="sedentary">Sedentary (little to no exercise)</option>
+                  <option value="lightlyActive">Lightly Active (1-3 days/week)</option>
+                  <option value="moderatelyActive">Moderately Active (3-5 days/week)</option>
+                  <option value="veryActive">Very Active (6-7 days/week)</option>
+                  <option value="extremelyActive">Extremely Active (twice per day)</option>
+                </select>
+                {errors.lifeStyle && <div className="invalid-feedback">{errors.lifeStyle}</div>}
+              </div>
             </div>
             
             <div className="text-center mt-5">
               <button 
                 type="submit" 
-                className="btn btn-success btn-lg px-5"
+                className="btn btn-success btn-lg px-5" 
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (
