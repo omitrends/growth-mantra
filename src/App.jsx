@@ -39,16 +39,6 @@ function NavbarWrapper() {
   return <Navbar />;
 }
 
-function NavbarWrapper() {
-  const location = useLocation();
 
-  // Check if the current path is '/dashboard'
-  if (location.pathname === '/dashboard') {
-    return <NavbarDash />;
-  }
-
-  // Render the default Navbar for all other routes
-  return <Navbar />;
-}
 
 export default App;
