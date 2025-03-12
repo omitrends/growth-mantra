@@ -8,7 +8,7 @@ const CreateAccount = () => {
   const navigate = useNavigate();
   const setupPage=(event)=>{
     event.preventDefault();
-    navigate('/set-up');
+    navigate('/setup');
   };
   
   return (
