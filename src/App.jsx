@@ -13,14 +13,13 @@ function App() {
       <Router>
         <Navbar/>
         <Routes>
-          
+          <Route>
             <Route index element={<Home/>} />
             <Route path="/register" element={<CreateAccount/>}/>
             <Route path="/login" element={<Login/>}/>
-            <Route path="/set-up" element={<Setup/>}/>
+            <Route path="/setup" element={<Setup/>}/>
             <Route path="/get-started" element={<CreateAccount/>}></Route>
-
-        
+          </Route>
         </Routes>
       </Router>
     </div>
