@@ -5,6 +5,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./components/Login";
 // import ForgetPass from "./components/forgetPass";
 import Setup from "./components/Setup";
+import './components/css/responsive.css';
+
 function App() {
   return (
     <div>
@@ -22,6 +24,7 @@ function App() {
         </Routes>
       </Router>
     </div>
+
   );
 }
 
