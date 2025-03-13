@@ -2,6 +2,23 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify'; // Assuming you have react-toastify installed
 
+// Helper functions for BMI category and color
+const getBMICategory = (bmi) => {
+  const bmiValue = parseFloat(bmi);
+  if (bmiValue < 18.5) return 'Underweight';
+  if (bmiValue < 25) return 'Normal weight';
+  if (bmiValue < 30) return 'Overweight';
+  return 'Obese';
+};
+
+const getBMIColor = (bmi) => {
+  const bmiValue = parseFloat(bmi);
+  if (bmiValue < 18.5) return '#FFC107'; // Yellow for Underweight
+  if (bmiValue < 25) return '#28A745'; // Green for Normal
+  if (bmiValue < 30) return '#FF6B6B'; // Orange for Overweight
+  return '#DC3545'; // Red for Obese
+};
+
 const Setup = () => {
   const navigate = useNavigate();
 
@@ -23,7 +40,6 @@ const Setup = () => {
   // Calculate BMI automatically when weight and height change
   useEffect(() => {
     if (formData.weight && formData.height) {
-      // BMI formula: weight (kg) / (height (m))^2
       const weightInKg = parseFloat(formData.weight);
       const heightInM = parseFloat(formData.height) / 100; // Convert cm to m
       if (!isNaN(weightInKg) && !isNaN(heightInM) && heightInM > 0) {
@@ -33,6 +49,7 @@ const Setup = () => {
     }
   }, [formData.weight, formData.height]);
 
+  // Form Validation
   const validateForm = () => {
     const newErrors = {};
     
@@ -63,6 +80,7 @@ const Setup = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+  // Handle Input Change
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData({
@@ -79,6 +97,7 @@ const Setup = () => {
     }
   };
 
+  // Handle Form Submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -104,192 +123,192 @@ const Setup = () => {
   };
 
   return (
-    <div className=" container d-flex align-items-center justify-content-center py-5 ">
-      <div className=" container d-flex align-items-center justify-content-center">
-        <div className="bg-white w-50 p-4 p-md-5  rounded-lg shadow ">
-          <div className="text-center mb-4">
-            <h2 className="fw-bold text-success mb-3">Setup Your Account</h2>
-            <p className="text-muted">Complete your profile to get personalized fitness recommendations</p>
-          </div>
-          
-          <form onSubmit={handleSubmit} className="needs-validation">
-            <div className="row g-4">
-              {/* Personal Information Section */}
-              <div className="col-12">
-                <h5 className="border-bottom pb-2 mb-3">Personal Information</h5>
-              </div>
-              
-              <div className="col-md-6">
-                <label htmlFor="fullName" className="form-label">Full Name</label>
-                <input 
-                  type="text" 
-                  className={`form-control ${errors.fullName ? 'is-invalid' : ''}`}
-                  id="fullName" 
-                  placeholder="Your Full Name"
-                  value={formData.fullName}
-                  onChange={handleChange}
-                />
-                {errors.fullName && <div className="invalid-feedback">{errors.fullName}</div>}
-              </div>
-              
-              <div className="col-md-6">
-                <label htmlFor="phoneNumber" className="form-label">Phone Number</label>
-                <input 
-                  type="tel" 
-                  className={`form-control ${errors.phoneNumber ? 'is-invalid' : ''}`}
-                  id="phoneNumber" 
-                  placeholder="10-digit phone number"
-                  value={formData.phoneNumber}
-                  onChange={handleChange}
-                />
-                {errors.phoneNumber && <div className="invalid-feedback">{errors.phoneNumber}</div>}
-              </div>
-              
-              <div className="col-md-6">
-                <label htmlFor="age" className="form-label">Age</label>
-                <input 
-                  type="number" 
-                  className={`form-control ${errors.age ? 'is-invalid' : ''}`}
-                  id="age" 
-                  placeholder="Your Age"
-                  value={formData.age}
-                  onChange={handleChange}
-                  min="1"
-                  max="120"
-                />
-                {errors.age && <div className="invalid-feedback">{errors.age}</div>}
-              </div>
-              
-              <div className="col-md-6">
-                <label htmlFor="gender" className="form-label">Gender</label>
-                <select 
-                  className={`form-control ${errors.gender ? 'is-invalid' : ''}`}
-                  id="gender" 
-                  value={formData.gender}
-                  onChange={handleChange}
-                >
-                  <option value="">Select Gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                </select>
-                {errors.gender && <div className="invalid-feedback">{errors.gender}</div>}
-              </div>
-              
-              {/* Physical Information Section */}
-              <div className="col-12 mt-4">
-                <h5 className="border-bottom pb-2 mb-3">Physical Information</h5>
-              </div>
-              
-              <div className="col-md-6">
-                <label htmlFor="weight" className="form-label">Weight (kg)</label>
-                <input 
-                  type="number" 
-                  className={`form-control ${errors.weight ? 'is-invalid' : ''}`}
-                  id="weight" 
-                  placeholder="Enter your weight in kg"
-                  value={formData.weight}
-                  onChange={handleChange}
-                  step="0.1"
-                  min="20"
-                  max="300"
-                />
-                {errors.weight && <div className="invalid-feedback">{errors.weight}</div>}
-              </div>
-              
-              <div className="col-md-6">
-                <label htmlFor="height" className="form-label">Height (cm)</label>
-                <input 
-                  type="number" 
-                  className={`form-control ${errors.height ? 'is-invalid' : ''}`}
-                  id="height" 
-                  placeholder="Enter your height in cm"
-                  value={formData.height}
-                  onChange={handleChange}
-                  min="50"
-                  max="250"
-                />
-                {errors.height && <div className="invalid-feedback">{errors.height}</div>}
-              </div>
-              
-              <div className="col-md-12">
-                <label htmlFor="bmi" className="form-label">BMI (Body Mass Index)</label>
-                <input 
-                  type="text" 
-                  className="form-control bg-light"
-                  id="bmi" 
-                  value={formData.bmi}
-                  readOnly
-                  placeholder="BMI will be calculated automatically"
-                />
-                {formData.bmi && (
-                  <div className="form-text">
-                    {parseFloat(formData.bmi) < 18.5 ? 'Underweight' : 
-                     parseFloat(formData.bmi) < 25 ? 'Normal weight' :
-                     parseFloat(formData.bmi) < 30 ? 'Overweight' : 'Obese'}
-                  </div>
-                )}
-              </div>
-              
-              {/* Fitness Goals Section */}
-              <div className="col-12 mt-4">
-                <h5 className="border-bottom pb-2 mb-3">Fitness Profile</h5>
-              </div>
-              
-              <div className="col-md-6">
-                <label htmlFor="fitnessGoal" className="form-label">Fitness Goal</label>
-                <select 
-                  className={`form-control ${errors.fitnessGoal ? 'is-invalid' : ''}`}
-                  id="fitnessGoal"
-                  value={formData.fitnessGoal}
-                  onChange={handleChange}
-                >
-                  <option value="">Select Fitness Goal</option>
-                  <option value="loseWeight">Lose Weight</option>
-                  <option value="gainMuscle">Gain Muscle</option>
-                  <option value="stayFit">Stay Fit</option>
-                  <option value="improveEndurance">Improve Endurance</option>
-                </select>
-                {errors.fitnessGoal && <div className="invalid-feedback">{errors.fitnessGoal}</div>}
-              </div>
-              
-              <div className="col-md-6">
-                <label htmlFor="lifeStyle" className="form-label">Lifestyle</label>
-                <select 
-                  className={`form-control ${errors.lifeStyle ? 'is-invalid' : ''}`}
-                  id="lifeStyle"
-                  value={formData.lifeStyle}
-                  onChange={handleChange}
-                >
-                  <option value="">Select Lifestyle</option>
-                  <option value="sedentary">Sedentary (little to no exercise)</option>
-                  <option value="lightlyActive">Lightly Active (1-3 days/week)</option>
-                  <option value="moderatelyActive">Moderately Active (3-5 days/week)</option>
-                  <option value="veryActive">Very Active (6-7 days/week)</option>
-                  <option value="extremelyActive">Extremely Active (twice per day)</option>
-                </select>
-                {errors.lifeStyle && <div className="invalid-feedback">{errors.lifeStyle}</div>}
-              </div>
-            </div>
-            
-            <div className="text-center mt-5">
-              <button 
-                type="submit" 
-                className="btn btn-success btn-lg px-5" 
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? (
-                  <>
-                    <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                    Saving...
-                  </>
-                ) : 'SAVE & CONTINUE'}
-              </button>
-            </div>
-          </form>
-        </div>
+    <div style={styles.modalContent}>
+      <div className="text-center mb-5">
+        <button className="btn btn-success btn-lg w-100 rounded-pill">
+          SETUP YOUR ACCOUNT
+        </button>
       </div>
+      <form onSubmit={handleSubmit} className="needs-validation" noValidate>
+        <div className="row g-3">
+          {/* Personal Information Section */}
+          <div className="col-md-6">
+            <label htmlFor="fullName" className="form-label">
+              Full Name
+            </label>
+            <input
+              type="text"
+              id="fullName"
+              placeholder="Your Full Name"
+              className={`form-control ${errors.fullName ? 'is-invalid' : ''}`}
+              value={formData.fullName}
+              onChange={handleChange}
+              required
+            />
+            {errors.fullName && <div className="invalid-feedback">{errors.fullName}</div>}
+          </div>
+          <div className="col-md-6">
+            <label htmlFor="weight" className="form-label">
+              Weight
+            </label>
+            <input
+              type="text"
+              id="weight"
+              placeholder="Weight"
+              className={`form-control ${errors.weight ? 'is-invalid' : ''}`}
+              value={formData.weight}
+              onChange={handleChange}
+              required
+            />
+            {errors.weight && <div className="invalid-feedback">{errors.weight}</div>}
+          </div>
+          <div className="col-md-6">
+            <label htmlFor="phoneNumber" className="form-label">
+              Phone Number
+            </label>
+            <input
+              type="text"
+              id="phoneNumber"
+              placeholder="Phone no"
+              className={`form-control ${errors.phoneNumber ? 'is-invalid' : ''}`}
+              value={formData.phoneNumber}
+              onChange={handleChange}
+              required
+            />
+            {errors.phoneNumber && <div className="invalid-feedback">{errors.phoneNumber}</div>}
+          </div>
+          <div className="col-md-6">
+            <label htmlFor="height" className="form-label">
+              Height
+            </label>
+            <input
+              type="text"
+              id="height"
+              placeholder="Height"
+              className={`form-control ${errors.height ? 'is-invalid' : ''}`}
+              value={formData.height}
+              onChange={handleChange}
+              required
+            />
+            {errors.height && <div className="invalid-feedback">{errors.height}</div>}
+          </div>
+          <div className="col-md-6">
+            <label htmlFor="gender" className="form-label">
+              Gender
+            </label>
+            <select
+              id="gender"
+              className={`form-control ${errors.gender ? 'is-invalid' : ''}`}
+              value={formData.gender}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+            {errors.gender && <div className="invalid-feedback">{errors.gender}</div>}
+          </div>
+          <div className="col-md-6">
+            <label htmlFor="bmi" className="form-label">
+              BMI
+            </label>
+            <input
+              type="text"
+              id="bmi"
+              placeholder="BMI"
+              className="form-control bg-light"
+              value={formData.bmi}
+              readOnly
+            />
+            {formData.bmi && (
+              <div className="form-text" style={{ color: getBMIColor(formData.bmi) }}>
+                {getBMICategory(formData.bmi)}
+              </div>
+            )}
+          </div>
+          <div className="col-md-6">
+            <label htmlFor="age" className="form-label">
+              Age
+            </label>
+            <input
+              type="text"
+              id="age"
+              placeholder="Your Age"
+              className={`form-control ${errors.age ? 'is-invalid' : ''}`}
+              value={formData.age}
+              onChange={handleChange}
+              required
+            />
+            {errors.age && <div className="invalid-feedback">{errors.age}</div>}
+          </div>
+          <div className="col-md-6">
+            <label htmlFor="fitnessGoal" className="form-label">
+              Fitness Goal
+            </label>
+            <select
+              id="fitnessGoal"
+              className={`form-control ${errors.fitnessGoal ? 'is-invalid' : ''}`}
+              value={formData.fitnessGoal}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select Fitness Goal</option>
+              <option value="Weight loss">Weight Loss</option>
+              <option value="Weight Gain">Weight Gain</option>
+              <option value="Muscle Gain">Muscle Gain</option>
+              <option value="General Fitness">General Fitness</option>
+            </select>
+            {errors.fitnessGoal && <div className="invalid-feedback">{errors.fitnessGoal}</div>}
+          </div>
+          <div className="col-12">
+            <label htmlFor="lifeStyle" className="form-label">
+              Life Style
+            </label>
+            <select
+              id="lifeStyle"
+              className={`form-control ${errors.lifeStyle ? 'is-invalid' : ''}`}
+              value={formData.lifeStyle}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select Lifestyle</option>
+              <option value="Sedentary">Sedentary</option>
+              <option value="Moderate">Moderate</option>
+              <option value="Active">Active</option>
+            </select>
+            {errors.lifeStyle && <div className="invalid-feedback">{errors.lifeStyle}</div>}
+          </div>
+          <div className="col-12 text-center">
+            <button
+              type="submit"
+              className="btn btn-success btn-lg rounded-pill"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <>
+                  <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                  Saving...
+                </>
+              ) : 'SAVE'}
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
   );
+};
+
+// Styles
+const styles = {
+  modalContent: {
+    backgroundColor: "#fff",
+    padding: "20px",
+    borderRadius: "8px",
+    boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
+    maxWidth: "600px",
+    margin: "auto",
+  },
 };
 
 export default Setup;

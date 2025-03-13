@@ -80,15 +80,17 @@ const styles = {
     backgroundColor: "#f9f9f9",
   },
   leftPane: {
+    // backgroundColor: "#f9f9f9",
     flex: 1,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#f9f9f9",
+    backgroundColor: "white",
   },
   logo: {
     width: "500px",
+    backgroundColor: "transparent",
   },
   rightPane: {
     flex: 1,
