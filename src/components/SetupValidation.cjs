@@ -1,16 +1,17 @@
 const validate = (values) => {
   const errors = {};
 
-  if (!values.fullName) {
-    errors.fullName = 'Name is required';
-  } else if (/[^a-zA-Z\s]/.test(values.fullName)) {
-    errors.fullName = 'Name cannot contain numbers or special characters';
+  // Adjusted to match formData field names
+  if (!values.name) {
+    errors.name = 'Name is required'; // Change from fullName to name
+  } else if (/[^a-zA-Z\s]/.test(values.name)) {
+    errors.name = 'Name cannot contain numbers or special characters';
   }
 
-  if (!values.phoneNumber) {
-    errors.phoneNumber = 'Phone number is required';
-  } else if (!/^\d{10}$/.test(values.phoneNumber)) {
-    errors.phoneNumber = 'Phone number must be exactly 10 digits';
+  if (!values.phoneno) {
+    errors.phoneno = 'Phone number is required'; // Change from phoneNumber to phoneno
+  } else if (!/^\d{10}$/.test(values.phoneno)) {
+    errors.phoneno = 'Phone number must be exactly 10 digits';
   }
 
   if (!values.age) {
@@ -36,11 +37,11 @@ const validate = (values) => {
   }
 
   if (!values.lifeStyle || values.lifeStyle === "Select") {
-    errors.lifeStyle = 'Lifestyle is required';
+    errors.lifeStyle = 'Lifestyle is required'; // Matches formData lifeStyle
   }
 
   if (!values.fitnessGoal || values.fitnessGoal === "Select") {
-    errors.fitnessGoal = 'Fitness goal is required';
+    errors.fitnessGoal = 'Fitness goal is required'; // Matches formData fitnessGoal
   }
 
   if (!values.gender || values.gender === 'Select') {

@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import validate from "./SetupValidation.cjs";
+import axios from 'axios';
 
 const Setup = () => {
   const navigate = useNavigate();
@@ -16,13 +15,15 @@ const Setup = () => {
     lifestyle: "",
     fitnessgoal: "",
     gender: "",
+    bmi: "", // Add bmi field here
   });
 
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [successMessage, setSuccessMessage] = useState(""); // State for success message
 
-  // Fetch registered user email
+  // Fetch registered user email from localStorage (assuming you store email after registration)
   useEffect(() => {
     const storedEmail = localStorage.getItem("email");
     if (storedEmail) {
@@ -34,7 +35,7 @@ const Setup = () => {
   useEffect(() => {
     const weightInKg = parseFloat(formData.weight);
     const heightInCm = parseFloat(formData.height);
-    const heightInM = heightInCm / 100;
+    const heightInM = heightInCm / 100; // Convert height from cm to meters
 
     if (weightInKg > 0 && heightInM > 0) {
       const bmi = (weightInKg / (heightInM * heightInM)).toFixed(1);
@@ -53,72 +54,61 @@ const Setup = () => {
     }));
   };
 
-  // Handle form submission
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log("Form submitted"); // Debugging log
 
-    if (!email) {
-      toast.error("Email not found. Please register again.");
-      return;
-    }
+    const formDataToSend = {
+      name: formData.name,
+      phoneno: formData.phoneno,
+      age: formData.age,
+      height: formData.height,
+      weight: formData.weight,
+      lifestyle: formData.lifestyle,
+      fitnessgoal: formData.fitnessgoal,
+      gender: formData.gender,
+    };
 
-    // Validate form data
-    const validationErrors = validate(formData);
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
-
-    // Prepare final data
-    const finalSetupData = { ...formData, email };
-    console.log("Form data being sent to the server:", finalSetupData); // Debugging log
+    console.log('Form Data Being Sent:', formDataToSend); // Add this to check the data
 
     try {
-      setIsSubmitting(true);
-      const token = localStorage.getItem("token");
-      console.log("Token from localStorage:", token);
-      if (!token) {
-        toast.error("Token not found. Please log in again.");
-        return;
-      }
-
-      const response = await fetch("http://localhost:5000/setup", {
-        method: "POST",
+      const response = await axios.post('http://localhost:5000/setup', formDataToSend, {
         headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // Sending token in the Authorization header
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(finalSetupData),
       });
 
-      console.log("Fetching data to backend:", finalSetupData); // Debugging log
-
-      const data = await response.json();
-      console.log("API Response:", data); // Debugging log
-
-      if (!response.ok) {
-        throw new Error(data.message || `HTTP error! Status: ${response.status}`);
+      if (response.data.success) {
+        // Set success message
+        setSuccessMessage("Setup completed successfully!");
+        
+        // Redirect after a delay (e.g., 3 seconds)
+        setTimeout(() => {
+          navigate("/dashboard"); // Redirect to the dashboard
+        }, 3000); // 3 seconds delay
+      } else {
+        console.error('Error:', response.data.message);
       }
-
-      toast.success("Setup completed successfully!");
-      navigate("/dashboard");
     } catch (error) {
-      console.error("Error during form submission:", error);
-      toast.error(error.message || "Something went wrong. Please try again later.");
-    } finally {
-      setIsSubmitting(false);
+      console.error('Error during form submission:', error);
     }
   };
 
+  // Close the modal
+  const closeModal = () => {
+    navigate("/"); // You can modify the behavior to close the modal, or navigate to another route.
+  };
+
   return (
-    <div style={styles.modalContent}>
-      <div className="text-center mb-5">
+    <div className="modal-content p-4 rounded shadow-sm position-relative">
+      <div className="text-center mb-4">
         <button className="btn btn-success btn-lg w-100 rounded-pill">
           SETUP YOUR ACCOUNT
         </button>
       </div>
       <p>Email: {email}</p>
+
+      {/* Display Success Message */}
+      {successMessage && <div className="alert alert-success">{successMessage}</div>}
 
       <form onSubmit={handleFormSubmit} className="needs-validation" noValidate>
         <div className="row g-3">
@@ -129,7 +119,7 @@ const Setup = () => {
               type="text"
               name="name"
               placeholder="Your Full Name"
-              className={`form-control ${errors.name ? "is-invalid" : ""}`}
+              className="form-control"
               value={formData.name}
               onChange={handleChange}
               required
@@ -144,7 +134,7 @@ const Setup = () => {
               type="text"
               name="phoneno"
               placeholder="Phone no"
-              className={`form-control ${errors.phoneno ? "is-invalid" : ""}`}
+              className="form-control"
               value={formData.phoneno}
               onChange={handleChange}
               required
@@ -159,7 +149,7 @@ const Setup = () => {
               type="number"
               name="age"
               placeholder="Your Age"
-              className={`form-control ${errors.age ? "is-invalid" : ""}`}
+              className="form-control"
               value={formData.age}
               onChange={handleChange}
               required
@@ -174,7 +164,7 @@ const Setup = () => {
               type="text"
               name="height"
               placeholder="Height"
-              className={`form-control ${errors.height ? "is-invalid" : ""}`}
+              className="form-control"
               value={formData.height}
               onChange={handleChange}
               required
@@ -189,7 +179,7 @@ const Setup = () => {
               type="text"
               name="weight"
               placeholder="Weight"
-              className={`form-control ${errors.weight ? "is-invalid" : ""}`}
+              className="form-control"
               value={formData.weight}
               onChange={handleChange}
               required
@@ -228,7 +218,13 @@ const Setup = () => {
           {/* Fitness Goal */}
           <div className="col-md-6">
             <label className="form-label">Fitness Goal</label>
-            <select name="fitnessgoal" className="form-control" value={formData.fitnessgoal} onChange={handleChange} required>
+            <select
+              name="fitnessgoal"
+              className="form-control"
+              value={formData.fitnessgoal}
+              onChange={handleChange}
+              required
+            >
               <option value="">Select Fitness Goal</option>
               <option value="Fat loss">Fat Loss</option>
               <option value="Muscle Gain">Muscle Gain</option>
@@ -238,7 +234,13 @@ const Setup = () => {
           {/* Lifestyle */}
           <div className="col-md-6">
             <label className="form-label">Lifestyle</label>
-            <select name="lifestyle" className="form-control" value={formData.lifestyle} onChange={handleChange} required>
+            <select
+              name="lifestyle"
+              className="form-control"
+              value={formData.lifestyle}
+              onChange={handleChange}
+              required
+            >
               <option value="">Select Lifestyle</option>
               <option value="Sedentary">Sedentary</option>
               <option value="Moderate">Moderate</option>
@@ -253,17 +255,6 @@ const Setup = () => {
       </form>
     </div>
   );
-};
-
-const styles = {
-  modalContent: {
-    background: "#fff",
-    padding: "30px",
-    borderRadius: "8px",
-    maxWidth: "600px",
-    margin: "auto",
-    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-  },
 };
 
 export default Setup;
