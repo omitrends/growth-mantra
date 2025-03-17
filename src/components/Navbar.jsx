@@ -1,9 +1,5 @@
-import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/images/logo.png'; // Import the image
-import './css/style.css';
-import './css/bootstrap.css';
-import './css/responsive.css';
 
 function Navbar() {
   const navigate = useNavigate();
@@ -13,16 +9,22 @@ function Navbar() {
     navigate('/get-started');
   };
 
-  const set = (event) => {
-    event.preventDefault();
-    navigate('/setup');
-  };
-
   const handleDashboard = (event) => {
     event.preventDefault();
     navigate('/dashboard');
   };
 
+  // Simple rounded button style with black text
+  const getStartedButtonStyle = {
+    display: 'inline-block',
+    padding: '8px 20px',
+    backgroundColor: '#7ca982',
+    color: 'black', // Black text color as requested
+    // fontWeight: 'bold',
+    textDecoration: 'none',
+    borderRadius: '0px', // Slightly rounded edges
+    border: 'none'
+  };
 
   return (
     <header className="header_section">
@@ -58,14 +60,18 @@ function Navbar() {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/setup" onClick={set}>
+                  <Link className="nav-link">
                     Contact us
                   </Link>
                 </li>
               </ul>
             </div>
             <div className="quote_btn-container ml-0 ml-lg-4 d-flex justify-content-center">
-              <Link to="/get-started" onClick={clickonGetStarted}>
+              <Link 
+                to="/get-started" 
+                onClick={clickonGetStarted}
+                style={getStartedButtonStyle}
+              >
                 Get Started
               </Link>
             </div>

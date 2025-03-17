@@ -1,36 +1,45 @@
-import "./css/style.css"; 
 import "./css/bootstrap.css";
-import "./css/responsive.css";
 import MW from "../assets/images/MW.png";
 import Fit from "../assets/images/Fit.png";
 import Nut from "../assets/images/Nut.png";
 import {useNavigate} from 'react-router-dom';
 
 function Slider() {
-  // Slide data
-  const slides = [
+  // Slide text data
+  const slideTexts = [
     {
       title: "Mental Wellbeing",
       description:
-        "Pause, reflect, and renew. Journaling helps you cultivate mindfulness and presence. Reduce stress and increase clarity through this mindful practice.",
-      image: MW,
-      alt: "Mental Wellbeing Illustration",
+        "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.",
     },
     {
       title: "Nutrition",
       description:
-        "Kickstart your nutrition journey today. Explore personalized meal plans, track your progress, and fuel your success. With expert guidance and easy tracking, you’ll have everything you need to nourish your body and reach your goals.",
-      image: Nut,
-      alt: "Nutrition Illustration",
+        "Your fitness journey starts here. Explore workouts, track progress, and reach new heights. With personalized plans, expert guidance, and progress tracking, you'll have everything you need to succeed.",
     },
     {
       title: "Fitness",
       description:
-      "Your fitness journey starts here. Explore workouts, track progress, and reach new heights. With personalized plans, expert guidance, and progress tracking, you'll have everything you need to succeed.",
+        "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.",
+    },
+  ];
+
+  // Separate image data
+  const images = [
+    {
+      image: MW,
+      alt: "Mental Wellbeing Illustration",
+    },
+    {
+      image: Nut,
+      alt: "Nutrition Illustration",
+    },
+    {
       image: Fit,
       alt: "Fitness Illustration",
     },
   ];
+
   const navigate = useNavigate();
   const handleregisterclick=(event)=>{
     event.preventDefault();
@@ -40,11 +49,12 @@ function Slider() {
     event.preventDefault();
     navigate('/login');
   };
+  
   return (
-    <section className="slider_section position-relative">
+    <section className="slider_section">
       <div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
         <div className="carousel-inner">
-          {slides.map((slide, index) => (
+          {slideTexts.map((text, index) => (
             <div
               key={index}
               className={`carousel-item ${index === 0 ? "active" : ""}`}
@@ -54,15 +64,22 @@ function Slider() {
                 <div className="slider_item-container">
                   <div className="container">
                     <div className="row">
+                      {/* Text Content Div */}
                       <div className="col-md-6">
-                        <div className="slider_item-detail">
-                          <h1>{slide.title}</h1>
-                          <p>{slide.description}</p>
+                        <div className="slider_text-content">
+                          <div className="slider_item-detail">
+                            <h1>{text.title}</h1>
+                            <p>{text.description}</p>
+                          </div>
                         </div>
                       </div>
-                      <div className="col-md-6 customimg">
-                        <div className="slider_img-box">
-                          <img src={slide.image} alt={slide.alt} />
+                      
+                      {/* Image Content Div */}
+                      <div className="col-md-6">
+                        <div className="slider_image-content">
+                          <div className="slider_img-box">
+                            <img src={images[index].image} alt={images[index].alt} />
+                          </div>
                         </div>
                       </div>
                     </div>

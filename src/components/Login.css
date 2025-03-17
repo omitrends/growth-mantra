@@ -65,7 +65,7 @@
     display: flex;
     align-items: center;
     /* border-bottom: 1px solid #aaa; */
-    width: 350px;
+    width: 250px;
     /*max-width: 350px;*/
     margin-bottom: 15px;
     padding: 5px;
@@ -94,14 +94,17 @@
   .login-button {
     background-color: #28a745;
     color: white;
-    padding: 8px;
-    width: 350px;
+    padding: 10px;
+    width: 200px;
+    max-width: 350px;
+    border: none;
     font-size: 20px;
     cursor: pointer;
     border: 1px solid #ddd;
     border-radius: 5px;
     align-items: center;
-    justify-self: center;
+    justify-content: center;
+    margin-top: 20px;
   }
   
   /* .login-button:hover {
@@ -174,13 +177,3 @@
     color: #007bff;
     font-weight: bold;
   }
-
-.text-red {
-  color: #ff4545;
-  font-size: 14px;
-  margin-top: 5px;
-  display: block;
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 5px;
-}

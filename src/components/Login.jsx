@@ -1,132 +1,125 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './Login.css';
-import login from '../assets/images/login.jpg';
-import googleLogo from '../assets/images/google-logo.png';
+import "./Login.css";
+import login from "../assets/images/login.jpg";
+import googleLogo from "../assets/images/google-logo.png";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import ForgetPass from "./ForgetPass";
+import CloseButton from "./CloseButton"; // Import the CloseButton component
 
 const Login = () => {
-  // State for email and password
-  const [values, setValues] = useState({
-    email: '',
-    password: ''
-  });
-
-  const [message, setMessage] = useState('');
-  const [loading, setLoading] = useState(false); // Track loading state
   const navigate = useNavigate();
+  const [showForget, setShowForget] = useState(false);
 
-  const handleRegisterClick = (event) => {
+  const ClickedforgetPass = (event) => {
     event.preventDefault();
-    navigate('/register');
+    setShowForget(true);
   };
 
-  const handleInput = (event) => {
-    setValues((prev) => ({ ...prev, [event.target.name]: event.target.value }));
+  const closeModal = () => {
+    setShowForget(false);
   };
 
-  const handleSubmit = async (event) => {
+  const handlregisterclick = (event) => {
     event.preventDefault();
-
-    // Send login data to backend for authentication
-    try {
-      setLoading(true); // Set loading to true when starting the API request
-      setMessage(''); // Clear any previous message before submitting
-
-      const response = await fetch('http://localhost:5000/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email: values.email,
-          password: values.password
-        })
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setMessage('Login successful!');
-        
-        // Store the JWT token in localStorage
-        localStorage.setItem('authToken', data.token);
-        
-        // Redirect to dashboard after a successful login
-        setTimeout(() => {
-          navigate('/setup');
-        }, 1500); // Optional delay before redirect
-      } else {
-        setMessage(data.message || 'Invalid credentials'); // Show backend error message
-      }
-    } catch (error) {
-      setMessage('Error occurred during login, please try again.');
-    } finally {
-      setLoading(false); // Reset loading state after API call
-    }
+    navigate("/register");
   };
 
   return (
-    <div className="login-container">
-      <div className="left-section">
-        <div className="logo-container">
-          <img src={login} alt="Growth Mantra" className="login-img" />
+    <div>
+      <div className="login-container">
+        {/* Left Section with Logo */}
+        <div className="left-section">
+          <div className="logo-container">
+            <img src={login} alt="Growth Mantra" className="login-img" />
+          </div>
         </div>
-      </div>
 
-      <div className="right-section">
-        <h2 className="login-title">LOGIN</h2>
+        {/* Right Section with Login Form */}
+        <div className="right-section">
+          <h2 className="login-title">LOGIN</h2>
 
-        {message && <p className="message">{message}</p>}
-
-        <form onSubmit={handleSubmit}>
           <div className="input-group">
             <input
               type="text"
-              name="email"
-              value={values.email}
-              onChange={handleInput}
-              placeholder="Enter Email"
+              placeholder="Enter Username"
               className="input-field"
+              style={styles.input}
             />
           </div>
 
           <div className="input-group">
             <input
               type="password"
-              name="password"
-              value={values.password}
-              onChange={handleInput}
               placeholder="Enter Password"
               className="input-field"
+              style={styles.input}
             />
           </div>
 
-          <button type="submit" className="login-button" disabled={loading}>
-            {loading ? 'Logging in...' : 'LOGIN'}
+          <button className="login-button">LOGIN</button>
+
+          <div className="extra-options">
+            <label>
+              <input type="checkbox" /> Remember Me
+            </label>
+            <a href="/forgot-password" onClick={ClickedforgetPass}>Forgot Password</a>
+          </div>
+
+          <hr className="divider" />
+          <p className="or-text">or login with</p>
+
+          <button className="google-login">
+            <img src={googleLogo} alt="Google" className="google-icon" />
+            GOOGLE
           </button>
-        </form>
 
-        <div className="extra-options">
-          <label>
-            <input type="checkbox" /> Remember Me
-          </label>
-          <a href="/forgot-password">Forgot Password</a>
+          <p className="register-text">
+            Don’t have an account?{" "}
+            <a href="/register" onClick={handlregisterclick}>
+              Register
+            </a>
+          </p>
         </div>
-
-        <hr className="divider" />
-        <p className="or-text">or login with</p>
-
-        <button className="google-login">
-          <img src={googleLogo} alt="Google" className="google-icon" />
-          GOOGLE
-        </button>
-
-        <p className="register-text">
-          Don’t have an account? <a href="/register" onClick={handleRegisterClick}>Register</a>
-        </p>
       </div>
+      {showForget && (
+        <div style={styles.modalOverlay}>
+          <div style={styles.modalContent}>
+            <CloseButton onClick={closeModal} />
+            <ForgetPass />
+          </div>
+        </div>
+      )}
     </div>
   );
+};
+
+const styles = {
+  input: {
+    width: "100%",
+    padding: "10px",
+    border: "1px solid #ddd",
+    borderRadius: "4px",
+    fontSize: "14px",
+  },
+  modalOverlay: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    backdropFilter: "blur(5px)", // Apply blur effect
+  },
+  modalContent: {
+    backgroundColor: "#fff",
+    padding: "20px",
+    borderRadius: "8px",
+    boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
+    position: "relative", // Add relative positioning
+  },
 };
 
 export default Login;

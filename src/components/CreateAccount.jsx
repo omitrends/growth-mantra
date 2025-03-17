@@ -1,88 +1,22 @@
-import React, { useState } from 'react';
-import logo from '../assets/images/rb_26614.png'; // Adjust path as necessary
-import Validation from './RegisterValidation.cjs'; // Ensure this is in the correct path
-
-// import React from "react";
-// import logo from "../assets/images/rb_26614.png";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import logo from "../assets/images/rb_26614.png";
+import Setup from "./Setup";
+import CloseButton from "./CloseButton"; // Import the CloseButton component
 
 const CreateAccount = () => {
-  const [values, setValues] = useState({
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-  });
+  const [showSetup, setShowSetup] = useState(false);
 
-  const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false); // Track loading state
-  const [message, setMessage] = useState(''); // To store success/error message
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setValues({
-      ...values,
-      [name]: value,
-    });
-
-    // Update errors when the value changes, only validate the field changed
-    setErrors(Validation({ ...values, [name]: value }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-  
-    const validationErrors = Validation(values);
-    setErrors(validationErrors);
-  
-    // Only submit the form if there are no validation errors
-    if (Object.keys(validationErrors).length === 0) {
-      try {
-        setLoading(true);
-        setMessage(''); // Reset message before sending request
-  
-        // Sending data to backend to register user
-        const response = await fetch('http://localhost:5000/register', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            username: values.username,
-            email: values.email,
-            password: values.password,
-          }),
-        });
-  
-        const data = await response.json();
-  
-        if (response.ok) {
-          setMessage('Registration successful!');
-          
-          // Store the JWT token in localStorage or sessionStorage
-          localStorage.setItem('token', data.token);
-
-          setTimeout(() => {
-            window.location.href = '/dashboard'; // Redirect to Dashboard after successful registration
-          }, 1500); // Optional delay before redirect
-        } else {
-          setMessage(data.message || 'Something went wrong, please try again.');
-        }
-      } catch (error) {
-        setMessage('Error occurred during registration, please try again.');
-      } finally {
-        setLoading(false);
-      }
-    }
-  };
- 
-
-
-  const navigate = useNavigate();
-  const setupPage=(event)=>{
+  const setupPage = (event) => {
     event.preventDefault();
-    navigate('/set-up');
+    console.log("Register button clicked");
+    setShowSetup(true);
   };
+
+  const closeModal = () => {
+    console.log("Close button clicked");
+    setShowSetup(false);
+  };
+
   return (
     <div>
       <div style={styles.container}>
@@ -94,204 +28,142 @@ const CreateAccount = () => {
           <p style={styles.loginText}>
             Already have an account? <a href="/login" style={styles.loginLink}>Login</a>
           </p>
-          <form style={styles.form} onSubmit={handleSubmit}>
+          <form style={styles.form}>
             <div style={styles.inputContainer}>
-              <input
-                type="text"
-                placeholder="Enter Username"
-                name="username"
-                value={values.username}
-                onChange={handleInputChange}
-                style={styles.input}
-              />
-              {errors.username && <span style={styles.error}>{errors.username}</span>}
+              <i className="fa fa-user" style={styles.icon}></i>
+              <input type="text" placeholder="Enter Username" style={styles.input} />
             </div>
             <div style={styles.inputContainer}>
-              <input
-                type="email"
-                placeholder="Enter Email"
-                name="email"
-                value={values.email}
-                onChange={handleInputChange}
-                style={styles.input}
-              />
-              {errors.email && <span style={styles.error}>{errors.email}</span>}
+              <i className="fa fa-envelope" style={styles.icon}></i>
+              <input type="email" placeholder="Enter Email" style={styles.input} />
             </div>
             <div style={styles.inputContainer}>
-              <input
-                type="password"
-                placeholder="Enter Password"
-                name="password"
-                value={values.password}
-                onChange={handleInputChange}
-                style={styles.input}
-              />
-              {errors.password && <span style={styles.error}>{errors.password}</span>}
+              <i className="fa fa-calendar" style={styles.icon}></i>
+              <input type="date" placeholder="Enter Date of Birth" style={styles.input} />
             </div>
             <div style={styles.inputContainer}>
-              <input
-                type="password"
-                placeholder="Confirm Password"
-                name="confirmPassword"
-                value={values.confirmPassword}
-                onChange={handleInputChange}
-                style={styles.input}
-              />
-              {errors.confirmPassword && <span style={styles.error}>{errors.confirmPassword}</span>}
+              <i className="fa fa-key" style={styles.icon}></i>
+              <input type="password" placeholder="Enter Password" style={styles.input} />
             </div>
-            <button type="submit" style={styles.button} disabled={loading}>
-              {loading ? 'Registering...' : 'REGISTER'}
+            <div style={styles.inputContainer}>
+              <i className="fa fa-lock" style={styles.icon}></i>
+              <input type="password" placeholder="Confirm Password" style={styles.input} />
+            </div>
+            <div style={styles.inputContainer}>
+              <i className="fa fa-lock" style={styles.icon}></i>
+              <input type="number" placeholder="Enter the number" style={styles.input} />
+            </div>
+            <button onClick={setupPage} type="submit" style={styles.button}>
+              REGISTER
             </button>
-            {message && <p style={styles.message}>{message}</p>}
           </form>
         </div>
       </div>
 
-         {/* <Navbar/> */}
-    <div style={styles.container}>
-      <div style={styles.leftPane}>
-        <img
-          src={logo}
-          alt="Growth Mantra Logo"
-          style={styles.logo}
-        />
-        {/* <h1 style={styles.title}>GROWTH MANTRA</h1> */}
-      </div>
-      <div style={styles.rightPane}>
-        <h2 style={styles.heading}>CREATE ACCOUNT</h2>
-        <p style={styles.loginText}>
-          Already have an account? <a href="/login" style={styles.loginLink}>Login</a>
-        </p>
-        <form style={styles.form}>
-          <div style={styles.inputContainer}>
-            <i className="fa fa-user" style={styles.icon}></i>
-            <input
-              type="text"
-              placeholder="Enter Username"
-              style={styles.input}
-            />
+      {showSetup && (
+        <div style={styles.modalOverlay}>
+          <div style={styles.modalContent}>
+            <CloseButton onClick={closeModal} />
+            <Setup />
           </div>
-          <div style={styles.inputContainer}>
-            <i className="fa fa-envelope" style={styles.icon}></i>
-            <input
-              type="email"
-              placeholder="Enter Email"
-              style={styles.input}
-            />
-          </div>
-          <div style={styles.inputContainer}>
-            <i className="fa fa-calendar" style={styles.icon}></i>
-            <input
-              type="date"
-              placeholder="Enter Date of Birth"
-              style={styles.input}
-            />
-          </div>
-          <div style={styles.inputContainer}>
-            <i className="fa fa-key" style={styles.icon}></i>
-            <input
-              type="password"
-              placeholder="Enter Password"
-              style={styles.input}
-            />
-          </div>
-          <div style={styles.inputContainer}>
-            <i className="fa fa-lock" style={styles.icon}></i>
-            <input
-              type="password"
-              placeholder="Confirm Password"
-              style={styles.input}
-            />
-          </div>
-          <div style={styles.inputContainer}>
-                <i className="fa fa-lock" style={styles.icon}></i>
-                <input type="number"
-                        placeholder="Enter the number"
-                        style={styles.input}
-                />
-          </div>
-          <button onClick={setupPage} type="submit" style={styles.button}>
-            REGISTER
-          </button>
-        </form>
-      </div>
-    </div>
+        </div>
+      )}
     </div>
   );
 };
 
 const styles = {
   container: {
-    display: 'flex',
-    height: '80vh',
-    backgroundColor: '#f9f9f9',
+    display: "flex",
+    flexDirection: "row",
+    height: "80vh",
+    backgroundColor: "#f9f9f9",
   },
   leftPane: {
+    // backgroundColor: "#f9f9f9",
     flex: 1,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "white",
   },
   logo: {
-    width: '500px',
+    width: "500px",
+    backgroundColor: "transparent",
   },
   rightPane: {
     flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: '20px',
-    borderLeft: '1px solid #ddd',
-    backgroundColor: 'white',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#ffffff",
+    padding: "20px",
+    borderLeft: "1px solid #ddd",
   },
   heading: {
-    fontSize: '28px',
-    marginBottom: '10px',
+    fontSize: "28px",
+    marginBottom: "10px",
   },
   loginText: {
-    fontSize: '14px',
-    marginBottom: '20px',
+    fontSize: "14px",
+    marginBottom: "20px",
   },
   loginLink: {
-    color: '#007bff',
-    textDecoration: 'none',
+    color: "#007bff",
+    textDecoration: "none",
   },
   form: {
-    width: '100%',
-    maxWidth: '400px',
+    width: "100%",
+    maxWidth: "400px",
   },
   inputContainer: {
-    marginBottom: '15px',
+    display: "flex",
+    alignItems: "center",
+    marginBottom: "15px",
+  },
+  icon: {
+    marginRight: "10px",
+    fontSize: "18px",
+    color: "#888",
   },
   input: {
-    width: '100%',
-    padding: '10px',
-    border: '1px solid #ddd',
-    borderRadius: '4px',
-    fontSize: '14px',
+    width: "100%",
+    padding: "10px",
+    border: "1px solid #ddd",
+    borderRadius: "4px",
+    fontSize: "14px",
   },
   button: {
-    width: '100%',
-    padding: '12px',
-    backgroundColor: '#28a745',
-    color: '#ffffff',
-    border: 'none',
-    borderRadius: '4px',
-    fontSize: '16px',
-    cursor: 'pointer',
+    width: "100%",
+    padding: "12px",
+    backgroundColor: "#28a745",
+    color: "#ffffff",
+    border: "none",
+    borderRadius: "4px",
+    fontSize: "16px",
+    cursor: "pointer",
   },
-  error: {
-    color: '#ff4545',
-    fontSize: '14px',
+  modalOverlay: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    backdropFilter: "blur(5px)", // Apply blur effect
   },
-  message: {
-    color: 'green',
-    fontSize: '14px',
-    marginBottom: '10px',
+  modalContent: {
+//     backgroundColor: "#fff",
+    padding: "20px",
+    borderRadius: "8px",
+    boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
+    position: "relative", // Add relative positioning
   },
 };
-
 
 export default CreateAccount;
