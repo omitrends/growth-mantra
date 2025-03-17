@@ -17,17 +17,6 @@ function Validation(values) {
       error.email = "Please enter a valid email";
     }
   
-    // Date of Birth Validation
-    // if (values.dob === "") {
-    //   error.dob = "Date of birth is required";
-    // } else {
-    //   const dob = new Date(values.dob);
-    //   const age = new Date().getFullYear() - dob.getFullYear();
-    //   if (age < 10) {
-    //     error.dob = "You must be at least 10 years old";
-    //   }
-    // }
-  
     // Password Validation with individual checks
     if (values.password === "") {
       error.password = "Password cannot be empty";
@@ -52,12 +41,8 @@ function Validation(values) {
       else if (!/[!@#$%^&*(),.?":{}|<>]/.test(values.password)) {
         error.password = "Password must contain at least one special character";
       }
-      // If all conditions are met, reset the password error
-      else {
-        error.password = "";
-      }
     }
-
+  
     // Confirm Password Validation
     if (values.confirmPassword === "") {
       error.confirmPassword = "Confirm Password cannot be empty";
@@ -65,24 +50,22 @@ function Validation(values) {
       error.confirmPassword = "Passwords do not match";
     }
   
-    // Clear the error object key if valid
+    // If no error for a field, don't add it to the error object
     if (!error.username) {
-      delete error.username;
+      error.username = "";
     }
     if (!error.email) {
-      delete error.email;
-    }
-    if (!error.dob) {
-      delete error.dob;
+      error.email = "";
     }
     if (!error.password) {
-      delete error.password;
+      error.password = "";
     }
     if (!error.confirmPassword) {
-      delete error.confirmPassword;
+      error.confirmPassword = "";
     }
   
     return error;
-}
+  }
   
-export default Validation;
+  export default Validation;
+  
