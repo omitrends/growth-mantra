@@ -12,31 +12,13 @@ const port = 5000;
 const connection = require('./databases.cjs');
 
 // Middleware
-app.use(cors({
-  origin: 'http://localhost:5173',  // Your frontend URL
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
-}));
-
+app.use(cors());
 app.use(bodyParser.json());
 
 // JWT Secret Key
 const JWT_SECRET = 'your_jwt_secret_key';  // Set your JWT secret key here
-const authenticateToken = (req, res, next) => {
-  const token = req.header('Authorization')?.replace('Bearer ', ''); // Extract token from header
-  if (!token) {
-    return res.status(401).json({ success: false, message: 'No token provided' });
-  }
-  try {
-    const decoded = jwt.verify(token, 'your-secret-key'); // Replace 'your-secret-key' with your actual secret key
-    req.user = decoded; // Store the decoded token data
-    next(); // Proceed to the next middleware/route handler
-  } catch (err) {
-    return res.status(401).json({ success: false, message: 'Invalid token' });
-  }
-};
 
+// Register route
 app.post('/register', async (req, res) => {
   const { username, email, password } = req.body;
 
@@ -123,65 +105,50 @@ app.post('/login', (req, res) => {
   });
 });
 
-app.post('/setup', authenticateToken, (req, res) => {
+// Setup route without token authentication
+// Removed authenticateToken middleware for /setup route
+app.post('/setup', (req, res) => {
   console.log("Received data at /setup endpoint:", req.body); // Log incoming request data
 
-  const token = req.headers.authorization?.split(' ')[1];  // Get the token from Authorization header
-  console.log("Authorization Token:", token); // Log token for debugging
+  let { name, phoneno, age, height, weight, lifestyle, fitnessgoal, gender } = req.body;
 
-  if (!token) {
-    return res.status(401).json({ success: false, message: 'No token, authorization denied' });
+  if (!name || !phoneno || !age || !height || !weight || !lifestyle || !fitnessgoal || !gender) {
+    console.log("Missing required fields:", { name, phoneno, age, height, weight, lifestyle, fitnessgoal, gender });
+    return res.status(400).json({ success: false, message: 'Missing required fields' });
   }
 
-  try {
-    const decoded = jwt.verify(token, JWT_SECRET);  // Verify the token
-    console.log('Decoded token:', decoded);  // Log the decoded token
-    const userId = decoded.userId;  // Extract userId from decoded token
+  height = parseFloat(height);  // Ensure height is a number
+  weight = parseFloat(weight);  // Ensure weight is a number
 
-    // Extract data from request body
-    let { name, phoneno, age, height, weight, lifestyle, fitnessgoal, gender } = req.body;
-
-    // Validate incoming data
-    if (!name || !phoneno || !age || !height || !weight || !lifestyle || !fitnessgoal || !gender) {
-      console.log("Missing required fields:", { name, phoneno, age, height, weight, lifestyle, fitnessgoal, gender });
-      return res.status(400).json({ success: false, message: 'Missing required fields' });
-    }
-
-    height = parseFloat(height);  // Ensure height is a number
-    weight = parseFloat(weight);  // Ensure weight is a number
-
-    if (isNaN(height) || isNaN(weight)) {
-      console.log("Invalid height or weight:", { height, weight });
-      return res.status(400).json({ success: false, message: 'Height and weight must be valid numbers' });
-    }
-
-    // Log the data we are going to insert
-    console.log("Data ready for insertion:", { name, phoneno, age, height, weight, lifestyle, fitnessgoal, gender, userId });
-
-    // Prepare the query for inserting data
-    const insertQuery = `
-      INSERT INTO Setup (Name, PhoneNo, Age, Height, Weight, LifeStyle, FitnessGoal, Gender, UserId)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `;
-
-    // Insert the data into the Setup table
-    connection.query(insertQuery, [name, phoneno, age, height, weight, lifestyle, fitnessgoal, gender, userId], (err, result) => {
-      if (err) {
-        console.error('Database Insertion Error:', err.sqlMessage);
-        return res.status(500).json({ success: false, message: 'Error inserting setup data' });
-      }
-
-      console.log('Setup data inserted successfully');
-      return res.json({ success: true, message: 'Setup completed successfully!' });
-    });
-  } catch (err) {
-    console.error("JWT Error:", err);
-    return res.status(401).json({ success: false, message: 'Invalid token' });
+  if (isNaN(height) || isNaN(weight)) {
+    console.log("Invalid height or weight:", { height, weight });
+    return res.status(400).json({ success: false, message: 'Height and weight must be valid numbers' });
   }
+
+  // Log the data we are going to insert
+  console.log("Data ready for insertion:", { name, phoneno, age, height, weight, lifestyle, fitnessgoal, gender });
+
+  // Prepare the query for inserting data
+  const insertQuery = `
+    INSERT INTO Setup (Name, PhoneNo, Age, Height, Weight, LifeStyle, FitnessGoal, Gender)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+  `;
+
+  // Insert the data into the Setup table
+  connection.query(insertQuery, [name, phoneno, age, height, weight, lifestyle, fitnessgoal, gender], (err, result) => {
+    if (err) {
+      console.error('Database Insertion Error:', err.sqlMessage);
+      return res.status(500).json({ success: false, message: 'Error inserting setup data' });
+    }
+
+    console.log('Setup data inserted successfully');
+    return res.status(200).json({ success: true, message: 'Setup completed successfully!' });
+  });
 });
 
 
 
+// Start the server
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });

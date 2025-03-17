@@ -2593,6 +2593,7 @@
     color: #fff;
     background-color: #dc3545;
     border-color: #dc3545;
+    z-index: 9999;
   }
   
   .btn-danger:hover {
