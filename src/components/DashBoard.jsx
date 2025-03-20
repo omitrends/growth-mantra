@@ -1,4 +1,4 @@
-import React from 'react';
+// import Reac from 'react';
 import './DashBoard.css'; // You'll need to create this CSS file separately
 
 const DashBoard = () => {
