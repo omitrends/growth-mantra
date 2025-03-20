@@ -7,6 +7,14 @@ import Login from "./components/Login";
 import Setup from "./components/Setup"; 
 import DashBoard from "./components/DashBoard";
 import NavbarDash from "./components/NavbarDash";
+import Fitness from "./components/Fitness";
+import Nutrition from "./components/Nutrition";
+import Mental from "./components/Mental";
+import LogWorkout from "./components/LogWorkout";
+import RecommendedWorkout from "./components/RecommendedWorkout";
+import ContactUs from "./components/ContactUs";
+import Community from "./components/Community";
+import GrowthMantraAI from "./components/GrowthMantraAI";
 
 function App() {
   return (
@@ -20,25 +28,39 @@ function App() {
           <Route path="/setup" element={<Setup />} />
           <Route path="/dashboard" element={<DashBoard />} />
           <Route path="/get-started" element={<CreateAccount />} />
+          <Route path="/fitness" element={<Fitness />} />
+          <Route path="/nutrition" element={<Nutrition />} />
+          <Route path="/mental" element={<Mental />} />
+          <Route path="/workout-logs" element={<LogWorkout />} />
+          <Route path="/recommended-plans" element={<RecommendedWorkout />} />
+          <Route path="/contact-us" element={<ContactUs/>} />
+          <Route path="/community" element={<Community/>} />
+          <Route path="/growth-mantra-ai" element={<GrowthMantraAI/>} />
+          
         </Routes>
       </Router>
     </div>
-
   );
 }
 
 function NavbarWrapper() {
   const location = useLocation();
 
-  // Check if the current path is '/dashboard'
-  if (location.pathname === '/dashboard') {
+  // Check if the current path starts with '/dashboard' or any of the other app pages
+  if (
+      location.pathname === '/dashboard' || 
+      location.pathname === '/fitness' || 
+      location.pathname === '/nutrition' || 
+      location.pathname === '/mental'||
+      location.pathname === '/workout-logs'||
+      location.pathname === '/recommended-plans'
+    
+    ) {
     return <NavbarDash />;
   }
 
   // Render the default Navbar for all other routes
   return <Navbar />;
 }
-
-
 
 export default App;

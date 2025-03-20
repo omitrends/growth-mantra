@@ -9,7 +9,8 @@
     position: sticky;
     top: 0;
     z-index: 1000;
-    padding: 0 20px; /* Add padding to the sides */
+    padding: 0 20px; 
+    
   }
   
   .navbar-container {
