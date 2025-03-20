@@ -11,10 +11,12 @@ import Fitness from "./components/Fitness";
 import Nutrition from "./components/Nutrition";
 import Mental from "./components/Mental";
 import LogWorkout from "./components/LogWorkout";
+import WorkoutHistory from "./components/WorkoutHistory";
 import RecommendedWorkout from "./components/RecommendedWorkout";
 import ContactUs from "./components/ContactUs";
 import Community from "./components/Community";
 import GrowthMantraAI from "./components/GrowthMantraAI";
+
 
 function App() {
   return (
@@ -36,6 +38,7 @@ function App() {
           <Route path="/contact-us" element={<ContactUs/>} />
           <Route path="/community" element={<Community/>} />
           <Route path="/growth-mantra-ai" element={<GrowthMantraAI/>} />
+          <Route path="/workout-history" element={<WorkoutHistory/>} />
           
         </Routes>
       </Router>
@@ -53,7 +56,8 @@ function NavbarWrapper() {
       location.pathname === '/nutrition' || 
       location.pathname === '/mental'||
       location.pathname === '/workout-logs'||
-      location.pathname === '/recommended-plans'
+      location.pathname === '/recommended-plans'||
+      location.pathname === '/workout-history'
     
     ) {
     return <NavbarDash />;
