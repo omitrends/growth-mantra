@@ -10,18 +10,22 @@ import NavbarDash from "./components/NavbarDash";
 import Mental from "./components/Mental";
 
 import Fitness from "./components/Fitness";
-import LogWorkout from "./components/LogWorkout";
+// import LogWorkout from "./components/LogWorkout";
+import LogWorkout from "./components/LogWorkout"
 import WorkoutHistory from "./components/WorkoutHistory";
 import RecommendedWorkout from "./components/RecommendedWorkout";
 
 import ContactUs from "./components/ContactUs";
 import Community from "./components/Community";
 import GrowthMantraAI from "./components/GrowthMantraAI";
-
+// import LogNutrition from "./components/LogNutrition"
+// import RecommendedNutrition from "./components/RecommendedNutrition";
 
 import Nutrition from "./components/nutrition/Nutrition";
 import NutritionLog from "./components/nutrition/LogNutrition";
 import RecommendedNutrition from "./components/nutrition/RecommendedNutrition"
+import NutritionHistory from "./components/nutrition/NutritionHistory";
+
 function App() {
   return (
     <div>
@@ -40,15 +44,19 @@ function App() {
           <Route path="/fitness" element={<Fitness />} />
           <Route path="/workout-logs" element={<LogWorkout />} />
           <Route path="/recommended-plans" element={<RecommendedWorkout />} />
+          <Route path="/workout-history" element={<WorkoutHistory/>} />
+
 
           <Route path="/nutrition" element={<Nutrition />} />
           <Route path="/nutrition-logs" element={<NutritionLog />} />
           <Route path="/recommended-plans-Nutrition" element={<RecommendedNutrition />} />
+          <Route path="/nutrition-history" element={<NutritionHistory />} />
 
           <Route path="/contact-us" element={<ContactUs/>} />
           <Route path="/community" element={<Community/>} />
           <Route path="/growth-mantra-ai" element={<GrowthMantraAI/>} />
-          <Route path="/workout-history" element={<WorkoutHistory/>} />
+          {/* <Route path="/nutrition-logs" element={<NutritionLog/>} /> */}
+          {/* <Route path="/recommended-plans-nutrition" element={<RecommendedNutrition/>} /> */}
           
         </Routes>
       </Router>
@@ -67,7 +75,9 @@ function NavbarWrapper() {
       location.pathname === '/mental'||
       location.pathname === '/workout-logs'||
       location.pathname === '/recommended-plans'||
-      location.pathname === '/workout-history'
+      location.pathname === '/workout-history'||
+      location.pathname === '/nutrition-logs'||
+      location.pathname === '/recommended-plans-nutrition'
     
     ) {
     return <NavbarDash />;

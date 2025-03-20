@@ -88,7 +88,7 @@
 .add-meal-button {
   background-color: #4CAF50;
   color: white;
-  flex: 1;
+  flex: 0.2;
 }
 
 .add-meal-button:hover {

@@ -60,7 +60,7 @@
 }
 
 .nutrition-button {
-  background-image: linear-gradient(to right, #4caf50, #81c784); /* Updated gradient */
+  background-image: linear-gradient(to right, #4caf50, #81c784);
   color: white;
   border: none;
   padding: 10px 20px;
@@ -69,8 +69,8 @@
   cursor: pointer;
   align-self: flex-start;
   transition: background-color 0.3s;
+  width: 40%; 
 }
-
 .nutrition-button:hover {
   background-color: #388e3c; /* Darker green on hover */
 }

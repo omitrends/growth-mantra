@@ -1,14 +1,19 @@
 import { useState } from 'react';
 import './LogNutrition.css';
 import Sidebar from '../Sidebar';
+import { useNavigate } from 'react-router';
+
 
 const LogNutrition = () => {
   const [mealType, setMealType] = useState('');
+  const [foodCategory, setFoodCategory] = useState('');
   const [foodItem, setFoodItem] = useState('');
   const [calories, setCalories] = useState('');
   const [quantity, setQuantity] = useState('');
   const [meals, setMeals] = useState([]);
-
+  
+  const navigate = useNavigate();
+  
   // Meal types and food categories for dropdown menus
   const mealTypes = ['Breakfast', 'Lunch', 'Dinner', 'Snack'];
   const foodCategories = ['Fruits', 'Vegetables', 'Grains', 'Proteins', 'Dairy', 'Fats'];
@@ -35,6 +40,7 @@ const LogNutrition = () => {
       alert('Meal logged successfully!');
       // Clear all inputs and meals
       setMealType('');
+      setFoodCategory('');
       setFoodItem('');
       setCalories('');
       setQuantity('');
@@ -46,7 +52,9 @@ const LogNutrition = () => {
 
   const handleView = () => {
     // This would typically navigate to a view showing all logged meals
-    alert('Navigating to meal history');
+    // alert('Navigating to meal history');
+    navigate('/nutrition-history')
+    
   };
 
   return (
@@ -72,8 +80,8 @@ const LogNutrition = () => {
           <div className="dropdown-field">
             <label>Food Category</label>
             <select
-              value={mealType}
-              onChange={(e) => setMealType(e.target.value)}
+              value={foodCategory}
+              onChange={(e) => setFoodCategory(e.target.value)}
             >
               <option value="">Select Food Category</option>
               {foodCategories.map((category) => (
@@ -81,6 +89,8 @@ const LogNutrition = () => {
               ))}
             </select>
           </div>
+          
+          <button className="add-meal-button" onClick={addMeal}>Add Meal</button>
         </div>
 
         <div className="input-container">
@@ -113,11 +123,6 @@ const LogNutrition = () => {
               placeholder="E.g., 1"
             />
           </div>
-        </div>
-
-        <div className="button-container">
-          <button className="add-meal-button" onClick={addMeal}>Add Meal</button>
-          <button className="enter-button" onClick={addMeal}>Enter</button>
         </div>
 
         {meals.length > 0 && (
