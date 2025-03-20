@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './Community.css';
 import { 
   MessageCircle, ThumbsUp, ThumbsDown, Share, Bookmark, 
-  Flag, Send, Filter, Search, User, Clock, Tag, 
-  TrendingUp, Award, AlertCircle
+  Flag, Send,  Search, User, Clock, Tag, 
+  TrendingUp, AlertCircle
 } from 'lucide-react';
 
 const Community = () => {

@@ -1,0 +1,106 @@
+.nutrition-container {
+  display: flex;
+  min-height: 80vh;
+  background-color: #f5f5f5;
+}
+
+.nutrition-content {
+  flex: 1;
+  padding: 2rem;
+}
+
+.title-box {
+  display: flex;
+  justify-content: center;
+}
+
+.nutrition-title {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #333;
+  text-align: center;
+  background-image: linear-gradient(to right, #4caf50, #81c784); /* Updated gradient */
+  border-radius: 20px;
+  width: 700px;
+  padding: 10px;
+}
+
+.nutrition-boxes {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.nutrition-box {
+  height: 250px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+}
+
+.box-content {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.box-content h2 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.box-content p {
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.nutrition-button {
+  background-image: linear-gradient(to right, #4caf50, #81c784); /* Updated gradient */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: background-color 0.3s;
+}
+
+.nutrition-button:hover {
+  background-color: #388e3c; /* Darker green on hover */
+}
+
+.box-image {
+  flex: 1;
+  background-size: cover;
+  background-position: center;
+}
+
+.meal-image {
+  background-image: url('../../assets/images/Nutrition-log.jpg'); 
+  background-size: 40%;
+  background-repeat: no-repeat;
+}
+
+.plans-image {
+  background-image: url('../../assets/images/Nutrition-reccomended.png'); /* Updated image */
+  background-size: 50%;
+  background-repeat: no-repeat;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .nutrition-box {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .box-image {
+    height: 150px;
+  }
+}

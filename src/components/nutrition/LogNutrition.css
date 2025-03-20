@@ -1,0 +1,177 @@
+.log-main {
+  max-width: 100vw;
+  display: flex;
+}
+
+.log-nutrition {
+  width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.log-title {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333;
+  font-size: 1.8rem;
+}
+
+.dropdown-container {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.dropdown-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-field label {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #555;
+}
+
+.dropdown-field select {
+  padding: 0.7rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  background-color: #f9f9f9;
+}
+
+.input-container {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.input-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-field label {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #555;
+}
+
+.input-field input {
+  padding: 0.7rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.button-container {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.add-meal-button, .enter-button {
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-meal-button {
+  background-color: #4CAF50;
+  color: white;
+  flex: 1;
+}
+
+.add-meal-button:hover {
+  background-color: #3e8e41;
+}
+
+.enter-button {
+  background-color: #2196F3;
+  color: white;
+  flex: 1;
+}
+
+.enter-button:hover {
+  background-color: #0b7dda;
+}
+
+.meals-container {
+  margin-bottom: 2rem;
+}
+
+.meals-container h2 {
+  margin-bottom: 1rem;
+  color: #333;
+  font-size: 1.3rem;
+}
+
+.meals-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.meals-table th, .meals-table td {
+  padding: 0.8rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.meals-table th {
+  background-color: #f2f2f2;
+  font-weight: 600;
+}
+
+.bottom-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.nutrition-button {
+  padding: 0.8rem 2rem;
+  border: none;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.submit:hover {
+  background-color: #3e8e41;
+}
+
+.view {
+  background-color: #2196F3;
+  color: white;
+}
+
+.view:hover {
+  background-color: #0b7dda;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .dropdown-container, .input-container {
+    flex-direction: column;
+  }
+
+  .button-container {
+    flex-direction: column;
+  }
+}

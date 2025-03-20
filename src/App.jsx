@@ -7,15 +7,19 @@ import Login from "./components/Login";
 import Setup from "./components/Setup"; 
 import DashBoard from "./components/DashBoard";
 import NavbarDash from "./components/NavbarDash";
-import Fitness from "./components/Fitness";
-import Nutrition from "./components/Nutrition";
 import Mental from "./components/Mental";
+
+import Fitness from "./components/Fitness";
 import LogWorkout from "./components/LogWorkout";
 import RecommendedWorkout from "./components/RecommendedWorkout";
+
 import ContactUs from "./components/ContactUs";
 import Community from "./components/Community";
 import GrowthMantraAI from "./components/GrowthMantraAI";
 
+import Nutrition from "./components/nutrition/Nutrition";
+import NutritionLog from "./components/nutrition/LogNutrition";
+import RecommendedNutrition from "./components/nutrition/RecommendedNutrition"
 function App() {
   return (
     <div>
@@ -28,11 +32,17 @@ function App() {
           <Route path="/setup" element={<Setup />} />
           <Route path="/dashboard" element={<DashBoard />} />
           <Route path="/get-started" element={<CreateAccount />} />
-          <Route path="/fitness" element={<Fitness />} />
-          <Route path="/nutrition" element={<Nutrition />} />
+
           <Route path="/mental" element={<Mental />} />
+
+          <Route path="/fitness" element={<Fitness />} />
           <Route path="/workout-logs" element={<LogWorkout />} />
           <Route path="/recommended-plans" element={<RecommendedWorkout />} />
+
+          <Route path="/nutrition" element={<Nutrition />} />
+          <Route path="/nutrition-logs" element={<NutritionLog />} />
+          <Route path="/recommended-plans-Nutrition" element={<RecommendedNutrition />} />
+
           <Route path="/contact-us" element={<ContactUs/>} />
           <Route path="/community" element={<Community/>} />
           <Route path="/growth-mantra-ai" element={<GrowthMantraAI/>} />

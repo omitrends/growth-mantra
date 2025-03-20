@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './LogWorkout.css';
 import Sidebar from './Sidebar';
 
