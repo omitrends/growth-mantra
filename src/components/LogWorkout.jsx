@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './LogWorkout.css';
 import Sidebar from './Sidebar';
 import {useNavigate} from 'react-router-dom'
-import { height } from '@fortawesome/free-solid-svg-icons/fa0';
+// import { height } from '@fortawesome/free-solid-svg-icons/fa0';
 const LogWorkout = () => {
 
   const navigate = useNavigate();
