@@ -1,0 +1,167 @@
+.log-main {
+    max-width: 100vw;
+    display: flex;
+}
+
+.log-workout {
+    width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+  
+.log-title {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333;
+  font-size: 1.8rem;
+  font-weight: 600;
+  padding: 0.75rem 0;
+  border-bottom: 2px solid #eaeaea;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+  
+.dropdown-container {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    align-items: flex-end; /* Align items at the bottom to line up with the button */
+}
+  
+.dropdown-field {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+  
+.dropdown-field label {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #555;
+}
+  
+.dropdown-field select {
+    padding: 0.7rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: #f9f9f9;
+    height: 47.2px; /* Match the height of add-set-button */
+    box-sizing: border-box;
+}
+  
+.input-container {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+  
+.input-field {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+  
+.input-field label {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #555;
+}
+  
+.input-field input {
+    padding: 0.7rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+  
+.add-set-button {
+    background-color: #4CAF50;
+    color: white;
+    height: 47.2px; /* Exact height as specified */
+    padding: 0 1.5rem;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+  
+.add-set-button:hover {
+    background-color: #3e8e41;
+}
+  
+.sets-container {
+    margin-bottom: 2rem;
+}
+  
+.sets-container h2 {
+    margin-bottom: 1rem;
+    color: #333;
+    font-size: 1.3rem;
+}
+  
+.sets-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+  
+.sets-table th, .sets-table td {
+    padding: 0.8rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+  
+.sets-table th {
+    background-color: #f2f2f2;
+    font-weight: 600;
+}
+  
+.bottom-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+  
+.workout-button {
+    padding: 0.7rem 1.8rem; /* Slightly smaller padding */
+    border: none;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 0.95rem; /* Slightly smaller font */
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+  
+.submit {
+    background-color: #4CAF50;
+    color: white;
+    width: auto; /* Remove fixed width */
+}
+  
+.submit:hover {
+    background-color: #3e8e41;
+}
+  
+.view {
+    background-color: #2196F3;
+    color: white;
+}
+  
+.view:hover {
+    background-color: #0b7dda;
+}
+
+.intensity{
+  height: 48px;
+}
+ 
+
+@media (max-width: 768px) {
+    .dropdown-container, .input-container {
+        flex-direction: column;
+    }
+}

@@ -9,7 +9,8 @@
     position: sticky;
     top: 0;
     z-index: 1000;
-    padding: 0 20px; /* Add padding to the sides */
+    padding: 0 20px; 
+    
   }
   
   .navbar-container {
@@ -28,7 +29,7 @@
   }
   
   .logo {
-    height: 40px;
+    height: 60px;
     margin-right: 10px;
   }
   
