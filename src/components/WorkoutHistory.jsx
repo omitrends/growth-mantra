@@ -1,3 +1,4 @@
+import React from "react";
 import { useState, useEffect } from 'react';
 import './WorkoutHistory.css';
 import Sidebar from './Sidebar';

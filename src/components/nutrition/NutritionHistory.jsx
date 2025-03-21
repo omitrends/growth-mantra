@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import './NutritionHistory.css';
 import Sidebar from '../Sidebar';
+import React from "react";
+
 
 const NutritionHistory = () => {
   const [meals, setMeals] = useState([]);

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './RecommendedNutrition.css';
+import React from "react";
 import Sidebar from '../Sidebar';
 
 const RecommendedNutrition = () => {

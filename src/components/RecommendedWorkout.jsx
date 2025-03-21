@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './RecommendedWorkout.css';
+import React from "react";
 import Sidebar from '../components/Sidebar';
 
 const RecommendedWorkout = () => {

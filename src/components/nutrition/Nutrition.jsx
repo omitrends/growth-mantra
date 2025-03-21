@@ -1,6 +1,8 @@
 import './Nutrition.css';
 import Sidebar from '../Sidebar';
 import { useNavigate } from 'react-router';
+import React from "react";
+
 
 const Nutrition = () => {
   const navigate = useNavigate();

@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import './Community.css';
+import React from "react";
+
 import { 
   MessageCircle, ThumbsUp, ThumbsDown, Share, Bookmark, 
   Flag, Send,  Search, User, Clock, Tag, 
