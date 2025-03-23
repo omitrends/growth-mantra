@@ -1,19 +1,19 @@
-import CreateAccount from "./components/CreateAccount";
+import CreateAccount from "./components/Account/CreateAccount";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
-import Login from "./components/Login";
+import Login from "./components/Account/Login";
 // import ForgetPass from "./components/forgetPass";
 import Setup from "./components/Setup"; 
 import DashBoard from "./components/DashBoard";
 import NavbarDash from "./components/NavbarDash";
 import Mental from "./components/Mental";
 
-import Fitness from "./components/Fitness";
+import Fitness from "./components/Fitness/Fitness";
 // import LogWorkout from "./components/LogWorkout";
-import LogWorkout from "./components/LogWorkout"
-import WorkoutHistory from "./components/WorkoutHistory";
-import RecommendedWorkout from "./components/RecommendedWorkout";
+import LogWorkout from "./components/Fitness/LogWorkout"
+import WorkoutHistory from "./components/Fitness/WorkoutHistory";
+import RecommendedWorkout from "./components/Fitness/RecommendedWorkout";
 
 import ContactUs from "./components/ContactUs";
 import Community from "./components/Community";
@@ -21,10 +21,10 @@ import GrowthMantraAI from "./components/GrowthMantraAI";
 // import LogNutrition from "./components/LogNutrition"
 // import RecommendedNutrition from "./components/RecommendedNutrition";
 
-import Nutrition from "./components/nutrition/Nutrition";
-import NutritionLog from "./components/nutrition/LogNutrition";
-import RecommendedNutrition from "./components/nutrition/RecommendedNutrition"
-import NutritionHistory from "./components/nutrition/NutritionHistory";
+import Nutrition from "./components/Nutrition/Nutrition";
+import NutritionLog from "./components/Nutrition/LogNutrition";
+import RecommendedNutrition from "./components/Nutrition/RecommendedNutrition"
+import NutritionHistory from "./components/Nutrition/NutritionHistory";
 
 function App() {
   return (
@@ -42,22 +42,18 @@ function App() {
           <Route path="/mental" element={<Mental />} />
 
           <Route path="/fitness" element={<Fitness />} />
-          <Route path="/workout-logs" element={<LogWorkout />} />
+          <Route path="/log-workout" element={<LogWorkout />} />
           <Route path="/recommended-plans" element={<RecommendedWorkout />} />
           <Route path="/workout-history" element={<WorkoutHistory/>} />
 
-
           <Route path="/nutrition" element={<Nutrition />} />
           <Route path="/nutrition-logs" element={<NutritionLog />} />
-          <Route path="/recommended-plans-Nutrition" element={<RecommendedNutrition />} />
+          <Route path="/recommended-plans-nutrition" element={<RecommendedNutrition />} />
           <Route path="/nutrition-history" element={<NutritionHistory />} />
 
           <Route path="/contact-us" element={<ContactUs/>} />
           <Route path="/community" element={<Community/>} />
           <Route path="/growth-mantra-ai" element={<GrowthMantraAI/>} />
-          {/* <Route path="/nutrition-logs" element={<NutritionLog/>} /> */}
-          {/* <Route path="/recommended-plans-nutrition" element={<RecommendedNutrition/>} /> */}
-          
         </Routes>
       </Router>
     </div>
@@ -72,13 +68,12 @@ function NavbarWrapper() {
       location.pathname === '/dashboard' || 
       location.pathname === '/fitness' || 
       location.pathname === '/nutrition' || 
-      location.pathname === '/mental'||
-      location.pathname === '/workout-logs'||
-      location.pathname === '/recommended-plans'||
-      location.pathname === '/workout-history'||
-      location.pathname === '/nutrition-logs'||
+      location.pathname === '/mental' ||
+      location.pathname === '/log-workout' ||
+      location.pathname === '/recommended-plans' ||
+      location.pathname === '/workout-history' ||
+      location.pathname === '/nutrition-logs' ||
       location.pathname === '/recommended-plans-nutrition'
-    
     ) {
     return <NavbarDash />;
   }

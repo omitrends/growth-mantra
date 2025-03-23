@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import './WorkoutHistory.css';
-import Sidebar from './Sidebar';
+import Sidebar from '../Sidebar';
 
 const WorkoutHistory = () => {
   const [workouts, setWorkouts] = useState([]);

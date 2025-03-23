@@ -1,6 +1,6 @@
 // import React from 'react';
 import './Fitness.css';
-import Sidebar from './Sidebar';
+import Sidebar from '../Sidebar';
 import { useNavigate } from 'react-router';
 
 const Fitness = () => {

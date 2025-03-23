@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './RecommendedWorkout.css';
-import Sidebar from '../components/Sidebar';
+import Sidebar from '../Sidebar';
 
 const RecommendedWorkout = () => {
   const [difficultyLevel, setDifficultyLevel] = useState('');

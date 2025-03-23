@@ -1,10 +1,10 @@
 import "./Login.css";
-import login from "../assets/images/login.jpg";
-import googleLogo from "../assets/images/google-logo.png";
+import login from "../../assets/images/login.jpg";
+import googleLogo from "../../assets/images/google-logo.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import ForgetPass from "./ForgetPass";
-import CloseButton from "./CloseButton"; // Import the CloseButton component
+import ForgetPass from "../ForgetPass";
+import CloseButton from "../CloseButton"; // Import the CloseButton component
 
 const Login = () => {
   const navigate = useNavigate();
