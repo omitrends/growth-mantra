@@ -1,0 +1,105 @@
+.fitness-container {
+    display: flex;
+    min-height: 80vh;
+    background-color: #f5f5f5;
+  }
+  
+  .fitness-content {
+    flex: 1;
+    padding: 2rem;
+  }
+  
+  .title-box{
+    display: flex;
+    justify-content: center;
+  }
+  .fitness-title {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: #333;
+    text-align: center;
+    background-image: linear-gradient(to right, #ec4899, #ef4444);
+    border-radius: 20px;
+    width: 700px;
+  }
+  
+  .fitness-boxes {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .fitness-box {
+    height: 250px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+  }
+  
+  .box-content {
+    flex: 1;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .box-content h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  
+  .box-content p {
+    color: #666;
+    margin-bottom: 1.5rem;
+  }
+  
+  .fitness-button {
+    background-image: linear-gradient(to right, #ec4899, #ef4444);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: background-color 0.3s;
+  }
+  
+  .fitness-button:hover {
+    background-color: #3e8e41;
+  }
+  
+  .box-image {
+    flex: 1;
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .workout-image {
+    background-image: url('../assets/images/Rec_img.jpg');
+    background-size: 50%;
+    background-repeat: no-repeat;
+    
+  }
+  
+  .plans-image {
+    background-image: url('../assets/images/log_book.jpg');
+    background-size: 50%;
+    background-repeat: no-repeat;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .fitness-box {
+      flex-direction: column;
+      height: auto;
+    }
+    
+    .box-image {
+      height: 150px; 
+    }
+  }

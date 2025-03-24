@@ -1,3 +1,4 @@
+import React from "react";
 import "./css/bootstrap.css";
 import MW from "../assets/images/MW.png";
 import Fit from "../assets/images/Fit.png";

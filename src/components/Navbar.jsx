@@ -1,5 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/images/logo.png'; // Import the image
+import { Padding } from '@mui/icons-material';
+import React from "react";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -9,10 +11,20 @@ function Navbar() {
     navigate('/get-started');
   };
 
-  const handleDashboard = (event) => {
+  const handleCommunity = (event) => {
     event.preventDefault();
-    navigate('/dashboard');
+    navigate('/Community');
   };
+
+  const handleContactUs = (event)=>{
+    event.preventDefault();
+    navigate('/contact-us')
+  }
+
+  const handleGMAI = (event)=>{
+    event.preventDefault();
+    navigate('/growth-mantra-ai')
+  }
 
   // Simple rounded button style with black text
   const getStartedButtonStyle = {
@@ -55,13 +67,19 @@ function Navbar() {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/dashboard" onClick={handleDashboard}>
+                  <Link className="nav-link" to="/community" onClick={handleCommunity}>
                     Community
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link">
+                  <Link to = "/contact-us" onClick={handleContactUs} className="nav-link">
                     Contact us
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to = "/growth-mantra-ai" onClick={handleGMAI} className="nav-link">
+                    Growth Mantra AI
+                    <i className="fa-regular fa-message ai-icon"></i>
                   </Link>
                 </li>
               </ul>

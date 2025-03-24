@@ -1,12 +1,59 @@
 import React from 'react';
-import "./Dashboard.css";
+import './DashBoard.css';
+import Sidebar from './Sidebar';
+import { useNavigate } from 'react-router-dom';
 
-function Dashboard() {
-  return (
-    <div>
-      helllo
-    </div>
-  );
-}
+const DashBoard = () => {
+    const navigate = useNavigate();
 
-export default Dashboard;
+    const handleFitnessClick = () => {
+        navigate('/fitness');
+    };
+    const handleNutritionClick = () => {
+      navigate('/nutrition');
+    };
+    const handleMentalClick = () => {
+    navigate('/mental');
+    };
+
+    return (
+      <div className="dashboard-container">
+        <Sidebar />
+        <div style={{ display: "flex", flexDirection: "column" }} className="main-content">
+          <div className="category-cards">
+            <div 
+              className="category-card fitness" 
+              onClick={handleFitnessClick}
+              style={{ cursor: 'pointer' }}
+            >
+              <i className="fas fa-dumbbell card-icon"></i>
+              <span className="card-label">FITNESS</span>
+            </div>
+            <div className="category-card mental"
+            onClick={handleMentalClick}
+            style={{ cursor: 'pointer' }}
+            >
+              <i className="fas fa-brain card-icon"></i>
+              <span className="card-label">MENTAL WELLBEING</span>
+            </div>
+            <div className="category-card nutrition"
+            onClick={handleNutritionClick}
+            style={{ cursor: 'pointer' }}
+            >
+              <i className="fas fa-utensils card-icon"></i>
+              <span className="card-label">NUTRITION</span>
+            </div>
+          </div>
+          
+          <div className="progress-section">
+            <p className="section-title">TRACK YOUR PROGRESS</p>
+            <div className="progress-container">
+              {/* Content for tracking progress goes here */}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+};
+
+export default DashBoard;
