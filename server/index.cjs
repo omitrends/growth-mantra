@@ -147,6 +147,56 @@ app.post('/setup', (req, res) => {
 });
 
 
+app.post('/workout', (req,res) =>{
+  const {userId} =req.body;
+  if(!userId){
+    return res.status(400).json({sucess :false, message: "Missing required fields"});
+  }
+
+  const insertQuery = `insert into workout (userId) values (?)`;
+  connection.query(insertQuery, [userId], (err, result) =>{
+    if (err) return res.status(500).json({ success: false, message: 'Error adding workout' });
+    res.status(200).json({ 
+      success: true, 
+      message: 'Workout added successfully', 
+      workoutId: result.insertId 
+    });
+  });  
+});
+
+app.post('/exercises', (req, res) => {
+  const { workoutId, type, exerciseName, duration, intensity, distance, calories, weight, reps } = req.body;
+
+  if (!workoutId || !type || !exerciseName) {
+    return res.status(400).json({ success: false, message: 'WorkoutId, Type, and ExerciseName are required' });
+  }
+
+  const insertQuery = `
+    INSERT INTO Exercises (WorkoutId, Type, ExerciseName, Duration, Intensity, Distance, Calories, Weight, Reps) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `;
+
+  connection.query(insertQuery, [workoutId, type, exerciseName, duration, intensity, distance, calories, weight, reps], (err, result) => {
+    if (err) return res.status(500).json({ success: false, message: 'Error adding exercise' });
+
+    res.status(200).json({ 
+      success: true, 
+      message: 'Exercise added successfully', 
+      exerciseId: result.insertId 
+    });
+  });
+});
+
+app.get('/workout/:userId', (req, res) => {
+  const { userId } = req.params;
+  const query = 'SELECT * FROM Workouts WHERE UserId = ?';
+
+  connection.query(query, [userId], (err, results) => {
+    if (err) return res.status(500).json({ success: false, message: 'Error fetching workouts' });
+
+    res.status(200).json({ success: true, workouts: results });
+  });
+});
 
 // Start the server
 app.listen(port, () => {

@@ -41,6 +41,32 @@ const createSetupTable = `
 );
 `;
 
+const createWorkoutTable = `
+  CREATE TABLE IF NOT EXISTS Workout (
+    WorkoutId INT AUTO_Increment primary key,
+    userId int,
+    WorkoutDate date not null default (curdate()),
+    foreign key (userId) references register(userId)
+    );
+`;
+
+const createexercisesTable = `
+  create table if not exists exercises(
+    exerciseId int auto_increment primary key,
+    WorkoutId int not null,
+    exerciseType enum('Cardio', 'Strength', 'Yoga', 'Pilates', 'HIIT', 'functional') not null,
+    exerciseName varchar(255) not null,
+    Duration INT DEFAULT NULL,
+    Intensity VARCHAR(50) DEFAULT NULL,
+    Distance FLOAT DEFAULT NULL,
+    Calories INT DEFAULT NULL,
+    Weight FLOAT DEFAULT NULL,
+    Reps INT DEFAULT NULL,
+    FOREIGN KEY (WorkoutId) REFERENCES Workout(WorkoutId)
+  );
+`;
+
+
 function initializeDatabase() {
   connection.connect((err) => {
     if (err) {
@@ -71,6 +97,22 @@ function initializeDatabase() {
         return;
       }
       console.log('Setup table created successfully');
+    });
+
+    connection.query(createWorkoutTable, (err) =>{
+      if(err){
+        console.error("Error creating workout table: ", err.message);
+        return;
+      }
+      console.log('workout table created sucessfully');
+    });
+
+    connection.query(createexercisesTable, (err)=>{
+      if(err){
+        console.error("Error creating exercise table: ", err.message);
+        return;
+      }
+      console.log('exercise table created sucessfully');
     });
   });
 }
