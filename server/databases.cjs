@@ -43,25 +43,26 @@ const createSetupTable = `
 
 const createWorkoutTable = `
   CREATE TABLE IF NOT EXISTS Workout (
-    WorkoutId INT AUTO_Increment primary key,
-    userId int,
-    WorkoutDate date not null default (curdate()),
-    foreign key (userId) references register(userId)
-    );
+    WorkoutId INT PRIMARY KEY AUTO_INCREMENT,
+    UserId INT NOT NULL, 
+    WorkoutType ENUM('Cardio', 'Strength', 'Yoga', 'Pilates', 'HIIT', 'Functional') NOT NULL,
+    BodyPart VARCHAR(255) NOT NULL,
+    WorkoutDate DATE NOT NULL DEFAULT (CURDATE()),
+    FOREIGN KEY (UserId) REFERENCES Register(UserId)
+  );
 `;
 
-const createexercisesTable = `
-  create table if not exists exercises(
-    exerciseId int auto_increment primary key,
-    WorkoutId int not null,
-    exerciseType enum('Cardio', 'Strength', 'Yoga', 'Pilates', 'HIIT', 'functional') not null,
-    exerciseName varchar(255) not null,
-    Duration INT DEFAULT NULL,
-    Intensity VARCHAR(50) DEFAULT NULL,
-    Distance FLOAT DEFAULT NULL,
-    Calories INT DEFAULT NULL,
-    Weight FLOAT DEFAULT NULL,
-    Reps INT DEFAULT NULL,
+const createExercisesTable = `
+  CREATE TABLE IF NOT EXISTS Exercises (
+    SetId INT AUTO_INCREMENT PRIMARY KEY,
+    WorkoutId INT,
+    Exercise VARCHAR(255) NOT NULL,
+    Weight DECIMAL(5,2),
+    Reps INT,
+    Duration DECIMAL(5,2),
+    Distance DECIMAL(5,2),
+    Calories DECIMAL(6,2),
+    Intensity VARCHAR(50),
     FOREIGN KEY (WorkoutId) REFERENCES Workout(WorkoutId)
   );
 `;
@@ -107,7 +108,7 @@ function initializeDatabase() {
       console.log('workout table created sucessfully');
     });
 
-    connection.query(createexercisesTable, (err)=>{
+    connection.query(createExercisesTable, (err)=>{
       if(err){
         console.error("Error creating exercise table: ", err.message);
         return;

@@ -2,16 +2,20 @@ import React from "react";
 import { useState, useEffect } from 'react';
 import './WorkoutHistory.css';
 import Sidebar from './Sidebar';
+import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 const WorkoutHistory = () => {
+  const navigate = useNavigate();
   const [workouts, setWorkouts] = useState([]);
+  const [email, setEmail] = useState("");
   const [filteredWorkouts, setFilteredWorkouts] = useState([]);
   const [filter, setFilter] = useState({
     workoutType: '',
     bodyPart: '',
     dateRange: 'all'
   });
-  
+
   // Workout types and body parts for filter dropdowns
   const workoutTypes = ['All', 'Strength', 'Cardio', 'HIIT', 'Yoga', 'Pilates', 'Functional'];
   const bodyParts = ['All', 'Chest', 'Back', 'Legs', 'Arms', 'Shoulders', 'Core', 'Full Body'];
@@ -20,88 +24,50 @@ const WorkoutHistory = () => {
     { value: 'week', label: 'This Week' },
     { value: 'month', label: 'This Month' },
     { value: '3months', label: 'Last 3 Months' }
-  ];
+  ]; 
 
-  // Mock data - in a real app, this would come from an API or local storage
-  useEffect(() => {
-    // Simulate fetching data
-    const mockWorkouts = [
-      {
-        id: 1,
-        date: '2025-03-18',
-        workoutType: 'Strength',
-        bodyPart: 'Chest',
-        sets: [
-          { exercise: 'Bench Press', weight: '80', reps: '8' },
-          { exercise: 'Incline Press', weight: '60', reps: '10' },
-          { exercise: 'Cable Flyes', weight: '15', reps: '12' }
-        ]
-      },
-      {
-        id: 2,
-        date: '2025-03-15',
-        workoutType: 'Cardio',
-        bodyPart: 'Full Body',
-        sets: [
-          { exercise: 'Running', duration: '30', distance: '5', calories: '350' }
-        ]
-      },
-      {
-        id: 3,
-        date: '2025-03-10',
-        workoutType: 'HIIT',
-        bodyPart: 'Full Body',
-        sets: [
-          { exercise: 'Burpees', duration: '10', intensity: 'High' },
-          { exercise: 'Mountain Climbers', duration: '10', intensity: 'Medium' }
-        ]
-      },
-      {
-        id: 4,
-        date: '2025-03-05',
-        workoutType: 'Yoga',
-        bodyPart: 'Core',
-        sets: [
-          { exercise: 'Sun Salutation', duration: '20' },
-          { exercise: 'Warrior Pose', duration: '15' }
-        ]
-      },
-      {
-        id: 5,
-        date: '2025-02-28',
-        workoutType: 'Strength',
-        bodyPart: 'Legs',
-        sets: [
-          { exercise: 'Squats', weight: '100', reps: '10' },
-          { exercise: 'Leg Press', weight: '150', reps: '12' },
-          { exercise: 'Lunges', weight: '20', reps: '15' }
-        ]
+  const fetchWorkouts = async (storedEmail) => {
+    try {
+      const response = await axios.get('http://localhost:5000/getWorkouts', {
+        params: { UserEmail: storedEmail }  // Pass the stored email here
+      });
+
+      if (response.data.success) {
+        console.log('Fetched Workouts:', response.data.workouts); // Debugging log
+        setWorkouts(response.data.workouts);
+      } else {
+        console.error('Error fetching workouts:', response.data.message);
       }
-    ];
+    } catch (error) {
+      console.error('API Error:', error);
+    }
+  };
 
-    setWorkouts(mockWorkouts);
-    setFilteredWorkouts(mockWorkouts);
-  }, []);
+  useEffect(() => {
+    const storedEmail = localStorage.getItem("email");
+    if (storedEmail) {
+      fetchWorkouts(storedEmail); // Call fetchWorkouts with the stored email
+    } else {
+      navigate("/login"); // Redirect to login if not logged in
+    }
+  }, [navigate]);
 
   // Apply filters
   useEffect(() => {
     let result = [...workouts];
-    
-    // Filter by workout type
+
     if (filter.workoutType && filter.workoutType !== 'All') {
-      result = result.filter(workout => workout.workoutType === filter.workoutType);
+      result = result.filter(workout => workout.WorkoutType === filter.workoutType);
     }
-    
-    // Filter by body part
+
     if (filter.bodyPart && filter.bodyPart !== 'All') {
-      result = result.filter(workout => workout.bodyPart === filter.bodyPart);
+      result = result.filter(workout => workout.BodyPart === filter.bodyPart);
     }
-    
-    // Filter by date range
+
     if (filter.dateRange !== 'all') {
       const today = new Date();
       let startDate = new Date();
-      
+
       switch (filter.dateRange) {
         case 'week':
           startDate.setDate(today.getDate() - 7);
@@ -115,17 +81,16 @@ const WorkoutHistory = () => {
         default:
           break;
       }
-      
+
       result = result.filter(workout => {
-        const workoutDate = new Date(workout.date);
+        const workoutDate = new Date(workout.WorkoutDate);
         return workoutDate >= startDate && workoutDate <= today;
       });
     }
-    
+
     setFilteredWorkouts(result);
   }, [filter, workouts]);
 
-  // Handle filter changes
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilter(prev => ({
@@ -144,130 +109,75 @@ const WorkoutHistory = () => {
   const renderSets = (sets, workoutType) => {
     if (!sets || sets.length === 0) return null;
 
+    console.log('Rendering sets for workout type:', workoutType); // Debugging log
+    console.log('Sets:', sets); // Debugging log
+
+    const renderTableHeader = (columns) => (
+      <thead>
+        <tr>
+          {columns.map((col, index) => (
+            <th key={index}>{col}</th>
+          ))}
+        </tr>
+      </thead>
+    );
+
+    const renderTableBody = (sets, columns) => (
+      <tbody>
+        {sets.map((set, index) => (
+          <tr key={index}>
+            {columns.map((col, colIndex) => (
+              <td key={colIndex}>
+                {set[col] !== null && set[col] !== undefined ? set[col] : 'N/A'}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    );
+
     switch (workoutType) {
       case 'Strength':
         return (
           <table className="history-sets-table">
-            <thead>
-              <tr>
-                <th>Exercise</th>
-                <th>Weight (kg)</th>
-                <th>Reps</th>
-              </tr>
-            </thead>
-            <tbody>
-              {sets.map((set, index) => (
-                <tr key={index}>
-                  <td>{set.exercise}</td>
-                  <td>{set.weight}</td>
-                  <td>{set.reps}</td>
-                </tr>
-              ))}
-            </tbody>
+            {renderTableHeader(['Exercise', 'Weight', 'Reps'])}
+            {renderTableBody(sets, ['Exercise', 'Weight', 'Reps'])}
           </table>
         );
       case 'Cardio':
         return (
           <table className="history-sets-table">
-            <thead>
-              <tr>
-                <th>Exercise</th>
-                <th>Duration (min)</th>
-                <th>Distance (km)</th>
-                <th>Calories</th>
-              </tr>
-            </thead>
-            <tbody>
-              {sets.map((set, index) => (
-                <tr key={index}>
-                  <td>{set.exercise}</td>
-                  <td>{set.duration}</td>
-                  <td>{set.distance || 'N/A'}</td>
-                  <td>{set.calories || 'N/A'}</td>
-                </tr>
-              ))}
-            </tbody>
+            {renderTableHeader(['Exercise', 'Duration', 'Distance', 'Calories'])}
+            {renderTableBody(sets, ['Exercise', 'Duration', 'Distance', 'Calories'])}
           </table>
         );
       case 'HIIT':
         return (
           <table className="history-sets-table">
-            <thead>
-              <tr>
-                <th>Exercise</th>
-                <th>Duration (min)</th>
-                <th>Intensity</th>
-              </tr>
-            </thead>
-            <tbody>
-              {sets.map((set, index) => (
-                <tr key={index}>
-                  <td>{set.exercise}</td>
-                  <td>{set.duration}</td>
-                  <td>{set.intensity}</td>
-                </tr>
-              ))}
-            </tbody>
+            {renderTableHeader(['Exercise', 'Duration', 'Intensity'])}
+            {renderTableBody(sets, ['Exercise', 'Duration', 'Intensity'])}
           </table>
         );
       case 'Yoga':
       case 'Pilates':
         return (
           <table className="history-sets-table">
-            <thead>
-              <tr>
-                <th>Pose/Exercise</th>
-                <th>Duration (min)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {sets.map((set, index) => (
-                <tr key={index}>
-                  <td>{set.exercise}</td>
-                  <td>{set.duration}</td>
-                </tr>
-              ))}
-            </tbody>
+            {renderTableHeader(['Pose/Exercise', 'Duration'])}
+            {renderTableBody(sets, ['Exercise', 'Duration'])}
           </table>
         );
       case 'Functional':
         return (
           <table className="history-sets-table">
-            <thead>
-              <tr>
-                <th>Exercise</th>
-                <th>Reps</th>
-                <th>Duration (min)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {sets.map((set, index) => (
-                <tr key={index}>
-                  <td>{set.exercise}</td>
-                  <td>{set.reps || 'N/A'}</td>
-                  <td>{set.duration || 'N/A'}</td>
-                </tr>
-              ))}
-            </tbody>
+            {renderTableHeader(['Exercise', 'Reps', 'Duration'])}
+            {renderTableBody(sets, ['Exercise', 'Reps', 'Duration'])}
           </table>
         );
       default:
         return (
           <table className="history-sets-table">
-            <thead>
-              <tr>
-                <th>Exercise</th>
-                <th>Details</th>
-              </tr>
-            </thead>
-            <tbody>
-              {sets.map((set, index) => (
-                <tr key={index}>
-                  <td>{set.exercise}</td>
-                  <td>Various</td>
-                </tr>
-              ))}
-            </tbody>
+            {renderTableHeader(['Exercise', 'Details'])}
+            {renderTableBody(sets, ['Exercise', 'Details'])}
           </table>
         );
     }
@@ -326,16 +236,18 @@ const WorkoutHistory = () => {
         <div className="workouts-container">
           {filteredWorkouts.length > 0 ? (
             filteredWorkouts.map((workout) => (
-              <div key={workout.id} className="workout-card">
+              <div key={workout.WorkoutId} className="workout-card">
                 <div className="workout-header">
-                  <div className="workout-date">{formatDate(workout.date)}</div>
+                  <div className="workout-date">{formatDate(workout.WorkoutDate)}</div>
                   <div className="workout-badges">
-                    <span className="workout-type-badge">{workout.workoutType}</span>
-                    <span className="workout-part-badge">{workout.bodyPart}</span>
+                    <span className="workout-type-badge">{workout.WorkoutType}</span>
+                    <span className="workout-part-badge">{workout.BodyPart}</span>
                   </div>
                 </div>
+
+                {/* Render workout details by default */}
                 <div className="workout-details">
-                  {renderSets(workout.sets, workout.workoutType)}
+                  {renderSets(workout.sets, workout.WorkoutType)} {/* Render sets directly */}
                 </div>
               </div>
             ))
@@ -352,7 +264,6 @@ const WorkoutHistory = () => {
         </div>
       </div>
     </div>
-
   );
 };
 

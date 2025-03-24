@@ -54,6 +54,7 @@ const Login = () => {
           setSuccessMessage("Login successful! Redirecting...");
           // Store token in localStorage or sessionStorage
           localStorage.setItem("token", data.token);
+          localStorage.setItem("email", values.email);
 
           // Redirect after 2 seconds to show success message
           setTimeout(() => {
