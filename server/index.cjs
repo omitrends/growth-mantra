@@ -23,6 +23,23 @@ app.use(bodyParser.json());
 // JWT Secret Key
 const JWT_SECRET = 'your_jwt_secret_key';  // Set your JWT secret key here
 
+const authenticateToken = (req, res, next) => {
+  const token = req.headers['authorization'];
+
+  if (!token) {
+    return res.status(401).json({ success: false, message: 'Access denied. No token provided.' });
+  }
+
+  jwt.verify(token, JWT_SECRET, (err, user) => {
+    if (err) {
+      return res.status(403).json({ success: false, message: 'Invalid token.' });
+    }
+
+    req.user = user;
+    next();
+  });
+};
+
 // Register route
 app.post('/register', async (req, res) => {
   const { username, email, password } = req.body;
@@ -100,7 +117,7 @@ app.post('/login', (req, res) => {
     }
 
     // Generate token
-    const token = jwt.sign({ userId: user.UserId }, JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ userId: user.UserId, email: user.UserEmail }, JWT_SECRET, { expiresIn: '1h' });
 
     res.status(200).json({
       success: true,
@@ -110,15 +127,14 @@ app.post('/login', (req, res) => {
   });
 });
 
-// Setup route without token authentication
-// Removed authenticateToken middleware for /setup route
+
 app.post('/setup', (req, res) => {
   console.log("Received data at /setup endpoint:", req.body); // Log incoming request data
 
-  let { name, phoneno, age, height, weight, lifestyle, fitnessgoal, gender } = req.body;
+  let { name, phoneno, age, height, weight, lifestyle, fitnessgoal, gender, UserEmail } = req.body;
 
-  if (!name || !phoneno || !age || !height || !weight || !lifestyle || !fitnessgoal || !gender) {
-    console.log("Missing required fields:", { name, phoneno, age, height, weight, lifestyle, fitnessgoal, gender });
+  if (!name || !phoneno || !age || !height || !weight || !lifestyle || !fitnessgoal || !gender || !UserEmail) {
+    console.log("Missing required fields:", { name, phoneno, age, height, weight, lifestyle, fitnessgoal, gender, UserEmail });
     return res.status(400).json({ success: false, message: 'Missing required fields' });
   }
 
@@ -130,28 +146,74 @@ app.post('/setup', (req, res) => {
     return res.status(400).json({ success: false, message: 'Height and weight must be valid numbers' });
   }
 
-  // Log the data we are going to insert
-  console.log("Data ready for insertion:", { name, phoneno, age, height, weight, lifestyle, fitnessgoal, gender });
-
-  // Prepare the query for inserting data
-  const insertQuery = `
-    INSERT INTO Setup (Name, PhoneNo, Age, Height, Weight, LifeStyle, FitnessGoal, Gender)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-  `;
-
-  // Insert the data into the Setup table
-  connection.query(insertQuery, [name, phoneno, age, height, weight, lifestyle, fitnessgoal, gender], (err, result) => {
-    if (err) {
-      console.error('Database Insertion Error:', err.sqlMessage);
-      return res.status(500).json({ success: false, message: 'Error inserting setup data' });
+  // Fetch the UserId based on the email
+  const getUserQuery = "SELECT UserId FROM Register WHERE UserEmail = ?";
+  connection.query(getUserQuery, [UserEmail], (err, results) => {
+    if (err || results.length === 0) {
+      console.error("Error fetching UserId:", err || "User not found");
+      return res.status(404).json({ success: false, message: "User not found" });
     }
 
-    console.log('Setup data inserted successfully');
-    return res.status(200).json({ success: true, message: 'Setup completed successfully!' });
+    const userId = results[0].UserId;
+
+    // Log the data we are going to insert
+    console.log("Data ready for insertion:", { name, phoneno, age, height, weight, lifestyle, fitnessgoal, gender, userId });
+
+    // Prepare the query for inserting data
+    const insertQuery = `
+      INSERT INTO Setup (UserId, Name, PhoneNo, Age, Height, Weight, LifeStyle, FitnessGoal, Gender)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+
+    // Insert the data into the Setup table
+    connection.query(insertQuery, [userId, name, phoneno, age, height, weight, lifestyle, fitnessgoal, gender], (err, result) => {
+      if (err) {
+        console.error('Database Insertion Error:', err.sqlMessage);
+        return res.status(500).json({ success: false, message: 'Error inserting setup data' });
+      }
+
+      console.log('Setup data inserted successfully');
+      return res.status(200).json({ success: true, message: 'Setup completed successfully!' });
+    });
   });
 });
 
-app.post('/logWorkout', (req, res) => {  // Change endpoint to match frontend
+app.get('/userdata', (req, res) => {
+  const { UserEmail } = req.query;
+
+  if (!UserEmail) {
+    return res.status(400).json({ success: false, message: 'Email is required' });
+  }
+
+  // Fetch the UserId based on the email
+  const getUserQuery = "SELECT UserId FROM Register WHERE UserEmail = ?";
+  connection.query(getUserQuery, [UserEmail], (err, results) => {
+    if (err || results.length === 0) {
+      console.error("Error fetching UserId:", err || "User not found");
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    const userId = results[0].UserId;
+
+    // Fetch the setup data based on UserId
+    const getSetupQuery = "SELECT * FROM Setup WHERE UserId = ?";
+    connection.query(getSetupQuery, [userId], (err, setupData) => {
+      if (err) {
+        console.error("Error fetching setup data:", err);
+        return res.status(500).json({ success: false, message: "Error fetching setup data" });
+      }
+
+      if (setupData.length === 0) {
+        return res.status(404).json({ success: false, message: "No setup data found" });
+      }
+
+      // Send the setup data back
+      res.json({ success: true, setupData: setupData[0] });
+    });
+  });
+});
+
+app.post('/logWorkout', authenticateToken, (req, res) => { 
 
   const { UserEmail, workoutType, bodyPart, sets } = req.body;
 
@@ -193,7 +255,7 @@ app.post('/logWorkout', (req, res) => {  // Change endpoint to match frontend
   });
 });
 
-app.get('/getWorkouts', (req, res) => {
+app.get('/getWorkouts', authenticateToken, (req, res) => {
   console.log("Received workout data:", req.body);
 
   const { UserEmail } = req.query;

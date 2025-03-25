@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import React from "react";
 
-
 const Setup = () => {
   const navigate = useNavigate();
 
@@ -68,6 +67,7 @@ const Setup = () => {
       lifestyle: formData.lifestyle,
       fitnessgoal: formData.fitnessgoal,
       gender: formData.gender,
+      UserEmail: email, // Include the email in the form data
     };
 
     console.log('Form Data Being Sent:', formDataToSend); // Add this to check the data

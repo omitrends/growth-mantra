@@ -1,35 +1,74 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import profileImage from '../assets/images/profile.png';
 
 const Sidebar = () => {
+  const [userData, setUserData] = useState(null);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const email = localStorage.getItem('email'); // Assuming the email is stored in localStorage
+        if (!email) {
+          throw new Error('No email found');
+        }
+
+        const response = await axios.get('http://localhost:5000/userdata', {
+          params: {
+            UserEmail: email // Use the email directly as a query parameter
+          }
+        });
+
+        setUserData(response.data.setupData);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+        setError(error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  if (error) {
+    return <div className="sidebar"></div>; // Return a blank sidebar on error
+  }
+
+  if (!userData) {
+    return <div className="sidebar"></div>; // Return a blank sidebar if no user data
+  }
+
   return (
     <div className="sidebar">
       <div className="user-profile">
         <div className="user-info">
           <img 
-            src="https://storage.googleapis.com/a1aa/image/sX6o1TQgGtzNwKhr7EWyRARW06ClBO1Rx4wkO0HKxPQ.jpg" 
+            src={profileImage} 
             alt="User profile picture" 
             className="profile-img" 
           />
           <div className="user-details">
-            <p className="user-name">NAME SURNAME</p>
-            <p className="user-meta">Male, 25 years</p>
+            <p className="user-name">{userData.Name}</p>
+            <p className="user-meta">{userData.Gender}, {userData.Age}</p>
           </div>
         </div>
-        <a href="#" className="edit-link">EDIT</a>
+        <a href="#" className="edit-link" onClick={() => navigate('/setup')}>EDIT</a>
       </div>
       
       <div className="measurements">
         <div className="measurement">
           <p className="measurement-label">HEIGHT</p>
           <p className="measurement-value">
-            170
+            {userData.Height}
             <span className="measurement-unit">cm</span>
           </p>
         </div>
         <div className="measurement">
           <p className="measurement-label">WEIGHT</p>
           <p className="measurement-value">
-            70
+            {userData.Weight}
             <span className="measurement-unit">kg</span>
           </p>
         </div>
