@@ -12,7 +12,7 @@ function NavbarDash() {
   // Logout function
   const handleLogout = (event) => {
     event.preventDefault();
-    localStorage.removeItem('userToken'); // Clear user session/token
+    localStorage.clear(); // Clear user session/token
     navigate('/login'); // Redirect to login page
   };
 
