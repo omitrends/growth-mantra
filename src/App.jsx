@@ -7,7 +7,6 @@ import Login from "./components/Login";
 import Setup from "./components/Setup"; 
 import DashBoard from "./components/DashBoard";
 import NavbarDash from "./components/NavbarDash";
-import Mental from "./components/Mental";
 
 import Fitness from "./components/Fitness";
 // import LogWorkout from "./components/LogWorkout";
@@ -26,6 +25,12 @@ import NutritionLog from "./components/nutrition/LogNutrition";
 import RecommendedNutrition from "./components/nutrition/RecommendedNutrition"
 import NutritionHistory from "./components/nutrition/NutritionHistory";
 
+import MentalWellbeing from "./components/mentalwellbeing/MentalWellbeing";
+import Journaling from "./components/mentalwellbeing/Journaling";
+import Meditation from "./components/mentalwellbeing/Meditation";
+
+
+
 function App() {
   return (
     <div>
@@ -39,7 +44,6 @@ function App() {
           <Route path="/dashboard" element={<DashBoard />} />
           <Route path="/get-started" element={<CreateAccount />} />
 
-          <Route path="/mental" element={<Mental />} />
 
           <Route path="/fitness" element={<Fitness />} />
           <Route path="/workout-logs" element={<LogWorkout />} />
@@ -51,6 +55,12 @@ function App() {
           <Route path="/nutrition-logs" element={<NutritionLog />} />
           <Route path="/recommended-plans-Nutrition" element={<RecommendedNutrition />} />
           <Route path="/nutrition-history" element={<NutritionHistory />} />
+
+
+          <Route path="/mentalwellbeing" element={<MentalWellbeing />} /> 
+          <Route path="/journaling" element={<Journaling />} /> 
+          <Route path="/meditation" element={<Meditation />} />
+
 
           <Route path="/contact-us" element={<ContactUs/>} />
           <Route path="/community" element={<Community/>} />
@@ -72,12 +82,14 @@ function NavbarWrapper() {
       location.pathname === '/dashboard' || 
       location.pathname === '/fitness' || 
       location.pathname === '/nutrition' || 
-      location.pathname === '/mental'||
+      location.pathname === '/mentalwellbeing'||
       location.pathname === '/workout-logs'||
       location.pathname === '/recommended-plans'||
       location.pathname === '/workout-history'||
       location.pathname === '/nutrition-logs'||
-      location.pathname === '/recommended-plans-nutrition'
+      location.pathname === '/recommended-plans-nutrition'||
+      location.pathname === '/journaling'||
+      location.pathname === '/meditation'
     
     ) {
     return <NavbarDash />;
