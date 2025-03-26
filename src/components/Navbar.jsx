@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/images/logo.png'; // Import the image
-// import { Padding } from '@mui/icons-material';
+import { Padding } from '@mui/icons-material';
+import React from "react";
 
 function Navbar() {
   const navigate = useNavigate();

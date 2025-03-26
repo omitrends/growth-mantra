@@ -7,7 +7,6 @@ import Login from "./components/Account/Login";
 import Setup from "./components/Setup"; 
 import DashBoard from "./components/DashBoard";
 import NavbarDash from "./components/NavbarDash";
-import Mental from "./components/Mental";
 
 import Fitness from "./components/Fitness/Fitness";
 // import LogWorkout from "./components/LogWorkout";
@@ -39,7 +38,6 @@ function App() {
           <Route path="/dashboard" element={<DashBoard />} />
           <Route path="/get-started" element={<CreateAccount />} />
 
-          <Route path="/mental" element={<Mental />} />
 
           <Route path="/fitness" element={<Fitness />} />
           <Route path="/log-workout" element={<LogWorkout />} />
@@ -50,6 +48,12 @@ function App() {
           <Route path="/nutrition-logs" element={<NutritionLog />} />
           <Route path="/recommended-plans-nutrition" element={<RecommendedNutrition />} />
           <Route path="/nutrition-history" element={<NutritionHistory />} />
+
+
+          <Route path="/mentalwellbeing" element={<MentalWellbeing />} /> 
+          <Route path="/journaling" element={<Journaling />} /> 
+          <Route path="/meditation" element={<Meditation />} />
+
 
           <Route path="/contact-us" element={<ContactUs/>} />
           <Route path="/community" element={<Community/>} />

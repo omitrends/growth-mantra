@@ -1,4 +1,4 @@
-// import React from 'react';
+import React from 'react';
 import './DashBoard.css';
 import Sidebar from './Sidebar';
 import { useNavigate } from 'react-router-dom';
@@ -12,8 +12,8 @@ const DashBoard = () => {
     const handleNutritionClick = () => {
       navigate('/nutrition');
     };
-    const handleMentalClick = () => {
-    navigate('/mental');
+    const handleMentalWellbeingClick = () => {
+    navigate('/mentalwellbeing');
     };
 
     return (
@@ -30,11 +30,11 @@ const DashBoard = () => {
               <span className="card-label">FITNESS</span>
             </div>
             <div className="category-card mental"
-            onClick={handleMentalClick}
+            onClick={handleMentalWellbeingClick}
             style={{ cursor: 'pointer' }}
             >
               <i className="fas fa-brain card-icon"></i>
-              <span className="card-label">MENTAL WELLBEING</span>
+              <span className="card-label">MENTAL WELL-BEING</span>
             </div>
             <div className="category-card nutrition"
             onClick={handleNutritionClick}

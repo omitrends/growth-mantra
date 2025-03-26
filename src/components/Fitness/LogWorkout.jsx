@@ -1,31 +1,127 @@
-import  { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './LogWorkout.css';
-import Sidebar from '../Sidebar';
-import {useNavigate} from 'react-router-dom'
-// import { height } from '@fortawesome/free-solid-svg-icons/fa0';
-const LogWorkout = () => {
+import Sidebar from './Sidebar';
+import { useNavigate } from 'react-router-dom';
+import React from "react";
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Papa from 'papaparse';
 
+const LogWorkout = () => {
   const navigate = useNavigate();
 
+  const [email, setEmail] = useState("");
   const [workoutType, setWorkoutType] = useState('');
   const [bodyPart, setBodyPart] = useState('');
   const [exercise, setExercise] = useState('');
   const [sets, setSets] = useState([]);
-  
-  // Fields for different workout types
   const [weight, setWeight] = useState('');
   const [reps, setReps] = useState('');
   const [duration, setDuration] = useState('');
   const [distance, setDistance] = useState('');
   const [calories, setCalories] = useState('');
   const [intensity, setIntensity] = useState('');
+  const [exerciseSuggestions, setExerciseSuggestions] = useState([]);
+  const [activeIndex, setActiveIndex] = useState(-1);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [exercisesData, setExercisesData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [exerciseName, setExerciseName] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
 
-  // Workout types and body parts for dropdown menus
   const workoutTypes = ['Strength', 'Cardio', 'HIIT', 'Yoga', 'Pilates', 'Functional'];
   const bodyParts = ['Chest', 'Back', 'Legs', 'Arms', 'Shoulders', 'Core', 'Full Body'];
   const intensityLevels = ['Low', 'Medium', 'High'];
 
-  // Reset input fields when workout type changes
+  useEffect(() => {
+    const storedEmail = localStorage.getItem("email");
+    if (storedEmail) {
+      setEmail(storedEmail);
+    } else {
+      navigate("/login"); // Redirect to login if not logged in
+    }
+  }, [navigate]);
+
+  const logout = () => {
+    localStorage.removeItem("email");
+    navigate("/login");
+  };
+
+ const addSet = () => {
+  if (!exerciseName) { // Check if exerciseName is empty
+    alert("Please enter an exercise name");
+    return;
+  }
+
+  let newSet = { id: Date.now(), exercise: exerciseName }; // Set exerciseName instead of exercise
+  let isValid = true;
+
+  switch (workoutType) {
+    case "Strength":
+      if (!weight || !reps) {
+        alert("Please enter weight and reps");
+        isValid = false;
+      } else {
+        newSet = { ...newSet, weight, reps };
+      }
+      break;
+    case "Cardio":
+      if (!duration && !distance) {
+        alert("Please enter duration or distance");
+        isValid = false;
+      } else {
+        newSet = {
+          ...newSet,
+          duration: duration || "N/A",
+          distance: distance || "N/A",
+          calories: calories || "N/A",
+        };
+      }
+      break;
+    case "HIIT":
+      if (!duration || !intensity) {
+        alert("Please enter duration and intensity");
+        isValid = false;
+      } else {
+        newSet = { ...newSet, duration, intensity };
+      }
+      break;
+    case "Yoga":
+    case "Pilates":
+      if (!duration) {
+        alert("Please enter duration");
+        isValid = false;
+      } else {
+        newSet = { ...newSet, duration };
+      }
+      break;
+    case "Functional":
+      if (!reps && !duration) {
+        alert("Please enter reps or duration");
+        isValid = false;
+      } else {
+        newSet = { ...newSet, reps: reps || "N/A", duration: duration || "N/A" };
+      }
+      break;
+    default:
+      alert("Please select a workout type");
+      isValid = false;
+  }
+
+  if (isValid) {
+    setSets([...sets, newSet]);
+    // Reset the fields after adding the set
+    setExerciseName(""); // Clear the exercise input field
+    setWeight("");
+    setReps("");
+    setDuration("");
+    setDistance("");
+    setCalories("");
+    setIntensity("");
+  }
+};
+
   useEffect(() => {
     setExercise('');
     setWeight('');
@@ -37,103 +133,81 @@ const LogWorkout = () => {
     setSets([]);
   }, [workoutType]);
 
-  const addSet = () => {
-    if (!exercise) {
-      alert('Please enter an exercise name');
-      return;
-    }
+  useEffect(() => {
+    Papa.parse('/server/data/Exercise.csv', {
+      download: true,
+      complete: (result) => {
+        setExercisesData(result.data); // Store CSV data
+      },
+      header: true, // Treat the first row as the header
+    });
+  }, []);
 
-    let newSet = { id: Date.now(), exercise };
-    let isValid = true;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    switch (workoutType) {
-      case 'Strength':
-        if (!weight || !reps) {
-          alert('Please enter weight and reps');
-          isValid = false;
-        } else {
-          newSet = { ...newSet, weight, reps };
-        }
-        break;
-      case 'Cardio':
-        if (!duration && !distance) {
-          alert('Please enter duration or distance');
-          isValid = false;
-        } else {
-          newSet = { ...newSet, duration: duration || 'N/A', distance: distance || 'N/A', calories: calories || 'N/A' };
-        }
-        break;
-      case 'HIIT':
-        if (!duration || !intensity) {
-          alert('Please enter duration and intensity');
-          isValid = false;
-        } else {
-          newSet = { ...newSet, duration, intensity };
-        }
-        break;
-      case 'Yoga':
-      case 'Pilates':
-        if (!duration) {
-          alert('Please enter duration');
-          isValid = false;
-        } else {
-          newSet = { ...newSet, duration };
-        }
-        break;
-      case 'Functional':
-        if (!reps && !duration) {
-          alert('Please enter reps or duration');
-          isValid = false;
-        } else {
-          newSet = { ...newSet, reps: reps || 'N/A', duration: duration || 'N/A' };
-        }
-        break;
-      default:
-        alert('Please select a workout type');
-        isValid = false;
-    }
+    const workoutData = {
+      UserEmail: email,
+      workoutType,
+      bodyPart,
+      sets: sets.map(set => ({
+        exercise: set.exercise,
+        weight: set.weight || null,
+        reps: set.reps || null,
+        duration: set.duration || null,
+        distance: set.distance || null,
+        calories: set.calories || null,
+        intensity: set.intensity || null
+      }))
+    };
 
-    if (isValid) {
-      setSets([...sets, newSet]);
-      // Clear inputs after adding
-      setExercise('');
-      setWeight('');
-      setReps('');
-      setDuration('');
-      setDistance('');
-      setCalories('');
-      setIntensity('');
-    }
-  };
-
-  const handleSubmit = () => {
-    if (sets.length > 0 && workoutType && bodyPart) {
-      // Here you would typically send the data to a server
-      alert('Workout logged successfully!');
-      // Clear all inputs and sets
-      setWorkoutType('');
-      setBodyPart('');
-      setExercise('');
-      setWeight('');
-      setReps('');
-      setDuration('');
-      setDistance('');
-      setCalories('');
-      setIntensity('');
-      setSets([]);
-    } else {
-      alert('Please enter workout details and add at least one set');
+    try {
+      const response = await axios.post("http://localhost:5000/logWorkout", workoutData, {
+        headers: { "Content-Type": "application/json" }
+      });
+      toast.success('Workout logged successfully!', { autoClose: 3000 });
+    } catch (error) {
+      toast.error('Error logging workout!', { autoClose: 3000 });
     }
   };
 
   const handleView = () => {
-    // This would typically navigate to a view showing all logged workouts
-    
     navigate('/workout-history');
-    
   };
 
-  // Render input fields based on workout type
+  const handleSearch = (searchQuery) => {
+    setExerciseName(searchQuery); // Update input field value
+
+    if (searchQuery.trim() === "") {
+      setSuggestions([]); // Clear suggestions if input is empty
+      return;
+    }
+
+    // Filter exercises based on the input, ensuring 'ExerciseName' is valid
+    const filteredSuggestions = exercisesData.filter(exercise =>
+      exercise.ExerciseName && exercise.ExerciseName.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    setSuggestions(filteredSuggestions); // Update suggestions
+    setActiveIndex(-1);
+  };
+
+  // Set selected exercise when clicked
+  const handleExerciseSelect = (exercise) => {
+    setExerciseName(exercise.ExerciseName); // Set selected exercise name
+    setSuggestions([]); // Clear suggestions after selection
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "ArrowDown") {
+      setActiveIndex((prevIndex) => (prevIndex + 1) % suggestions.length);
+    } else if (e.key === "ArrowUp") {
+      setActiveIndex((prevIndex) => (prevIndex - 1 + suggestions.length) % suggestions.length);
+    } else if (e.key === "Enter" && activeIndex >= 0) {
+      handleExerciseSelect(suggestions[activeIndex]);
+    }
+  };
+  
   const renderInputFields = () => {
     switch (workoutType) {
       case 'Strength':
@@ -143,10 +217,24 @@ const LogWorkout = () => {
               <label>Exercise</label>
               <input 
                 type="text" 
-                value={exercise} 
-                onChange={(e) => setExercise(e.target.value)} 
+                value={exerciseName} 
+                onChange={(e) => handleSearch(e.target.value)}
+                onKeyDown={handleKeyDown}
                 placeholder="E.g., Bench Press"
               />
+             {suggestions.length > 0 && (
+  <ul className="suggestions-list">
+    {suggestions.map((exercise, index) => (
+      <li 
+        key={index} 
+        className={index === activeIndex ? 'active' : ''}
+        onClick={() => handleExerciseSelect(exercise)}
+      >
+        {exercise.ExerciseName}
+      </li>
+    ))}
+  </ul>
+)}
             </div>
             <div className="input-field">
               <label>Weight (kg)</label>
@@ -175,10 +263,24 @@ const LogWorkout = () => {
               <label>Exercise</label>
               <input 
                 type="text" 
-                value={exercise} 
-                onChange={(e) => setExercise(e.target.value)} 
+                value={exerciseName} 
+                onChange={(e) => handleSearch(e.target.value)}
+                onKeyDown={handleKeyDown}
                 placeholder="E.g., Running, Cycling"
               />
+            {suggestions.length > 0 && (
+  <ul className="suggestions-list">
+    {suggestions.map((exercise, index) => (
+      <li 
+        key={index} 
+        className={index === activeIndex ? 'active' : ''}
+        onClick={() => handleExerciseSelect(exercise)}
+      >
+        {exercise.ExerciseName}
+      </li>
+    ))}
+  </ul>
+)}
             </div>
             <div className="input-field">
               <label>Duration (min)</label>
@@ -216,10 +318,24 @@ const LogWorkout = () => {
               <label>Exercise</label>
               <input 
                 type="text" 
-                value={exercise} 
-                onChange={(e) => setExercise(e.target.value)} 
+                value={exerciseName} 
+                onChange={(e) => handleSearch(e.target.value)} 
+                onKeyDown={handleKeyDown}
                 placeholder="E.g., Burpees"
               />
+              {suggestions.length > 0 && (
+  <ul className="suggestions-list">
+    {suggestions.map((exercise, index) => (
+      <li 
+        key={index} 
+        className={index === activeIndex ? 'active' : ''}
+        onClick={() => handleExerciseSelect(exercise)}
+      >
+        {exercise.ExerciseName}
+      </li>
+    ))}
+  </ul>
+)}
             </div>
             <div className="input-field">
               <label>Duration (min)</label>
@@ -253,10 +369,24 @@ const LogWorkout = () => {
               <label>Pose/Exercise</label>
               <input 
                 type="text" 
-                value={exercise} 
-                onChange={(e) => setExercise(e.target.value)} 
+                value={exerciseName} 
+                onChange={(e) => handleSearch(e.target.value)} 
+                onKeyDown={handleKeyDown}
                 placeholder={workoutType === 'Yoga' ? "E.g., Downward Dog" : "E.g., Hundred"}
               />
+{suggestions.length > 0 && (
+  <ul className="suggestions-list">
+    {suggestions.map((exercise, index) => (
+      <li 
+        key={index} 
+        className={index === activeIndex ? 'active' : ''}
+        onClick={() => handleExerciseSelect(exercise)}
+      >
+        {exercise.ExerciseName}
+      </li>
+    ))}
+  </ul>
+)}
             </div>
             <div className="input-field">
               <label>Duration (min)</label>
@@ -276,10 +406,24 @@ const LogWorkout = () => {
               <label>Exercise</label>
               <input 
                 type="text" 
-                value={exercise} 
-                onChange={(e) => setExercise(e.target.value)} 
+                value={exerciseName} 
+                onChange={(e) => handleSearch(e.target.value)} 
+                onKeyDown={handleKeyDown}
                 placeholder="E.g., Box Jumps"
               />
+{suggestions.length > 0 && (
+  <ul className="suggestions-list">
+    {suggestions.map((exercise, index) => (
+      <li 
+        key={index} 
+        className={index === activeIndex ? 'active' : ''}
+        onClick={() => handleExerciseSelect(exercise)}
+      >
+        {exercise.ExerciseName}
+      </li>
+    ))}
+  </ul>
+)}
             </div>
             <div className="input-field">
               <label>Reps</label>
@@ -420,6 +564,7 @@ const LogWorkout = () => {
     });
   };
 
+
   return (
     <div className="log-main">
       <Sidebar/>
@@ -457,7 +602,7 @@ const LogWorkout = () => {
         </div>
         
         <div className="input-container">
-          {renderInputFields()}
+          {renderInputFields()}        
         </div>
         
         {sets.length > 0 && (
@@ -476,9 +621,11 @@ const LogWorkout = () => {
         
         <div className="bottom-buttons">
           <button className="workout-button submit" onClick={handleSubmit}>Submit</button>
+
           <button className="workout-button view" onClick={handleView}>View</button>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

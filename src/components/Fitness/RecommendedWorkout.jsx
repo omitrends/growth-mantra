@@ -32,9 +32,6 @@ const RecommendedWorkout = () => {
           exercises: [
             'Squats: 3 sets x 8-10 reps',
             'Push-ups: 3 sets x 8-12 reps',
-            'Dumbbell Rows: 3 sets x 8-10 reps per arm',
-            'Lunges: 2 sets x 10 reps per leg',
-            'Plank: 3 sets x 30 seconds'
           ]
         },
         '3': {
@@ -46,8 +43,6 @@ const RecommendedWorkout = () => {
               exercises: [
                 'Squats: 3 sets x 10 reps',
                 'Lunges: 3 sets x 10 reps per leg',
-                'Leg Press: 3 sets x 12 reps',
-                'Calf Raises: 3 sets x 15 reps'
               ]
             },
             {
@@ -55,8 +50,6 @@ const RecommendedWorkout = () => {
               exercises: [
                 'Push-ups: 3 sets x 10 reps',
                 'Dumbbell Shoulder Press: 3 sets x 10 reps',
-                'Tricep Dips: 3 sets x 10 reps',
-                'Chest Flyes: 3 sets x 12 reps'
               ]
             },
             {
@@ -64,8 +57,6 @@ const RecommendedWorkout = () => {
               exercises: [
                 'Assisted Pull-ups: 3 sets x 8 reps',
                 'Dumbbell Rows: 3 sets x 10 reps',
-                'Bicep Curls: 3 sets x 12 reps',
-                'Face Pulls: 3 sets x 15 reps'
               ]
             }
           ]
@@ -82,8 +73,6 @@ const RecommendedWorkout = () => {
                 'Bench Press: 3 sets x 8-12 reps',
                 'Incline Dumbbell Press: 3 sets x 10-12 reps',
                 'Chest Flyes: 3 sets x 12-15 reps',
-                'Tricep Pushdowns: 3 sets x 12-15 reps',
-                'Overhead Tricep Extensions: 3 sets x 12-15 reps'
               ]
             },
             {
@@ -91,9 +80,6 @@ const RecommendedWorkout = () => {
               exercises: [
                 'Lat Pulldowns: 3 sets x 10-12 reps',
                 'Seated Cable Rows: 3 sets x 10-12 reps',
-                'One-Arm Dumbbell Rows: 3 sets x 10-12 reps per arm',
-                'Bicep Curls: 3 sets x 12-15 reps',
-                'Hammer Curls: 3 sets x 12-15 reps'
               ]
             },
             {
@@ -101,9 +87,6 @@ const RecommendedWorkout = () => {
               exercises: [
                 'Goblet Squats: 3 sets x 10-12 reps',
                 'Leg Press: 3 sets x 10-12 reps',
-                'Leg Extensions: 3 sets x 12-15 reps',
-                'Shoulder Press: 3 sets x 10-12 reps',
-                'Lateral Raises: 3 sets x 12-15 reps'
               ]
             }
           ]
@@ -119,9 +102,6 @@ const RecommendedWorkout = () => {
               exercises: [
                 'Running: 20-30 minutes',
                 'Cycling: 20-30 minutes',
-                'Plank: 3 sets x 30 seconds',
-                'Mountain Climbers: 3 sets x 20 reps',
-                'Russian Twists: 3 sets x 20 reps'
               ]
             },
             {
@@ -129,9 +109,6 @@ const RecommendedWorkout = () => {
               exercises: [
                 'Jump Squats: 3 sets x 15 reps',
                 'Burpees: 3 sets x 10 reps',
-                'Push-ups: 3 sets x 12 reps',
-                'Lunges: 3 sets x 12 reps per leg',
-                'Bicycle Crunches: 3 sets x 20 reps'
               ]
             }
           ]
@@ -147,19 +124,13 @@ const RecommendedWorkout = () => {
               exercises: [
                 'Kettlebell Swings: 3 sets x 15 reps',
                 'Box Jumps: 3 sets x 10 reps',
-                'Medicine Ball Slams: 3 sets x 12 reps',
-                'Battle Ropes: 3 sets x 30 seconds',
-                'Farmer’s Walk: 3 sets x 20 meters'
               ]
             },
             {
               name: 'Day 2 - Core & Stability',
               exercises: [
                 'Plank: 3 sets x 30 seconds',
-                'Side Plank: 3 sets x 20 seconds per side',
-                'Russian Twists: 3 sets x 20 reps',
-                'Bird Dogs: 3 sets x 12 reps per side',
-                'Dead Bug: 3 sets x 12 reps'
+                'Side Plank: 3 sets x 20 seconds per side'
               ]
             }
           ]
@@ -175,9 +146,6 @@ const RecommendedWorkout = () => {
               exercises: [
                 'Jump Squats: 30 seconds',
                 'Burpees: 30 seconds',
-                'Mountain Climbers: 30 seconds',
-                'High Knees: 30 seconds',
-                'Rest: 1 minute (repeat 3 rounds)'
               ]
             },
             {
@@ -185,9 +153,6 @@ const RecommendedWorkout = () => {
               exercises: [
                 'Push-ups: 30 seconds',
                 'Lunges: 30 seconds',
-                'Plank Shoulder Taps: 30 seconds',
-                'Bicycle Crunches: 30 seconds',
-                'Rest: 1 minute (repeat 3 rounds)'
               ]
             }
           ]
@@ -202,9 +167,7 @@ const RecommendedWorkout = () => {
               name: 'Day 1 - Upper Body',
               exercises: [
                 'Push-ups: 3 sets x 10-12 reps',
-                'Pull-ups: 3 sets x 6-8 reps',
-                'Dips: 3 sets x 8-10 reps',
-                'Plank: 3 sets x 30 seconds'
+                'Pull-ups: 3 sets x 6-8 reps'
               ]
             },
             {
@@ -212,8 +175,6 @@ const RecommendedWorkout = () => {
               exercises: [
                 'Bodyweight Squats: 3 sets x 12-15 reps',
                 'Lunges: 3 sets x 10 reps per leg',
-                'Step-ups: 3 sets x 12 reps per leg',
-                'Calf Raises: 3 sets x 15-20 reps'
               ]
             }
           ]
@@ -230,10 +191,7 @@ const RecommendedWorkout = () => {
               name: 'Day 1 - Chest & Triceps',
               exercises: [
                 'Bench Press: 4 sets x 6-8 reps',
-                'Incline Bench Press: 4 sets x 8-10 reps',
-                'Dips: 3 sets x 8-10 reps',
-                'Skull Crushers: 3 sets x 10-12 reps',
-                'Cable Tricep Extensions: 3 sets x 12-15 reps'
+                'Incline Bench Press: 4 sets x 8-10 reps'
               ]
             },
             {
@@ -241,9 +199,6 @@ const RecommendedWorkout = () => {
               exercises: [
                 'Deadlifts: 4 sets x 6-8 reps',
                 'Pull-ups: 4 sets x 8-10 reps',
-                'Barbell Rows: 3 sets x 8-10 reps',
-                'Barbell Curls: 3 sets x 10-12 reps',
-                'Hammer Curls: 3 sets x 12-15 reps'
               ]
             },
             {
@@ -257,19 +212,13 @@ const RecommendedWorkout = () => {
               exercises: [
                 'Squats: 4 sets x 6-8 reps',
                 'Romanian Deadlifts: 4 sets x 8-10 reps',
-                'Leg Press: 3 sets x 10-12 reps',
-                'Leg Curls: 3 sets x 10-12 reps',
-                'Calf Raises: 4 sets x 15-20 reps'
               ]
             },
             {
               name: 'Day 5 - Shoulders',
               exercises: [
                 'Overhead Press: 4 sets x 6-8 reps',
-                'Lateral Raises: 4 sets x 10-12 reps',
-                'Face Pulls: 3 sets x 12-15 reps',
-                'Shrugs: 3 sets x 10-12 reps',
-                'Front Raises: 3 sets x 10-12 reps'
+                'Lateral Raises: 4 sets x 10-12 reps'
               ]
             }
           ]
@@ -284,45 +233,35 @@ const RecommendedWorkout = () => {
               name: 'Day 1 - Chest',
               exercises: [
                 'Bench Press: 4 sets x 8-12 reps',
-                'Incline Dumbbell Press: 4 sets x 10-12 reps',
-                'Chest Flyes: 3 sets x 12-15 reps',
-                'Cable Crossovers: 3 sets x 12-15 reps'
+                'Incline Dumbbell Press: 4 sets x 10-12 reps'
               ]
             },
             {
               name: 'Day 2 - Back',
               exercises: [
                 'Deadlifts: 4 sets x 8-10 reps',
-                'Pull-ups: 4 sets x 8-10 reps',
-                'Barbell Rows: 3 sets x 10-12 reps',
-                'Lat Pulldowns: 3 sets x 12-15 reps'
+                'Pull-ups: 4 sets x 8-10 reps'
               ]
             },
             {
               name: 'Day 3 - Shoulders',
               exercises: [
                 'Overhead Press: 4 sets x 8-12 reps',
-                'Lateral Raises: 4 sets x 12-15 reps',
-                'Face Pulls: 3 sets x 12-15 reps',
-                'Shrugs: 3 sets x 12-15 reps'
+                'Lateral Raises: 4 sets x 12-15 reps'
               ]
             },
             {
               name: 'Day 4 - Legs',
               exercises: [
                 'Squats: 4 sets x 8-12 reps',
-                'Leg Press: 4 sets x 10-12 reps',
-                'Leg Curls: 3 sets x 12-15 reps',
-                'Calf Raises: 4 sets x 15-20 reps'
+                'Leg Press: 4 sets x 10-12 reps'
               ]
             },
             {
               name: 'Day 5 - Arms',
               exercises: [
                 'Barbell Curls: 4 sets x 10-12 reps',
-                'Hammer Curls: 4 sets x 12-15 reps',
-                'Tricep Pushdowns: 4 sets x 12-15 reps',
-                'Skull Crushers: 3 sets x 12-15 reps'
+                'Hammer Curls: 4 sets x 12-15 reps'
               ]
             }
           ]
@@ -337,20 +276,14 @@ const RecommendedWorkout = () => {
               name: 'Day 1 - Cardio & Core',
               exercises: [
                 'Running: 30-40 minutes',
-                'Cycling: 30-40 minutes',
-                'Plank: 3 sets x 45 seconds',
-                'Mountain Climbers: 3 sets x 30 reps',
-                'Russian Twists: 3 sets x 25 reps'
+                'Cycling: 30-40 minutes'
               ]
             },
             {
               name: 'Day 2 - Full Body Circuit',
               exercises: [
                 'Jump Squats: 3 sets x 20 reps',
-                'Burpees: 3 sets x 15 reps',
-                'Push-ups: 3 sets x 15 reps',
-                'Lunges: 3 sets x 15 reps per leg',
-                'Bicycle Crunches: 3 sets x 25 reps'
+                'Burpees: 3 sets x 15 reps'
               ]
             },
             {
@@ -372,28 +305,21 @@ const RecommendedWorkout = () => {
               name: 'Day 1 - Full Body Functional',
               exercises: [
                 'Kettlebell Swings: 4 sets x 20 reps',
-                'Box Jumps: 4 sets x 12 reps',
-                'Medicine Ball Slams: 4 sets x 15 reps',
-                'Battle Ropes: 4 sets x 45 seconds',
-                'Farmer’s Walk: 4 sets x 30 meters'
+                'Box Jumps: 4 sets x 12 reps'
               ]
             },
             {
               name: 'Day 2 - Core & Stability',
               exercises: [
                 'Plank: 4 sets x 45 seconds',
-                'Side Plank: 4 sets x 30 seconds per side',
-                'Russian Twists: 4 sets x 25 reps',
-                'Bird Dogs: 4 sets x 15 reps per side',
-                'Dead Bug: 4 sets x 15 reps'
+                'Side Plank: 4 sets x 30 seconds per side'
               ]
             },
             {
               name: 'Day 3 - Agility & Speed',
               exercises: [
                 'Ladder Drills: 4 sets x 30 seconds',
-                'Cone Drills: 4 sets x 30 seconds',
-                'Shuttle Runs: 4 sets x 20 meters'
+                'Cone Drills: 4 sets x 30 seconds'
               ]
             }
           ]
@@ -408,20 +334,14 @@ const RecommendedWorkout = () => {
               name: 'Day 1 - Cardio HIIT',
               exercises: [
                 'Jump Squats: 40 seconds',
-                'Burpees: 40 seconds',
-                'Mountain Climbers: 40 seconds',
-                'High Knees: 40 seconds',
-                'Rest: 1 minute (repeat 4 rounds)'
+                'Burpees: 40 seconds'
               ]
             },
             {
               name: 'Day 2 - Strength HIIT',
               exercises: [
                 'Push-ups: 40 seconds',
-                'Lunges: 40 seconds',
-                'Plank Shoulder Taps: 40 seconds',
-                'Bicycle Crunches: 40 seconds',
-                'Rest: 1 minute (repeat 4 rounds)'
+                'Lunges: 40 seconds'
               ]
             },
             {
@@ -480,10 +400,7 @@ const RecommendedWorkout = () => {
               name: 'Day 1 - Push (Chest/Shoulders/Triceps)',
               exercises: [
                 'Bench Press: 5 sets x 5 reps',
-                'Overhead Press: 5 sets x 5 reps',
-                'Incline Dumbbell Press: 4 sets x 8-10 reps',
-                'Lateral Raises: 4 sets x 12-15 reps',
-                'Tricep Pushdowns: 4 sets x 12-15 reps'
+                'Overhead Press: 5 sets x 5 reps'
               ]
             },
             {
@@ -789,7 +706,22 @@ const RecommendedWorkout = () => {
     // Convert difficulty level and workout type to lowercase for object keys
     const difficulty = difficultyLevel.toLowerCase();
     const workout = workoutType.toLowerCase();
-
+  
+    // Check if the difficulty level exists
+    if (!workoutPlans[difficulty]) {
+      console.log('Difficulty level not found:', difficulty);
+    }
+  
+    // Check if the workout type exists within the difficulty level
+    if (workoutPlans[difficulty] && !workoutPlans[difficulty][workout]) {
+      console.log('Workout type not found for difficulty level:', workout);
+    }
+  
+    // Check if the split exists within the workout type and difficulty level
+    if (workoutPlans[difficulty] && workoutPlans[difficulty][workout] && !workoutPlans[difficulty][workout][split]) {
+      console.log('Split not found for workout type and difficulty level:', split);
+    }
+  
     // If we have a plan that matches the user's criteria
     if (
       workoutPlans[difficulty] && 
@@ -800,13 +732,14 @@ const RecommendedWorkout = () => {
       setError('');
     } else {
       // If no exact match, return a generic response
+      console.log('No exact match found');
       setRecommendation({
         title: 'Custom Workout Plan',
         message: `We don't have an exact match for a ${difficultyLevel} ${workoutType} ${split}-day split in our database yet. Please contact our fitness coach for a personalized plan.`
       });
       setError('No exact match found. Showing a generic recommendation.');
     }
-
+  
     setShowRecommendation(true);
   };
 

@@ -1,4 +1,6 @@
 import Slider from "./Slider";
+import React from "react";
+
 function Home() {
 
     return(

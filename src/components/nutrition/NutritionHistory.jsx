@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import './NutritionHistory.css';
 import Sidebar from '../Sidebar';
+import React from "react";
+import axios from "axios";
 
 const NutritionHistory = () => {
   const [meals, setMeals] = useState([]);
@@ -11,7 +13,6 @@ const NutritionHistory = () => {
     dateRange: 'all'
   });
 
-  // Meal types and food categories for filter dropdowns
   const mealTypes = ['All', 'Breakfast', 'Lunch', 'Dinner', 'Snack'];
   const foodCategories = ['All', 'Fruits', 'Vegetables', 'Grains', 'Proteins', 'Dairy', 'Fats'];
   const dateRanges = [
@@ -21,81 +22,44 @@ const NutritionHistory = () => {
     { value: '3months', label: 'Last 3 Months' }
   ];
 
-  // Mock data - in a real app, this would come from an API or local storage
   useEffect(() => {
-    // Simulate fetching data
-    const mockMeals = [
-      {
-        id: 1,
-        date: '2025-03-18',
-        mealType: 'Breakfast',
-        foodCategory: 'Fruits',
-        items: [
-          { foodItem: 'Apple', calories: '95', quantity: '1' },
-          { foodItem: 'Oatmeal', calories: '150', quantity: '1 bowl' }
-        ]
-      },
-      {
-        id: 2,
-        date: '2025-03-15',
-        mealType: 'Lunch',
-        foodCategory: 'Proteins',
-        items: [
-          { foodItem: 'Grilled Chicken', calories: '200', quantity: '150g' },
-          { foodItem: 'Quinoa', calories: '120', quantity: '1 cup' }
-        ]
-      },
-      {
-        id: 3,
-        date: '2025-03-10',
-        mealType: 'Dinner',
-        foodCategory: 'Vegetables',
-        items: [
-          { foodItem: 'Steamed Broccoli', calories: '55', quantity: '1 cup' },
-          { foodItem: 'Salmon', calories: '250', quantity: '200g' }
-        ]
-      },
-      {
-        id: 4,
-        date: '2025-03-05',
-        mealType: 'Snack',
-        foodCategory: 'Dairy',
-        items: [
-          { foodItem: 'Greek Yogurt', calories: '100', quantity: '1 cup' },
-          { foodItem: 'Almonds', calories: '150', quantity: '1 oz' }
-        ]
-      },
-      {
-        id: 5,
-        date: '2025-02-28',
-        mealType: 'Breakfast',
-        foodCategory: 'Grains',
-        items: [
-          { foodItem: 'Whole Grain Toast', calories: '80', quantity: '2 slices' },
-          { foodItem: 'Avocado', calories: '120', quantity: '1/2' }
-        ]
-      }
-    ];
+    const fetchMeals = async () => {
+      try {
+        const storedEmail = localStorage.getItem("email");
+        if (!storedEmail) {
+          alert("User not logged in.");
+          return;
+        }
 
-    setMeals(mockMeals);
-    setFilteredMeals(mockMeals);
+        const userResponse = await axios.get("http://localhost:5000/get-user-id", {
+          params: { email: storedEmail },
+        });
+
+        const UserId = userResponse.data.UserId;
+
+        const response = await axios.get(`http://localhost:5000/logged-meals/${UserId}`);
+        setMeals(response.data.meals);
+        setFilteredMeals(response.data.meals);
+      } catch (error) {
+        console.error("Error fetching meals:", error);
+        alert("Failed to fetch meals. Please try again.");
+      }
+    };
+
+    fetchMeals();
   }, []);
 
-  // Apply filters
   useEffect(() => {
     let result = [...meals];
 
-    // Filter by meal type
     if (filter.mealType && filter.mealType !== 'All') {
-      result = result.filter(meal => meal.mealType === filter.mealType);
+      result = result.filter(meal => meal.meal_type === filter.mealType);
     }
 
-    // Filter by food category
     if (filter.foodCategory && filter.foodCategory !== 'All') {
-      result = result.filter(meal => meal.foodCategory === filter.foodCategory);
+      result = result.filter(meal => meal.category === filter.foodCategory);
     }
 
-    // Filter by date range
     if (filter.dateRange !== 'all') {
       const today = new Date();
       let startDate = new Date();
@@ -115,7 +79,7 @@ const NutritionHistory = () => {
       }
 
       result = result.filter(meal => {
-        const mealDate = new Date(meal.date);
+        const mealDate = new Date(meal.FoodDate);
         return mealDate >= startDate && mealDate <= today;
       });
     }
@@ -123,7 +87,6 @@ const NutritionHistory = () => {
     setFilteredMeals(result);
   }, [filter, meals]);
 
-  // Handle filter changes
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilter(prev => ({
@@ -132,7 +95,6 @@ const NutritionHistory = () => {
     }));
   };
 
-  // Format date
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'short', day: 'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
@@ -190,13 +152,13 @@ const NutritionHistory = () => {
 
         <div className="meals-container">
           {filteredMeals.length > 0 ? (
-            filteredMeals.map((meal) => (
-              <div key={meal.id} className="meal-card">
+            filteredMeals.map((meal, index) => (
+              <div key={index} className="meal-card">
                 <div className="meal-header">
-                  <div className="meal-date">{formatDate(meal.date)}</div>
+                  <div className="meal-date">{formatDate(meal.FoodDate)}</div>
                   <div className="meal-badges">
-                    <span className="meal-type-badge">{meal.mealType}</span>
-                    <span className="meal-category-badge">{meal.foodCategory}</span>
+                    <span className="meal-type-badge">{meal.meal_type}</span>
+                    <span className="meal-category-badge">{meal.category}</span>
                   </div>
                 </div>
                 <div className="meal-details">
@@ -209,13 +171,11 @@ const NutritionHistory = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {meal.items.map((item, index) => (
-                        <tr key={index}>
-                          <td>{item.foodItem}</td>
-                          <td>{item.calories}</td>
-                          <td>{item.quantity}</td>
-                        </tr>
-                      ))}
+                      <tr>
+                        <td>{meal.food_name}</td>
+                        <td>{meal.calories}</td>
+                        <td>{meal.quantity}</td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
