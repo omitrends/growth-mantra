@@ -158,6 +158,30 @@
 .intensity{
   height: 48px;
 }
+
+.suggestions-list {
+    list-style-type: none; /* Remove bullets */
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    max-height: 150px; /* Limit height */
+    overflow-y: auto; /* Add scroll if needed */
+  }
+  
+  .suggestions-list li {
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .suggestions-list li:hover,
+  .suggestions-list li.active {
+    background-color: #f0f0f0;
+  }
+  
+  .suggestions-list li.active {
+    background-color: #bac3ca;
+  }
  
 
 @media (max-width: 768px) {

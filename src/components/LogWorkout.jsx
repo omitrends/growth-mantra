@@ -189,6 +189,7 @@ const LogWorkout = () => {
     );
 
     setSuggestions(filteredSuggestions); // Update suggestions
+    setActiveIndex(-1);
   };
 
   // Set selected exercise when clicked
@@ -197,7 +198,16 @@ const LogWorkout = () => {
     setSuggestions([]); // Clear suggestions after selection
   };
 
-
+  const handleKeyDown = (e) => {
+    if (e.key === "ArrowDown") {
+      setActiveIndex((prevIndex) => (prevIndex + 1) % suggestions.length);
+    } else if (e.key === "ArrowUp") {
+      setActiveIndex((prevIndex) => (prevIndex - 1 + suggestions.length) % suggestions.length);
+    } else if (e.key === "Enter" && activeIndex >= 0) {
+      handleExerciseSelect(suggestions[activeIndex]);
+    }
+  };
+  
   const renderInputFields = () => {
     switch (workoutType) {
       case 'Strength':
@@ -209,6 +219,7 @@ const LogWorkout = () => {
                 type="text" 
                 value={exerciseName} 
                 onChange={(e) => handleSearch(e.target.value)}
+                onKeyDown={handleKeyDown}
                 placeholder="E.g., Bench Press"
               />
              {suggestions.length > 0 && (
@@ -216,6 +227,7 @@ const LogWorkout = () => {
     {suggestions.map((exercise, index) => (
       <li 
         key={index} 
+        className={index === activeIndex ? 'active' : ''}
         onClick={() => handleExerciseSelect(exercise)}
       >
         {exercise.ExerciseName}
@@ -252,7 +264,8 @@ const LogWorkout = () => {
               <input 
                 type="text" 
                 value={exerciseName} 
-                onChange={(e) => handleSearch(e.target.value)} 
+                onChange={(e) => handleSearch(e.target.value)}
+                onKeyDown={handleKeyDown}
                 placeholder="E.g., Running, Cycling"
               />
             {suggestions.length > 0 && (
@@ -260,6 +273,7 @@ const LogWorkout = () => {
     {suggestions.map((exercise, index) => (
       <li 
         key={index} 
+        className={index === activeIndex ? 'active' : ''}
         onClick={() => handleExerciseSelect(exercise)}
       >
         {exercise.ExerciseName}
@@ -306,6 +320,7 @@ const LogWorkout = () => {
                 type="text" 
                 value={exerciseName} 
                 onChange={(e) => handleSearch(e.target.value)} 
+                onKeyDown={handleKeyDown}
                 placeholder="E.g., Burpees"
               />
               {suggestions.length > 0 && (
@@ -313,6 +328,7 @@ const LogWorkout = () => {
     {suggestions.map((exercise, index) => (
       <li 
         key={index} 
+        className={index === activeIndex ? 'active' : ''}
         onClick={() => handleExerciseSelect(exercise)}
       >
         {exercise.ExerciseName}
@@ -355,6 +371,7 @@ const LogWorkout = () => {
                 type="text" 
                 value={exerciseName} 
                 onChange={(e) => handleSearch(e.target.value)} 
+                onKeyDown={handleKeyDown}
                 placeholder={workoutType === 'Yoga' ? "E.g., Downward Dog" : "E.g., Hundred"}
               />
 {suggestions.length > 0 && (
@@ -362,6 +379,7 @@ const LogWorkout = () => {
     {suggestions.map((exercise, index) => (
       <li 
         key={index} 
+        className={index === activeIndex ? 'active' : ''}
         onClick={() => handleExerciseSelect(exercise)}
       >
         {exercise.ExerciseName}
@@ -390,6 +408,7 @@ const LogWorkout = () => {
                 type="text" 
                 value={exerciseName} 
                 onChange={(e) => handleSearch(e.target.value)} 
+                onKeyDown={handleKeyDown}
                 placeholder="E.g., Box Jumps"
               />
 {suggestions.length > 0 && (
@@ -397,6 +416,7 @@ const LogWorkout = () => {
     {suggestions.map((exercise, index) => (
       <li 
         key={index} 
+        className={index === activeIndex ? 'active' : ''}
         onClick={() => handleExerciseSelect(exercise)}
       >
         {exercise.ExerciseName}
@@ -543,6 +563,7 @@ const LogWorkout = () => {
       }
     });
   };
+
 
   return (
     <div className="log-main">
