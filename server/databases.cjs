@@ -3,7 +3,7 @@ const mysql = require('mysql2');
 const connection = mysql.createConnection({
   host: 'localhost',            
   user: 'root',                 
-  password: 'root',   
+  password: 'amruta123',   
   database: 'growthmantra',    
 });
 
@@ -67,6 +67,39 @@ const createExercisesTable = `
   );
 `;
 
+  const createfoodTable = `
+CREATE TABLE IF NOT EXISTS food (
+    FoodId INT AUTO_INCREMENT PRIMARY KEY,
+    meal_type ENUM('Breakfast', 'Lunch', 'Dinner', 'Snack'),
+    category ENUM('Fruits', 'Vegetables', 'Grain', 'Protein', 'Dairy', 'Fats'),
+    food_name VARCHAR(100) NOT NULL,
+    quantity INT NOT NULL,
+    calories INT NOT NULL,
+    FoodDate DATE NOT NULL DEFAULT (CURDATE()), 
+    UserId int  , foreign key (UserId) references Register(UserId) 
+);
+`;
+  const createFoodItemsTable = `
+CREATE TABLE IF NOT EXISTS fooditems (
+    FoodItemId INT AUTO_INCREMENT PRIMARY KEY,
+    food_name VARCHAR(100) UNIQUE NOT NULL,
+    calories_per_unit INT NOT NULL,
+    FoodId int, foreign key (FoodId) references food(FoodId)
+);
+`;
+
+const insertFoodItems = `
+INSERT INTO fooditems (food_name, calories_per_unit) VALUES
+('Rice', 210),
+('Chapati', 70),
+('Dal', 150),
+('Paneer', 265),
+('Banana', 89),
+('Egg', 78),
+('Milk', 120),
+('Almonds', 70);
+`;
+
 
 function initializeDatabase() {
   connection.connect((err) => {
@@ -115,7 +148,36 @@ function initializeDatabase() {
       }
       console.log('exercise table created sucessfully');
     });
+
+    connection.query(createfoodTable, (err)=>{
+      if(err){
+        console.error("Error creating Food table: ", err.message);
+        return;
+      }
+      console.log('Food table created sucessfully');
+    });
+
+    connection.query(createFoodItemsTable, (err)=>{
+      if(err){
+        console.error("Error creating Food Items  table: ", err.message);
+        return;
+      }
+      console.log('Food Items table created sucessfully');
+    });
+    connection.query(insertFoodItems , (err) =>{
+      if(err){
+        console.error("Error inserting into food table" , err.message);
+        return;
+      }
+      console.log("Food items inserted succesfully");
+    });
+
+    
+
+
   });
+
+
 }
 
 initializeDatabase();
