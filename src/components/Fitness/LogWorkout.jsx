@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import './LogWorkout.css';
-import Sidebar from './Sidebar';
+import Sidebar from '../Sidebar';
 import { useNavigate } from 'react-router-dom';
-import React from "react";
+// import React from "react";
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -39,7 +39,7 @@ const LogWorkout = () => {
     if (storedEmail) {
       setEmail(storedEmail);
     } else {
-      navigate("/login"); // Redirect to login if not logged in
+      navigate("/login");
     }
   }, [navigate]);
 
@@ -134,7 +134,7 @@ const LogWorkout = () => {
   }, [workoutType]);
 
   useEffect(() => {
-    Papa.parse('/server/data/Exercise.csv', {
+    Papa.parse('/data/Exercise.csv', {
       download: true,
       complete: (result) => {
         setExercisesData(result.data); // Store CSV data

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import logo from "../assets/images/rb_26614.png";
-import Setup from "./Setup";
-import CloseButton from "./CloseButton"; 
+import logo from "../../assets/images/rb_26614.png";
+import Setup from "../Setup";
+import CloseButton from "../CloseButton"; 
 
 
 const CreateAccount = () => {

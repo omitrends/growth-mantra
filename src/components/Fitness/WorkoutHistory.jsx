@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import { useState, useEffect } from 'react';
 import './WorkoutHistory.css';
 import Sidebar from '../Sidebar';
@@ -29,17 +29,19 @@ const WorkoutHistory = () => {
   const fetchWorkouts = async (storedEmail) => {
     try {
       const response = await axios.get('http://localhost:5000/getWorkouts', {
-        params: { UserEmail: storedEmail }  // Pass the stored email here
+        params: { UserEmail: storedEmail }, // Pass the stored email here
       });
 
       if (response.data.success) {
         console.log('Fetched Workouts:', response.data.workouts); // Debugging log
-        setWorkouts(response.data.workouts);
+        setWorkouts(response.data.workouts || []); // Ensure workouts is an array
       } else {
         console.error('Error fetching workouts:', response.data.message);
+        setWorkouts([]); // Set an empty array if there's an error
       }
     } catch (error) {
       console.error('API Error:', error);
+      setWorkouts([]); // Set an empty array if there's an API error
     }
   };
 
