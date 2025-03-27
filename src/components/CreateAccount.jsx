@@ -1,20 +1,88 @@
 import { useState } from "react";
 import logo from "../assets/images/rb_26614.png";
 import Setup from "./Setup";
-import CloseButton from "./CloseButton"; // Import the CloseButton component
+import CloseButton from "./CloseButton"; 
+import React from "react";
 
 const CreateAccount = () => {
-  const [showSetup, setShowSetup] = useState(false);
+  const [showSetup, setShowSetup] = useState(false); // State for showing the setup page
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [error, setError] = useState(""); // For displaying any error messages
+  const [loading, setLoading] = useState(false); // To show loading state
 
-  const setupPage = (event) => {
-    event.preventDefault();
-    console.log("Register button clicked");
-    setShowSetup(true);
+  // Handle form data change
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
+
+  const setupPage = async (event) => {
+    event.preventDefault(); // Prevent default form submission
+  
+    // Validate inputs
+    if (!formData.username || !formData.email || !formData.password || !formData.confirmPassword) {
+      setError("All fields are required");
+      return;
+    }
+  
+    // Check if passwords match
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+  
+    setLoading(true); // Start loading
+  
+    try {
+      // Send the registration request to the backend
+      const response = await fetch("http://localhost:5000/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: formData.username,
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok && data.success) {
+        console.log("Registration successful");
+  
+        // ✅ Store token and email for future use
+        localStorage.setItem("authToken", data.token);
+        localStorage.setItem("email", formData.email); // Store email
+  
+        // ✅ Show the setup page
+        setShowSetup(true);
+      } else {
+        setError(data.message || "Registration failed, please try again.");
+      }
+    } catch (error) {
+      setError("An error occurred during registration.");
+      console.error(error);
+    } finally {
+      setLoading(false); // End loading state
+    }
+  };
+  
+  
+  
 
   const closeModal = () => {
     console.log("Close button clicked");
-    setShowSetup(false);
+    setShowSetup(false); // Close the setup page modal
   };
 
   return (
@@ -28,46 +96,69 @@ const CreateAccount = () => {
           <p style={styles.loginText}>
             Already have an account? <a href="/login" style={styles.loginLink}>Login</a>
           </p>
-          <form style={styles.form}>
+          <form style={styles.form} onSubmit={setupPage}>
             <div style={styles.inputContainer}>
               <i className="fa fa-user" style={styles.icon}></i>
-              <input type="text" placeholder="Enter Username" style={styles.input} />
+              <input
+                type="text"
+                name="username"
+                placeholder="Enter Username"
+                value={formData.username}
+                onChange={handleChange}
+                style={styles.input}
+              />
             </div>
             <div style={styles.inputContainer}>
               <i className="fa fa-envelope" style={styles.icon}></i>
-              <input type="email" placeholder="Enter Email" style={styles.input} />
-            </div>
-            <div style={styles.inputContainer}>
-              <i className="fa fa-calendar" style={styles.icon}></i>
-              <input type="date" placeholder="Enter Date of Birth" style={styles.input} />
+              <input
+                type="email"
+                name="email"
+                placeholder="Enter Email"
+                value={formData.email}
+                onChange={handleChange}
+                style={styles.input}
+              />
             </div>
             <div style={styles.inputContainer}>
               <i className="fa fa-key" style={styles.icon}></i>
-              <input type="password" placeholder="Enter Password" style={styles.input} />
+              <input
+                type="password"
+                name="password"
+                placeholder="Enter Password"
+                value={formData.password}
+                onChange={handleChange}
+                style={styles.input}
+              />
             </div>
             <div style={styles.inputContainer}>
               <i className="fa fa-lock" style={styles.icon}></i>
-              <input type="password" placeholder="Confirm Password" style={styles.input} />
+              <input
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirm Password"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                style={styles.input}
+              />
             </div>
-            <div style={styles.inputContainer}>
-              <i className="fa fa-lock" style={styles.icon}></i>
-              <input type="number" placeholder="Enter the number" style={styles.input} />
-            </div>
-            <button onClick={setupPage} type="submit" style={styles.button}>
-              REGISTER
+            {error && <p style={{ color: "red" }}>{error}</p>}
+            <button type="submit" style={styles.button} disabled={loading}>
+              {loading ? "Registering..." : "REGISTER"}
             </button>
           </form>
         </div>
       </div>
 
       {showSetup && (
-        <div style={styles.modalOverlay}>
-          <div style={styles.modalContent}>
-            <CloseButton onClick={closeModal} />
-            <Setup />
-          </div>
-        </div>
-      )}
+  <div style={styles.modalOverlay}>
+    <div style={styles.modalContent}>
+      <CloseButton onClick={closeModal} />
+      <Setup />
+    </div>
+  </div>
+)}
+
+
     </div>
   );
 };
@@ -80,7 +171,6 @@ const styles = {
     backgroundColor: "#f9f9f9",
   },
   leftPane: {
-    // backgroundColor: "#f9f9f9",
     flex: 1,
     display: "flex",
     flexDirection: "column",
@@ -155,14 +245,15 @@ const styles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    backdropFilter: "blur(5px)", // Apply blur effect
+    backdropFilter: "blur(5px)",
   },
   modalContent: {
-//     backgroundColor: "#fff",
     padding: "20px",
     borderRadius: "8px",
     boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
-    position: "relative", // Add relative positioning
+    position: "relative",
+    minWidth: "300px",
+    backgroundColor: "#fff",
   },
 };
 

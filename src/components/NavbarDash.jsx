@@ -2,6 +2,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import logo from '../assets/images/logo.png'; // Replace with your logo path
 import './NavbarDash.css'; // Import the CSS file
+import React from "react";
+
 
 function NavbarDash() {
   const navigate = useNavigate();
@@ -10,7 +12,7 @@ function NavbarDash() {
   // Logout function
   const handleLogout = (event) => {
     event.preventDefault();
-    localStorage.removeItem('userToken'); // Clear user session/token
+    localStorage.clear(); // Clear user session/token
     navigate('/login'); // Redirect to login page
   };
 

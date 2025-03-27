@@ -1,3 +1,4 @@
+import React from "react";
 import CreateAccount from "./components/CreateAccount";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
