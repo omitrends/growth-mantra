@@ -1,4 +1,6 @@
 import Logo from "../assets/images/logo.png";
+import React from "react";
+
 function ForgetPass() {
   return (
    

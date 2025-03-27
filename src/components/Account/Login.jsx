@@ -1,3 +1,4 @@
+import React from "react";
 import "./Login.css";
 import login from "../../assets/images/login.jpg";
 import googleLogo from "../../assets/images/google-logo.png";
@@ -5,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import ForgetPass from "../ForgetPass";
 import CloseButton from "../CloseButton"; // Import the CloseButton component
+
 
 const Login = () => {
   const navigate = useNavigate();
@@ -81,7 +83,7 @@ const Login = () => {
   return (
     <div className="login-container">
       <div className="left-section">
-        <img src={loginImage} alt="Growth Mantra" className="login-img" />
+        <img src={login} alt="Growth Mantra" className="login-img" />
       </div>
       <div className="right-section">
         <h2 className="login-title">LOGIN</h2>

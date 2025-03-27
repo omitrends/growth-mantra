@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import './LogWorkout.css';
 import Sidebar from '../Sidebar';
 import { useNavigate } from 'react-router-dom';
-// import React from "react";
+import React from "react";
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

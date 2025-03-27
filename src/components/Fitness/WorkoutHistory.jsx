@@ -1,4 +1,4 @@
-// import React from "react";
+import React from "react";
 import { useState, useEffect } from 'react';
 import './WorkoutHistory.css';
 import Sidebar from '../Sidebar';
@@ -11,6 +11,7 @@ const WorkoutHistory = () => {
   const [email, setEmail] = useState("");
   const [filteredWorkouts, setFilteredWorkouts] = useState([]);
   const [filter, setFilter] = useState({
+    
     workoutType: '',
     bodyPart: '',
     dateRange: 'all'

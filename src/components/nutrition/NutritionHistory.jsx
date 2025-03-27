@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './NutritionHistory.css';
 import Sidebar from '../Sidebar';
-// import React from "react";
+import React from "react";
 import axios from "axios";
 
 const NutritionHistory = () => {

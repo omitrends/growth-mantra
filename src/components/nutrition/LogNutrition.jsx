@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import "./LogNutrition.css";
 import Sidebar from "../Sidebar";
 import { useNavigate } from "react-router";
-// import React from "react";
+import React from "react";
 import axios from "axios";
 
 const LogNutrition = () => {
