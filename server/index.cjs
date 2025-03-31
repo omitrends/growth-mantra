@@ -434,7 +434,15 @@ app.get('/logged-meals/:UserId', (req, res) => {
     res.status(200).json({ success: true, meals: results });
   });
 });
+app.post('/get-recommendation', (req, res) => {
+  const { goal, dietType, calorieRange } = req.body;
 
+  if (!goal || !dietType || !calorieRange) {
+    return res.status(400).json({ error: 'Missing required fields' });
+  }
+
+  // Process the request...
+});
 // Start the server
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
