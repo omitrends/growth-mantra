@@ -1,111 +1,334 @@
 import { useState } from 'react';
 import './RecommendedNutrition.css';
 import React from "react";
-import Sidebar from '../Sidebar';
+import Sidebar from '../Sidebar'; // Corrected the import path for Sidebar
 
 const RecommendedNutrition = () => {
-  const [dietType, setDietType] = useState('');
   const [goal, setGoal] = useState('');
+  const [dietType, setDietType] = useState('');
   const [mealFrequency, setMealFrequency] = useState('');
   const [showRecommendation, setShowRecommendation] = useState(false);
   const [recommendation, setRecommendation] = useState(null);
   const [error, setError] = useState('');
 
   // Options for dropdown menus
-  const dietTypes = ['Balanced', 'Keto', 'Vegan', 'Low-Carb', 'High-Protein', 'Mediterranean'];
-  const goals = ['Weight Loss', 'Muscle Gain', 'Maintenance', 'Improved Health'];
-  const mealFrequencies = [
-    { value: '3', label: '3 Meals per Day' },
-    { value: '4', label: '4 Meals per Day' },
-    { value: '5', label: '5 Meals per Day' },
-    { value: '6', label: '6 Meals per Day' }
-  ];
+  const goals = ['Weight Loss', 'Muscle Gain', 'Maintenance'];
+  const dietTypes = ['Vegetarian', 'Keto', 'Vegan', 'High Protein'];
+  const mealFrequencies = ['3 meals/day', '4 meals/day', '5 meals/day'];
 
-  // Sample nutrition plans - in a real app, these would come from a database
+  // Comprehensive nutrition plans for all combinations
   const nutritionPlans = {
-    balanced: {
-      weightLoss: {
-        '3': {
-          title: 'Balanced Weight Loss Plan (3 Meals)',
-          frequency: '3 meals per day',
+    'weight loss': {
+      vegetarian: {
+        '3 meals/day': {
+          title: 'Vegetarian Weight Loss Plan (3 meals/day)',
           meals: [
-            'Breakfast: Oatmeal with berries and a boiled egg',
-            'Lunch: Grilled chicken salad with olive oil dressing',
-            'Dinner: Baked salmon with steamed vegetables'
-          ]
+            'Breakfast: Greek yogurt with granola and fresh fruit',
+            'Lunch: Grilled tofu salad with olive oil dressing',
+            'Dinner: Lentil soup with steamed broccoli and quinoa',
+          ],
+          snacks: ['Carrot sticks with hummus', 'Apple slices with almond butter']
         },
-        '5': {
-          title: 'Balanced Weight Loss Plan (5 Meals)',
-          frequency: '5 meals per day',
+        '4 meals/day': {
+          title: 'Vegetarian Weight Loss Plan (4 meals/day)',
           meals: [
-            'Breakfast: Greek yogurt with honey and nuts',
-            'Snack: Apple slices with almond butter',
-            'Lunch: Quinoa salad with chickpeas and avocado',
-            'Snack: Carrot sticks with hummus',
-            'Dinner: Grilled turkey with roasted sweet potatoes'
-          ]
+            'Pre Breakfast: Cottage cheese with pineapple',
+            'Breakfast: Scrambled eggs with spinach and whole-grain toast',
+            'Lunch: Chickpea wrap with avocado and mixed greens',
+            'Dinner: Grilled paneer with roasted sweet potatoes and asparagus',
+          ],
+          snacks: ['Handful of mixed nuts', 'Greek yogurt with honey']
+        },
+        '5 meals/day': {
+          title: 'Vegetarian Weight Loss Plan (5 meals/day)',
+          meals: [
+            'Pre Breakfast: Smoothie with protein powder and spinach',
+            'Breakfast: Smoothie with spinach, banana, and almond milk',
+            'Lunch: Grilled halloumi with quinoa and roasted vegetables',
+            'Evening Snack: Hummus with cucumber slices',
+            'Dinner: Baked tofu with steamed green beans and brown rice',
+          ],
+          snacks: ['Trail mix', 'Handful of almonds']
         }
       },
-      muscleGain: {
-        '4': {
-          title: 'Balanced Muscle Gain Plan (4 Meals)',
-          frequency: '4 meals per day',
+      "high protein": {
+        '3 meals/day': {
+          title: 'High Protein Weight Loss Plan (3 meals/day)',
           meals: [
-            'Breakfast: Scrambled eggs with whole-grain toast',
-            'Lunch: Grilled chicken with brown rice and broccoli',
-            'Snack: Protein shake with banana',
-            'Dinner: Beef stir-fry with quinoa'
-          ]
+            'Breakfast: Egg white omelette with turkey bacon',
+            'Lunch: Grilled chicken breast with quinoa and steamed broccoli',
+            'Dinner: Baked salmon with sweet potato and asparagus',
+          ],
+          snacks: ['Protein shake', 'Boiled eggs']
+        },
+        '4 meals/day': {
+          title: 'High Protein Weight Loss Plan (4 meals/day)',
+          meals: [
+            'Pre Breakfast: Greek yogurt with berries',
+            'Breakfast: Protein pancakes with almond butter',
+            'Lunch: Grilled steak with brown rice and green beans',
+            'Dinner: Chicken stir-fry with mixed vegetables and jasmine rice',
+          ],
+          snacks: ['Greek yogurt with honey', 'Peanut butter on celery sticks']
+        },
+        '5 meals/day': {
+          title: 'High Protein Weight Loss Plan (5 meals/day)',
+          meals: [
+            'Pre Breakfast: Protein smoothie with spinach and banana',
+            'Breakfast: Smoothie with protein powder, oats, and banana',
+            'Lunch: Grilled turkey burger with avocado and sweet potato fries',
+            'Evening Snack: Cottage cheese with pineapple',
+            'Dinner: Lean beef chili with kidney beans and cornbread',
+          ],
+          snacks: ['Protein bar', 'Cottage cheese with pineapple', 'Almonds']
         }
       }
     },
-    keto: {
-      weightLoss: {
-        '3': {
-          title: 'Keto Weight Loss Plan (3 Meals)',
-          frequency: '3 meals per day',
+    'muscle gain': {
+      vegetarian: {
+        '3 meals/day': {
+          title: 'Vegetarian Muscle Gain Plan (3 meals/day)',
           meals: [
-            'Breakfast: Avocado and eggs with bacon',
-            'Lunch: Grilled salmon with asparagus',
-            'Dinner: Chicken thighs with cauliflower rice'
-          ]
+            'Breakfast: Scrambled eggs with whole-grain toast and avocado',
+            'Lunch: Grilled paneer with brown rice and steamed broccoli',
+            'Dinner: Lentil curry with mixed vegetables and quinoa',
+          ],
+          snacks: ['Protein shake', 'Greek yogurt with granola']
+        },
+        '4 meals/day': {
+          title: 'Vegetarian Muscle Gain Plan (4 meals/day)',
+          meals: [
+            'Pre Breakfast: Overnight oats with chia seeds',
+            'Breakfast: Protein pancakes with banana and peanut butter',
+            'Lunch: Grilled tofu with sweet potatoes and asparagus',
+            'Dinner: Chickpea curry with basmati rice and spinach',
+          ],
+          snacks: ['Boiled eggs', 'Trail mix', 'Cottage cheese']
+        },
+        '5 meals/day': {
+          title: 'Vegetarian Muscle Gain Plan (5 meals/day)',
+          meals: [
+            'Pre Breakfast: Smoothie with protein powder and spinach',
+            'Breakfast: Smoothie with protein powder, oats, and berries',
+            'Lunch: Grilled halloumi sandwich with avocado and whole-grain bread',
+            'Evening Snack: Greek yogurt with honey and nuts',
+            'Dinner: Grilled paneer with mashed potatoes and green beans',
+          ],
+          snacks: ['Protein bar', 'Peanut butter on rice cakes', 'Almonds']
+        }
+      },
+      keto: {
+        '3 meals/day': {
+          title: 'Keto Muscle Gain Plan (3 meals/day)',
+          meals: [
+            'Breakfast: Scrambled eggs with cheese and avocado',
+            'Lunch: Grilled chicken Caesar salad (no croutons)',
+            'Dinner: Pan-seared salmon with zucchini noodles',
+          ],
+          snacks: ['Hard-boiled eggs', 'Cheese sticks']
+        },
+        '4 meals/day': {
+          title: 'Keto Muscle Gain Plan (4 meals/day)',
+          meals: [
+            'Pre Breakfast: Greek yogurt with chia seeds',
+            'Breakfast: Omelette with spinach and feta cheese',
+            'Lunch: Grilled steak with sautéed mushrooms and asparagus',
+            'Dinner: Roasted chicken thighs with cauliflower mash',
+          ],
+          snacks: ['Avocado slices', 'Pork rinds']
+        },
+        '5 meals/day': {
+          title: 'Keto Muscle Gain Plan (5 meals/day)',
+          meals: [
+            'Pre Breakfast: Bulletproof coffee',
+            'Breakfast: Keto pancakes with butter and sugar-free syrup',
+            'Lunch: Grilled salmon with avocado salad',
+            'Evening Snack: Celery sticks with cream cheese',
+            'Dinner: Beef stir-fry with broccoli and coconut oil',
+          ],
+          snacks: ['Macadamia nuts', 'Cheddar cheese cubes', 'Olives']
+        }
+      },
+      vegan: {
+        '3 meals/day': {
+          title: 'Vegan Muscle Gain Plan (3 meals/day)',
+          meals: [
+            'Breakfast: Smoothie with almond milk, spinach, and banana',
+            'Lunch: Quinoa salad with chickpeas and mixed greens',
+            'Dinner: Lentil curry with steamed broccoli and brown rice',
+          ],
+          snacks: ['Carrot sticks with hummus', 'Apple slices with almond butter']
+        },
+        '4 meals/day': {
+          title: 'Vegan Muscle Gain Plan (4 meals/day)',
+          meals: [
+            'Pre Breakfast: Chia pudding with almond milk and berries',
+            'Breakfast: Avocado toast on whole-grain bread',
+            'Lunch: Grilled vegetable wrap with hummus',
+            'Dinner: Stir-fried tofu with mixed vegetables and quinoa',
+          ],
+          snacks: ['Trail mix', 'Vegan protein bar']
+        },
+        '5 meals/day': {
+          title: 'Vegan Muscle Gain Plan (5 meals/day)',
+          meals: [
+            'Pre Breakfast: Smoothie with almond milk, spinach, and protein powder',
+            'Breakfast: Oatmeal with almond butter and fresh fruit',
+            'Lunch: Buddha bowl with quinoa, roasted vegetables, and tahini dressing',
+            'Evening Snack: Celery sticks with almond butter',
+            'Dinner: Vegan chili with kidney beans and cornbread',
+          ],
+          snacks: ['Handful of nuts', 'Vegan yogurt with granola']
         }
       }
     },
-    vegan: {
-      improvedHealth: {
-        '4': {
-          title: 'Vegan Health Plan (4 Meals)',
-          frequency: '4 meals per day',
+    maintenance: {
+      vegetarian: {
+        '3 meals/day': {
+          title: 'Vegetarian Maintenance Plan (3 meals/day)',
           meals: [
+            'Breakfast: Greek yogurt with granola and fresh fruit',
+            'Lunch: Grilled tofu sandwich with a side salad',
+            'Dinner: Baked cod with roasted vegetables and wild rice',
+          ],
+          snacks: ['Hummus with carrot sticks', 'Handful of trail mix']
+        },
+        '4 meals/day': {
+          title: 'Vegetarian Maintenance Plan (4 meals/day)',
+          meals: [
+            'Pre Breakfast: Overnight oats with chia seeds',
             'Breakfast: Smoothie with spinach, banana, and almond milk',
-            'Lunch: Lentil soup with whole-grain bread',
-            'Snack: Mixed nuts and dried fruit',
-            'Dinner: Stir-fried tofu with mixed vegetables'
-          ]
+            'Lunch: Grilled paneer Caesar wrap with whole-grain tortilla',
+            'Dinner: Roasted tofu with mashed potatoes and green beans',
+          ],
+          snacks: ['Boiled eggs', 'Apple slices with peanut butter']
+        },
+        '5 meals/day': {
+          title: 'Vegetarian Maintenance Plan (5 meals/day)',
+          meals: [
+            'Pre Breakfast: Protein smoothie with spinach and banana',
+            'Breakfast: Scrambled eggs with avocado and whole-grain toast',
+            'Lunch: Grilled halloumi with quinoa and roasted vegetables',
+            'Evening Snack: Greek yogurt with honey and nuts',
+            'Dinner: Chickpea stir-fry with brown rice and broccoli',
+          ],
+          snacks: ['Protein shake', 'Cottage cheese with pineapple', 'Trail mix']
+        }
+      },
+      keto: {
+        '3 meals/day': {
+          title: 'Keto Maintenance Plan (3 meals/day)',
+          meals: [
+            'Breakfast: Scrambled eggs with cheese and avocado',
+            'Lunch: Grilled chicken Caesar salad (no croutons)',
+            'Dinner: Pan-seared salmon with zucchini noodles',
+          ],
+          snacks: ['Hard-boiled eggs', 'Cheese sticks']
+        },
+        '4 meals/day': {
+          title: 'Keto Maintenance Plan (4 meals/day)',
+          meals: [
+            'Pre Breakfast: Greek yogurt with chia seeds',
+            'Breakfast: Omelette with spinach and feta cheese',
+            'Lunch: Grilled steak with sautéed mushrooms and asparagus',
+            'Dinner: Roasted chicken thighs with cauliflower mash',
+          ],
+          snacks: ['Avocado slices', 'Pork rinds']
+        },
+        '5 meals/day': {
+          title: 'Keto Maintenance Plan (5 meals/day)',
+          meals: [
+            'Pre Breakfast: Bulletproof coffee',
+            'Breakfast: Keto pancakes with butter and sugar-free syrup',
+            'Lunch: Grilled salmon with avocado salad',
+            'Evening Snack: Celery sticks with cream cheese',
+            'Dinner: Beef stir-fry with broccoli and coconut oil',
+          ],
+          snacks: ['Macadamia nuts', 'Cheddar cheese cubes', 'Olives']
+        }
+      },
+      vegan: {
+        '3 meals/day': {
+          title: 'Vegan Maintenance Plan (3 meals/day)',
+          meals: [
+            'Breakfast: Smoothie with almond milk, spinach, and banana',
+            'Lunch: Quinoa salad with chickpeas and mixed greens',
+            'Dinner: Lentil curry with steamed broccoli and brown rice',
+          ],
+          snacks: ['Carrot sticks with hummus', 'Apple slices with almond butter']
+        },
+        '4 meals/day': {
+          title: 'Vegan Maintenance Plan (4 meals/day)',
+          meals: [
+            'Pre Breakfast: Chia pudding with almond milk and berries',
+            'Breakfast: Avocado toast on whole-grain bread',
+            'Lunch: Grilled vegetable wrap with hummus',
+            'Dinner: Stir-fried tofu with mixed vegetables and quinoa',
+          ],
+          snacks: ['Trail mix', 'Vegan protein bar']
+        },
+        '5 meals/day': {
+          title: 'Vegan Maintenance Plan (5 meals/day)',
+          meals: [
+            'Pre Breakfast: Smoothie with almond milk, spinach, and protein powder',
+            'Breakfast: Oatmeal with almond butter and fresh fruit',
+            'Lunch: Buddha bowl with quinoa, roasted vegetables, and tahini dressing',
+            'Evening Snack: Celery sticks with almond butter',
+            'Dinner: Vegan chili with kidney beans and cornbread',
+          ],
+          snacks: ['Handful of nuts', 'Vegan yogurt with granola']
+        }
+      },
+      "high protein": {
+        '3 meals/day': {
+          title: 'High Protein Maintenance Plan (3 meals/day)',
+          meals: [
+            'Breakfast: Egg white omelette with turkey bacon',
+            'Lunch: Grilled chicken breast with quinoa and roasted vegetables',
+            'Dinner: Baked salmon with sweet potato and steamed broccoli',
+          ],
+          snacks: ['Protein shake', 'Boiled eggs']
+        },
+        '4 meals/day': {
+          title: 'High Protein Maintenance Plan (4 meals/day)',
+          meals: [
+            'Pre Breakfast: Greek yogurt with berries',
+            'Breakfast: Protein pancakes with almond butter',
+            'Lunch: Grilled steak with brown rice and green beans',
+            'Dinner: Chicken stir-fry with mixed vegetables and jasmine rice',
+          ],
+          snacks: ['Greek yogurt with honey', 'Peanut butter on celery sticks']
+        },
+        '5 meals/day': {
+          title: 'High Protein Maintenance Plan (5 meals/day)',
+          meals: [
+            'Pre Breakfast: Protein smoothie with spinach and banana',
+            'Breakfast: Smoothie with protein powder, oats, and banana',
+            'Lunch: Grilled turkey burger with avocado and sweet potato fries',
+            'Evening Snack: Cottage cheese with pineapple',
+            'Dinner: Lean beef chili with kidney beans and cornbread',
+          ],
+          snacks: ['Protein bar', 'Cottage cheese with pineapple', 'Almonds']
         }
       }
     }
   };
 
   const getRecommendation = () => {
-    // Convert diet type and goal to lowercase for object keys
-    const diet = dietType.toLowerCase();
-    const nutritionGoal = goal.toLowerCase().replace(' ', '');
+    const selectedGoal = goal.toLowerCase();
+    const selectedDiet = dietType.toLowerCase();
 
-    // If we have a plan that matches the user's criteria
     if (
-      nutritionPlans[diet] &&
-      nutritionPlans[diet][nutritionGoal] &&
-      nutritionPlans[diet][nutritionGoal][mealFrequency]
+      nutritionPlans[selectedGoal] &&
+      nutritionPlans[selectedGoal][selectedDiet] &&
+      nutritionPlans[selectedGoal][selectedDiet][mealFrequency]
     ) {
-      setRecommendation(nutritionPlans[diet][nutritionGoal][mealFrequency]);
+      setRecommendation(nutritionPlans[selectedGoal][selectedDiet][mealFrequency]);
       setError('');
     } else {
-      // If no exact match, return a generic response
       setRecommendation({
         title: 'Custom Nutrition Plan',
-        message: `We don't have an exact match for a ${dietType} ${goal} ${mealFrequency}-meal plan in our database yet. Please contact our nutritionist for a personalized plan.`
+        message: `We don't have an exact match for a ${goal} ${dietType} plan with ${mealFrequency} in our database yet. Please contact our nutritionist for a personalized plan.`
       });
       setError('No exact match found. Showing a generic recommendation.');
     }
@@ -115,7 +338,7 @@ const RecommendedNutrition = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (dietType && goal && mealFrequency) {
+    if (goal && dietType && mealFrequency) {
       getRecommendation();
     } else {
       setError('Please select all options to get a recommendation.');
@@ -123,8 +346,8 @@ const RecommendedNutrition = () => {
   };
 
   const handleReset = () => {
-    setDietType('');
     setGoal('');
+    setDietType('');
     setMealFrequency('');
     setShowRecommendation(false);
     setRecommendation(null);
@@ -137,7 +360,7 @@ const RecommendedNutrition = () => {
       <div className="recommended-nutrition">
         <h1 className="recommended-title">Recommended Nutrition Plans</h1>
         <p className="recommended-subtitle">
-          Find the perfect nutrition plan based on your preferences and goals
+          Find the perfect nutrition plan based on your goals and preferences
         </p>
 
         {error && <p className="error-message">{error}</p>}
@@ -145,10 +368,24 @@ const RecommendedNutrition = () => {
         {!showRecommendation ? (
           <form className="nutrition-form" onSubmit={handleSubmit}>
             <div className="form-group">
+              <label>Goal</label>
+              <select 
+                value={goal} 
+                onChange={(e) => setGoal(e.target.value)} 
+                required
+              >
+                <option value="">Select Goal</option>
+                {goals.map((g) => (
+                  <option key={g} value={g}>{g}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="form-group">
               <label>Diet Type</label>
-              <select
-                value={dietType}
-                onChange={(e) => setDietType(e.target.value)}
+              <select 
+                value={dietType} 
+                onChange={(e) => setDietType(e.target.value)} 
                 required
               >
                 <option value="">Select Diet Type</option>
@@ -159,29 +396,15 @@ const RecommendedNutrition = () => {
             </div>
 
             <div className="form-group">
-              <label>Goal</label>
-              <select
-                value={goal}
-                onChange={(e) => setGoal(e.target.value)}
-                required
-              >
-                <option value="">Select Goal</option>
-                {goals.map((goal) => (
-                  <option key={goal} value={goal}>{goal}</option>
-                ))}
-              </select>
-            </div>
-
-            <div className="form-group">
               <label>Meal Frequency</label>
-              <select
-                value={mealFrequency}
-                onChange={(e) => setMealFrequency(e.target.value)}
+              <select 
+                value={mealFrequency} 
+                onChange={(e) => setMealFrequency(e.target.value)} 
                 required
               >
-                <option value="">Select Frequency</option>
-                {mealFrequencies.map((option) => (
-                  <option key={option.value} value={option.value}>{option.label}</option>
+                <option value="">Select Meal Frequency</option>
+                {mealFrequencies.map((freq) => (
+                  <option key={freq} value={freq}>{freq}</option>
                 ))}
               </select>
             </div>
@@ -198,31 +421,23 @@ const RecommendedNutrition = () => {
             ) : (
               <div className="specific-recommendation">
                 <h2>{recommendation.title}</h2>
-                <p className="recommendation-frequency"><strong>Frequency:</strong> {recommendation.frequency}</p>
-
-                {recommendation.meals && (
-                  <div className="nutrition-details">
-                    <h3>Meal Plan</h3>
-                    <ul className="meal-list">
-                      {recommendation.meals.map((meal, index) => (
-                        <li key={index}>{meal}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                <div className="recommendation-tips">
-                  <h3>Tips</h3>
-                  <ul>
-                    <li>Stay hydrated throughout the day</li>
-                    <li>Include a variety of foods to ensure balanced nutrition</li>
-                    <li>Monitor portion sizes to align with your goals</li>
-                    <li>Consult a nutritionist for personalized advice</li>
+                <div className="meal-plan">
+                  <h3>Meals</h3>
+                  <ul className="meal-list">
+                    {recommendation.meals.map((meal, index) => (
+                      <li key={index}>{meal}</li>
+                    ))}
+                  </ul>
+                  <h3>Snacks</h3>
+                  <ul className="snack-list">
+                    {recommendation.snacks.map((snack, index) => (
+                      <li key={index}>{snack}</li>
+                    ))}
                   </ul>
                 </div>
               </div>
             )}
-
+            
             <button onClick={handleReset} className="reset-button">
               Find Another Plan
             </button>
