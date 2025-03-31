@@ -1,0 +1,130 @@
+.history-main {
+    max-width: 100vw;
+    display: flex;
+}
+
+.journal-history {
+    width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.history-title {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #333;
+    font-size: 1.8rem;
+}
+
+.filter-container {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.filter-field {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-field label {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #555;
+}
+
+.filter-field select {
+    padding: 0.7rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: #f9f9f9;
+}
+
+.journals-container {
+    margin-bottom: 2rem;
+}
+
+.journal-card {
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.journal-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.journal-date {
+    font-weight: 600;
+    color: #333;
+}
+
+.journal-mood {
+    font-weight: 600;
+    color: #007bff;
+}
+
+.journal-details p {
+    margin: 0.5rem 0;
+    color: #555;
+}
+
+.no-journals {
+    text-align: center;
+    color: #777;
+    font-size: 1.2rem;
+}
+
+.bottom-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.journal-button {
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 15px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.journal-button.back {
+    background-color: #808080; /* Grey background */
+    color: white;
+}
+
+.journal-button.back:hover {
+    background-color: #696969; /* Darker grey on hover */
+}
+
+.journal-button.export {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.journal-button.export:hover {
+    background-color: #3e8e41;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .filter-container {
+        flex-direction: column;
+    }
+
+    .bottom-buttons {
+        flex-direction: column;
+    }
+}

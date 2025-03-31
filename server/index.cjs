@@ -435,6 +435,101 @@ app.get('/logged-meals/:UserId', (req, res) => {
   });
 });
 
+app.post('/save-journal', (req, res) => {
+  const {
+    UserEmail,
+    date = new Date().toISOString().split('T')[0], // Default to current date if not provided
+    day = new Date().toLocaleString('en-US', { weekday: 'long' }), // Default to current day if not provided
+    thingsToDo = [],
+    notes = '',
+    sleepHours = 0,
+    feelings = '',
+    gratitude = '',
+    affirmations = '',
+    mood = ''
+  } = req.body;
+
+  // Validate required fields
+  if (!UserEmail || !mood) {
+    return res.status(400).json({ success: false, message: 'UserEmail and mood are required' });
+  }
+
+  // Fetch the UserId based on the email
+  const getUserQuery = "SELECT UserId FROM Register WHERE UserEmail = ?";
+  connection.query(getUserQuery, [UserEmail], (err, results) => {
+    if (err || results.length === 0) {
+      console.error("Error fetching UserId:", err || "User not found");
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    const userId = results[0].UserId;
+
+    // Prepare the query for inserting data
+    const insertJournalQuery = `
+      INSERT INTO Journal (UserId, JournalDate, Day, ThingsToDo, Notes, SleepHours, Feelings, Gratitude, Affirmations, Mood)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+
+    // Insert the data into the Journal table
+    connection.query(
+      insertJournalQuery,
+      [
+        userId,
+        date,
+        day,
+        JSON.stringify(thingsToDo), // Convert array to JSON string
+        notes,
+        sleepHours,
+        feelings,
+        gratitude,
+        affirmations,
+        mood
+      ],
+      (err, result) => {
+        if (err) {
+          console.error('Database Insertion Error:', err.sqlMessage);
+          return res.status(500).json({ success: false, message: 'Error saving journal entry' });
+        }
+
+        console.log('Journal entry saved successfully');
+        return res.status(200).json({ success: true, message: 'Journal entry saved successfully!' });
+      }
+    );
+  });
+});
+
+app.get('/logged-journals/:UserId', (req, res) => {
+  const { UserId } = req.params;
+
+  console.log("Fetching journals for UserId:", UserId); // Debug log
+
+  if (!UserId) {
+    return res.status(400).json({ success: false, message: 'UserId is required' });
+  }
+
+  const query = `
+    SELECT JournalDate, Day, ThingsToDo, Notes, SleepHours, Feelings, Gratitude, Affirmations, Mood
+    FROM Journal
+    WHERE UserId = ?
+    ORDER BY JournalDate DESC
+  `;
+
+  connection.query(query, [UserId], (err, results) => {
+    if (err) {
+      console.error("Error fetching journal entries:", err);
+      return res.status(500).json({ success: false, message: 'Error fetching journal entries' });
+    }
+
+    console.log("Fetched journal entries:", results); // Debug log
+
+    if (results.length === 0) {
+      return res.status(404).json({ success: false, message: 'No journal entries found' });
+    }
+
+    res.status(200).json({ success: true, journals: results });
+  });
+});
+
 // Start the server
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);

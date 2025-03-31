@@ -100,6 +100,22 @@ INSERT INTO fooditems (food_name, calories_per_unit) VALUES
 ('Almonds', 70);
 `;
 
+const createJournalTable =`
+CREATE TABLE IF NOT EXISTS Journal (
+journalId INT AUTO_INCREMENT PRIMARY KEY,
+UserId INT NOT NULL,
+JournalDate DATE NOT NULL,
+Day ENUM('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday') NOT NULL,
+Mood ENUM('Joy', 'Annoyed', 'Worried', 'Silly', 'Happy', 'Surprised', 'Angry', 'Sleepy', 'Emotional') NOT NULL,
+ThingsToDo Text NOT NULL,
+Notes Text NOT NULL,
+SleepHours INT NOT NULL,
+Gratitude TEXT NOT NULL,
+Feelings TEXT NOT NULL,
+affirmations TEXT NOT NULL,
+foreign key (UserId) references Register(UserId)
+);
+`;
 
 function initializeDatabase() {
   connection.connect((err) => {
@@ -171,13 +187,15 @@ function initializeDatabase() {
       }
       console.log("Food items inserted succesfully");
     });
-
-    
-
-
   });
 
-
+  connection.query(createJournalTable, (err) => {
+    if (err) {
+      console.error('Error creating Journal table:', err.message);
+      return;
+    }
+    console.log('Journal table created successfully');
+  });
 }
 
 initializeDatabase();

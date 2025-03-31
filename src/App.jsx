@@ -29,6 +29,7 @@ import NutritionHistory from "./components/nutrition/NutritionHistory";
 import MentalWellbeing from "./components/mentalwellbeing/MentalWellbeing";
 import Journaling from "./components/mentalwellbeing/Journaling";
 import Meditation from "./components/mentalwellbeing/Meditation";
+import JournalHistory from "./components/mentalwellbeing/JournalHistory";
 
 
 
@@ -60,6 +61,7 @@ function App() {
 
           <Route path="/mentalwellbeing" element={<MentalWellbeing />} /> 
           <Route path="/journaling" element={<Journaling />} /> 
+          <Route path='/journal-history' element={<JournalHistory />} />
           <Route path="/meditation" element={<Meditation />} />
 
 
