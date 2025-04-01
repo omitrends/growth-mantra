@@ -31,12 +31,14 @@ const NutritionHistory = () => {
           return;
         }
 
+        // Fetch UserId based on email
         const userResponse = await axios.get("http://localhost:5000/get-user-id", {
           params: { email: storedEmail },
         });
 
         const UserId = userResponse.data.UserId;
 
+        // Fetch all logged meals for the user
         const response = await axios.get(`http://localhost:5000/logged-meals/${UserId}`);
         setMeals(response.data.meals);
         setFilteredMeals(response.data.meals);
