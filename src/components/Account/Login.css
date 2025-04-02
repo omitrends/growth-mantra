@@ -60,15 +60,23 @@
     margin-bottom: 40px;
   }
   
-  /* Input Fields */
   .input-group {
     display: flex;
     align-items: center;
-    /* border-bottom: 1px solid #aaa; */
     width: 250px;
-    /*max-width: 350px;*/
     margin-bottom: 15px;
-    padding: 5px;
+    padding: 10px; /* Add padding inside the box */
+    background: white; /* Set background color */
+    border: 1px solid #ccc; /* Add a border around the input group */
+    border-radius: 5px; /* Add rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+  }
+  
+  .input-field {
+    border: none;
+    flex: 1;
+    font-size: 14px;
+    outline: none;
     background: transparent;
   }
 
@@ -81,15 +89,7 @@
     margin-bottom: 2px;
   }
   */
-  
-  .input-field {
-    border: none;
-    flex: 1;
-    font-size: 14px;
-    outline: none;
-    background: transparent;
-  }
-  
+    
   /* Login Button */
   .login-button {
     background-color: #28a745;

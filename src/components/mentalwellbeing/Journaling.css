@@ -6,9 +6,10 @@
 
 .journaling-container {
   width: 90%;
-  max-width: 1000px;
+  max-width: 1100px;
   background: #fff;
-  padding: 20px;
+  padding: 10px;
+  margin: 10px auto;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
@@ -149,12 +150,20 @@ textarea.lined {
   transition: background 0.2s;
 }
 
-.back-button {
-  background: #757575;
+.view-button {
+  width: 100%;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
-.back-button:hover {
-  background: #616161;
+.view-button:hover {
+  background-color: #0b7dda;
 }
 
 .save-button:hover {
