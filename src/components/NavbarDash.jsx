@@ -4,7 +4,6 @@ import logo from '../assets/images/logo.png'; // Replace with your logo path
 import './NavbarDash.css'; // Import the CSS file
 import React from "react";
 
-
 function NavbarDash() {
   const navigate = useNavigate();
   const [streak, setStreak] = useState(0); // State to track the streak
@@ -30,7 +29,7 @@ function NavbarDash() {
     if (lastLoginDate === yesterdayDate) {
       setStreak((prevStreak) => prevStreak + 1); // Increment streak
     } else {
-      setStreak(1); // Reset streak if missed a day
+      setStreak(0); // Reset streak to 0 if missed a day
     }
 
     localStorage.setItem('lastLoginDate', currentDate); // Update last login date
