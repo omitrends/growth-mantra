@@ -4,7 +4,8 @@ import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Login from "./components/Login";
-// import ForgetPass from "./components/forgetPass";
+import ForgetPassword from "./components/ForgetPass";
+import ResetPassword from "./components/ResetPassword";
 import Setup from "./components/Setup"; 
 import DashBoard from "./components/DashBoard";
 import NavbarDash from "./components/NavbarDash";
@@ -45,7 +46,8 @@ function App() {
           <Route path="/setup" element={<Setup />} />
           <Route path="/dashboard" element={<DashBoard />} />
           <Route path="/get-started" element={<CreateAccount />} />
-
+          <Route path="/forgot-password" element={<ForgetPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
 
           <Route path="/fitness" element={<Fitness />} />
           <Route path="/workout-logs" element={<LogWorkout />} />

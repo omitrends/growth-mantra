@@ -7,6 +7,8 @@ const mysql = require('mysql2');
 const fs = require('fs');
 const csv = require('csv-parser');
 require('dotenv').config();
+const crypto = require('crypto');
+const nodemailer = require('nodemailer');
 
 const app = express();
 const port = 5000;
@@ -127,6 +129,114 @@ app.post('/login', (req, res) => {
   });
 });
 
+app.post("/forget-password", (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    return res.status(400).json({ success: false, message: "Email is required" });
+  }
+
+  const query = "SELECT * FROM Register WHERE UserEmail = ?";
+  connection.query(query, [email], (err, result) => {
+    if (err) {
+      console.error("Error querying database:", err);
+      return res.status(500).json({ success: false, message: "Server error" });
+    }
+
+    if (result.length === 0) {
+      return res.status(404).json({ success: false, message: "Email not found" });
+    }
+
+    const user = result[0];
+    const resetToken = crypto.randomBytes(32).toString("hex");
+    const tokenExpiration = new Date(Date.now() + 3600000); // Token valid for 1 hour
+
+    const insertQuery = `
+      INSERT INTO PasswordReset (UserId, ResetToken, TokenExpiration)
+      VALUES (?, ?, ?)
+      ON DUPLICATE KEY UPDATE ResetToken = ?, TokenExpiration = ?
+    `;
+    connection.query(insertQuery, [user.UserId, resetToken, tokenExpiration, resetToken, tokenExpiration], (err) => {
+      if (err) {
+        console.error("Error inserting into PasswordReset table:", err);
+        return res.status(500).json({ success: false, message: "Server error" });
+      }
+
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: "growthmantra11@gmail.com", // Your email address
+          pass: "scgr ejhz dhnr ascf", // Replace with your App Password
+        },
+      });
+
+      const resetLink = `http://localhost:5173/reset-password/${resetToken}`;
+      const mailOptions = {
+        from: "growthmantra11@gmail.com", // Your email address
+        to: email,
+        subject: "Password Reset Request",
+        html: `<p>You requested a password reset. Click the link below to reset your password:</p>
+               <a href="${resetLink}">${resetLink}</a>
+               <p>If you did not request this, please ignore this email.</p>`,
+      };
+
+      transporter.sendMail(mailOptions, (err, info) => {
+        if (err) {
+          console.error("Error sending email:", err); // Log the error
+          return res.status(500).json({ success: false, message: "Error sending email" });
+        }
+        console.log("Email sent successfully:", info.response); // Log success
+        res.status(200).json({ success: true, message: "Password reset email sent" });
+      });
+    });
+  });
+});
+
+app.post("/reset-password", async (req, res) => {
+  const { token, newPassword } = req.body;
+
+  if (!token || !newPassword) {
+    return res.status(400).json({ success: false, message: "Token and new password are required" });
+  }
+
+  // Check if the token exists and is valid
+  const query = "SELECT * FROM PasswordReset WHERE ResetToken = ? AND TokenExpiration > NOW()";
+  connection.query(query, [token], async (err, result) => {
+    if (err) {
+      console.error("Error querying PasswordReset table:", err);
+      return res.status(500).json({ success: false, message: "Server error" });
+    }
+
+    if (result.length === 0) {
+      return res.status(400).json({ success: false, message: "Invalid or expired token" });
+    }
+
+    const resetEntry = result[0];
+
+    // Hash the new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // Update the user's password in the Register table
+    const updateQuery = "UPDATE Register SET Password = ? WHERE UserId = ?";
+    connection.query(updateQuery, [hashedPassword, resetEntry.UserId], (err) => {
+      if (err) {
+        console.error("Error updating password:", err);
+        return res.status(500).json({ success: false, message: "Error updating password" });
+      }
+
+      // Delete the reset token from the PasswordReset table
+      const deleteQuery = "DELETE FROM PasswordReset WHERE ResetToken = ?";
+      connection.query(deleteQuery, [token], (err) => {
+        if (err) {
+          console.error("Error deleting reset token:", err);
+          return res.status(500).json({ success: false, message: "Error deleting reset token" });
+        }
+
+        res.status(200).json({ success: true, message: "Password reset successfully" });
+      });
+    });
+  });
+});
 
 app.post('/setup', (req, res) => {
   console.log("Received data at /setup endpoint:", req.body); // Log incoming request data

@@ -17,7 +17,7 @@ const validate = (values) => {
   if (!values.age) {
     errors.age = 'Age is required';
   } else if (isNaN(values.age) || values.age < 10 || values.age > 120) {
-    errors.age = 'Age must be a valid number between 10 and 120';
+    errors.age = 'Age must be above 10 years';
   }
 
   if (!values.weight) {
