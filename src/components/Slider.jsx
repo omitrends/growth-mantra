@@ -11,7 +11,7 @@ function Slider() {
     {
       title: "Mental Wellbeing",
       description:
-        "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.",
+        "Mental well-being is about taking care of your thoughts and emotions.It helps you manage stress, improve focus, and feel more balanced in daily life. Simple practices like meditation, mood tracking, and journaling can make a big difference in how you feel. By checking in with your mind regularly, you build emotional strength and a healthier outlook.",
     },
     {
       title: "Nutrition",
@@ -21,7 +21,7 @@ function Slider() {
     {
       title: "Fitness",
       description:
-        "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.",
+        "Regular exercise helps improve strength, flexibility, and overall health. Whether it's through workouts, walking, or other activities, staying active can boost your energy, improve your mood, and help you feel your best every day.",
     },
   ];
 
