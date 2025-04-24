@@ -51,7 +51,7 @@ const Login = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          setSuccessMessage("Login successful! Redirecting...");
+          setSuccessMessage("Login successful!");
           // Store token in localStorage or sessionStorage
           localStorage.setItem("token", data.token);
           localStorage.setItem("email", values.email);

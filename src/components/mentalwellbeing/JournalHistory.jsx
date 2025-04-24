@@ -157,7 +157,7 @@ const JournalHistory = () => {
 
         <div className="bottom-buttons">
           <button className="journal-button back" onClick={() => window.history.back()}>Back</button>
-          <button className="journal-button export" onClick={handleExport}>Export Data</button>
+          {/* <button className="journal-button export" onClick={handleExport}>Export Data</button> */}
         </div>
       </div>
     </div>
