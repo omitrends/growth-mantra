@@ -22,6 +22,7 @@ import NutritionHistory from "./components/Nutrition/NutritionHistory";
 import MentalWellbeing from "./components/MentalWellbeing/MentalWellbeing";
 import Journaling from "./components/MentalWellbeing/Journaling";
 import Meditation from "./components/MentalWellbeing/Meditation";
+import JournalHistory from "./components/mentalwellbeing/JournalHistory";
 
 import ContactUs from "./components/ContactUs";
 import Community from "./components/Community";
@@ -29,15 +30,8 @@ import GrowthMantraAI from "./components/GrowthMantraAI";
 // import LogNutrition from "./components/LogNutrition"
 // import RecommendedNutrition from "./components/RecommendedNutrition";
 
-import Nutrition from "./components/nutrition/Nutrition";
-import NutritionLog from "./components/nutrition/LogNutrition";
-import RecommendedNutrition from "./components/nutrition/RecommendedNutrition"
-import NutritionHistory from "./components/nutrition/NutritionHistory";
 
-import MentalWellbeing from "./components/mentalwellbeing/MentalWellbeing";
-import Journaling from "./components/mentalwellbeing/Journaling";
-import Meditation from "./components/mentalwellbeing/Meditation";
-import JournalHistory from "./components/mentalwellbeing/JournalHistory";
+
 
 
 
