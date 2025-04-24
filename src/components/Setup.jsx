@@ -16,15 +16,15 @@ const Setup = () => {
     lifestyle: "",
     fitnessgoal: "",
     gender: "",
-    bmi: "", // Add bmi field here
+    bmi: "",
   });
 
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [successMessage, setSuccessMessage] = useState(""); // State for success message
+  const [successMessage, setSuccessMessage] = useState("");
 
-  // Fetch registered user email from localStorage (assuming you store email after registration)
+  // Fetch registered user email from localStorage
   useEffect(() => {
     const storedEmail = localStorage.getItem("email");
     if (storedEmail) {
@@ -36,7 +36,7 @@ const Setup = () => {
   useEffect(() => {
     const weightInKg = parseFloat(formData.weight);
     const heightInCm = parseFloat(formData.height);
-    const heightInM = heightInCm / 100; // Convert height from cm to meters
+    const heightInM = heightInCm / 100;
 
     if (weightInKg > 0 && heightInM > 0) {
       const bmi = (weightInKg / (heightInM * heightInM)).toFixed(1);
@@ -55,8 +55,47 @@ const Setup = () => {
     }));
   };
 
+  // Validation function
+  const validate = () => {
+    const newErrors = {};
+    const { name, phoneno, age, height, weight, lifestyle, fitnessgoal, gender } = formData;
+
+    // Name validation
+    if (!name) newErrors.name = "Name is required";
+
+    // Phone Number validation (only digits, 10 characters)
+    if (!phoneno || !/^\d{10}$/.test(phoneno)) newErrors.phoneno = "Enter a valid 10-digit phone number";
+
+    // Age validation (positive number)
+    if (!age || age <= 10) newErrors.age = "Age must be above 10 years";
+
+    // Height validation (positive number)
+    if (!height || height <= 0) newErrors.height = "Height must be a positive number";
+
+    // Weight validation (positive number)
+    if (!weight || weight <= 0) newErrors.weight = "Weight must be a positive number";
+
+    // Lifestyle validation
+    if (!lifestyle) newErrors.lifestyle = "Lifestyle is required";
+
+    // Fitness Goal validation
+    if (!fitnessgoal) newErrors.fitnessgoal = "Fitness Goal is required";
+
+    // Gender validation
+    if (!gender) newErrors.gender = "Gender is required";
+
+    setErrors(newErrors);
+
+    // Return false if there are any validation errors
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // Handle form submit
   const handleFormSubmit = async (event) => {
     event.preventDefault();
+
+    // Validate form data before submitting
+    if (!validate()) return;
 
     const formDataToSend = {
       name: formData.name,
@@ -67,7 +106,7 @@ const Setup = () => {
       lifestyle: formData.lifestyle,
       fitnessgoal: formData.fitnessgoal,
       gender: formData.gender,
-      UserEmail: email, // Include the email in the form data
+      UserEmail: email,
     };
 
     console.log('Form Data Being Sent:', formDataToSend); // Add this to check the data
@@ -80,12 +119,11 @@ const Setup = () => {
       });
 
       if (response.data.success) {
-        // Set success message
         setSuccessMessage("Setup completed successfully!");
-        
-        // Redirect after a delay (e.g., 3 seconds)
+
+        // Redirect after a delay
         setTimeout(() => {
-          navigate("/dashboard"); // Redirect to the dashboard
+          navigate("/dashboard");
         }, 3000); // 3 seconds delay
       } else {
         console.error('Error:', response.data.message);
@@ -93,11 +131,6 @@ const Setup = () => {
     } catch (error) {
       console.error('Error during form submission:', error);
     }
-  };
-
-  // Close the modal
-  const closeModal = () => {
-    navigate("/"); // You can modify the behavior to close the modal, or navigate to another route.
   };
 
   return (
@@ -121,7 +154,7 @@ const Setup = () => {
               type="text"
               name="name"
               placeholder="Your Full Name"
-              className="form-control"
+              className={`form-control ${errors.name ? 'is-invalid' : ''}`}
               value={formData.name}
               onChange={handleChange}
               required
@@ -136,7 +169,7 @@ const Setup = () => {
               type="text"
               name="phoneno"
               placeholder="Phone no"
-              className="form-control"
+              className={`form-control ${errors.phoneno ? 'is-invalid' : ''}`}
               value={formData.phoneno}
               onChange={handleChange}
               required
@@ -151,7 +184,7 @@ const Setup = () => {
               type="number"
               name="age"
               placeholder="Your Age"
-              className="form-control"
+              className={`form-control ${errors.age ? 'is-invalid' : ''}`}
               value={formData.age}
               onChange={handleChange}
               required
@@ -166,7 +199,7 @@ const Setup = () => {
               type="text"
               name="height"
               placeholder="Height"
-              className="form-control"
+              className={`form-control ${errors.height ? 'is-invalid' : ''}`}
               value={formData.height}
               onChange={handleChange}
               required
@@ -181,7 +214,7 @@ const Setup = () => {
               type="text"
               name="weight"
               placeholder="Weight"
-              className="form-control"
+              className={`form-control ${errors.weight ? 'is-invalid' : ''}`}
               value={formData.weight}
               onChange={handleChange}
               required
@@ -206,7 +239,7 @@ const Setup = () => {
             <label className="form-label">Gender</label>
             <select
               name="gender"
-              className="form-control"
+              className={`form-control ${errors.gender ? 'is-invalid' : ''}`}
               value={formData.gender}
               onChange={handleChange}
               required
@@ -215,6 +248,7 @@ const Setup = () => {
               <option value="male">Male</option>
               <option value="female">Female</option>
             </select>
+            {errors.gender && <div className="invalid-feedback">{errors.gender}</div>}
           </div>
 
           {/* Fitness Goal */}
@@ -222,7 +256,7 @@ const Setup = () => {
             <label className="form-label">Fitness Goal</label>
             <select
               name="fitnessgoal"
-              className="form-control"
+              className={`form-control ${errors.fitnessgoal ? 'is-invalid' : ''}`}
               value={formData.fitnessgoal}
               onChange={handleChange}
               required
@@ -231,6 +265,7 @@ const Setup = () => {
               <option value="Fat loss">Fat Loss</option>
               <option value="Muscle Gain">Muscle Gain</option>
             </select>
+            {errors.fitnessgoal && <div className="invalid-feedback">{errors.fitnessgoal}</div>}
           </div>
 
           {/* Lifestyle */}
@@ -238,7 +273,7 @@ const Setup = () => {
             <label className="form-label">Lifestyle</label>
             <select
               name="lifestyle"
-              className="form-control"
+              className={`form-control ${errors.lifestyle ? 'is-invalid' : ''}`}
               value={formData.lifestyle}
               onChange={handleChange}
               required
@@ -248,6 +283,7 @@ const Setup = () => {
               <option value="Moderate">Moderate</option>
               <option value="Active">Active</option>
             </select>
+            {errors.lifestyle && <div className="invalid-feedback">{errors.lifestyle}</div>}
           </div>
         </div>
 

@@ -192,7 +192,7 @@ const NutritionHistory = () => {
 
         <div className="bottom-buttons">
           <button className="nutrition-button back" onClick={() => window.history.back()}>Back</button>
-          <button className="nutrition-button export">Export Data</button>
+          {/* <button className="nutrition-button export">Export Data</button> */}
         </div>
       </div>
     </div>

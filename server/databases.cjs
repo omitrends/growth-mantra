@@ -24,6 +24,16 @@ const createLoginTable = `
   );
 `;
 
+const createPasswordResetTable = `
+CREATE TABLE IF NOT EXISTS PasswordReset (
+  ResetId INT AUTO_INCREMENT PRIMARY KEY,
+  UserId INT NOT NULL,
+  ResetToken VARCHAR(255) NOT NULL,
+  TokenExpiration DATETIME NOT NULL,
+  FOREIGN KEY (UserId) REFERENCES Register(UserId) ON DELETE CASCADE
+);
+`;
+
 const createSetupTable = `
   CREATE TABLE IF NOT EXISTS Setup (
   SetupId INT AUTO_INCREMENT PRIMARY KEY,
@@ -139,6 +149,14 @@ function initializeDatabase() {
         return;
       }
       console.log('Login table created successfully');
+    });
+
+    connection.query(createPasswordResetTable, (err) => {
+      if (err) {
+        console.error("Error creating PasswordReset table:", err.message);
+        return;
+      }
+      console.log("PasswordReset table created successfully");
     });
 
     connection.query(createSetupTable, (err) => {

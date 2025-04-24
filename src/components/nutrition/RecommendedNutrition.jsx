@@ -19,166 +19,263 @@ const RecommendedNutrition = () => {
   // Comprehensive nutrition plans for all combinations
   const nutritionPlans = {
     'weight loss': {
+      vegan: {
+        '3 meals/day': {
+          title: 'Vegan Weight Loss Plan (3 meals/day)',
+          meals: [
+            'Breakfast: Smoothie ,spinach, and banana',
+            'Lunch: Oats with chickpeas and mixed greens',
+            'Dinner: Dal with rice and salad',
+          ],
+          snacks: ['Roasted chickpeas and foxnut(Makhana) mix']
+        },
+        '4 meals/day': {
+          title: 'Vegan Muscle Gain Plan (4 meals/day)',
+          meals: [
+            'Pre Breakfast: Chia pudding and berries',
+            'Breakfast: Mixed salad on whole-grain bread',
+            'Lunch: Oats with chickpeas and mixed greens',
+            'Dinner: Dal with rice and salad',
+          ],
+          snacks: ['Roasted chickpeas and foxnut(Makhana) mix']
+        },
+        '5 meals/day': {
+          title: 'Vegan Muscle Gain Plan (5 meals/day)',
+          meals: [
+            'Pre Breakfast: Warm jeera water',
+            'Breakfast: Mixed salad on whole-grain bread',
+            'Lunch: Oats with chickpeas and mixed greens',
+            'Evening Snack: roasted chickpeas with spices',
+            'Dinner: Dal with rice and salad',
+          ],
+          snacks: ['Roasted chickpeas and foxnut(Makhana) mix']
+        }
+      },
+      keto: {
+        '3 meals/day': {
+          title: 'Keto Weight Loss Plan (3 meals/day)',
+          meals: [
+            'Breakfast: Paneer bhurji with tomato slices',
+            'Lunch: Butter chicken with sautéed vegetables',
+            'Dinner: Grilled fish with a side of salad',
+          ],
+          snacks: ['Cheese cubes', 'Boiled eggs']
+        },
+        '4 meals/day': {
+          title: 'Keto Muscle Gain Plan (4 meals/day)',
+          meals: [
+            'Pre Breakfast: A glass of coconut water',
+            'Breakfast: Masala omelette with cheese',
+            'Lunch: Grilled chicken with cauliflower rice',
+            'Dinner: Mutton curry with salad',
+          ],
+          snacks: ['Cheese cubes', 'Boiled eggs']
+        },
+        '5 meals/day': {
+          title: 'Keto Muscle Gain Plan (5 meals/day)',
+          meals: [
+            'Pre Breakfast: Bulletproof coffee',
+            'Breakfast: Keto dosa with coconut chutney',
+            'Lunch: Grilled fish with sautéed vegetables',
+            'Evening Snack: Paneer cubes with spices',
+            'Dinner: Chicken curry with a side of spinach salad',
+          ],
+          snacks: ['Cheese cubes', 'Boiled eggs']
+        }
+      },
       vegetarian: {
         '3 meals/day': {
           title: 'Vegetarian Weight Loss Plan (3 meals/day)',
           meals: [
-            'Breakfast: Greek yogurt with granola and fresh fruit',
-            'Lunch: Grilled tofu salad with olive oil dressing',
-            'Dinner: Lentil soup with steamed broccoli and quinoa',
+            'Breakfast:Poha with peanuts and a cup of green tea',
+            'Lunch:  Dal with steamed rice and a side of cucumber salad',
+            'Dinner: Vegetable curry with chapati and sautéed spinach',
           ],
-          snacks: ['Carrot sticks with hummus', 'Apple slices with almond butter']
+          snacks: ['Vegetable curry with chapati and sautéed spinach']
         },
         '4 meals/day': {
           title: 'Vegetarian Weight Loss Plan (4 meals/day)',
           meals: [
-            'Pre Breakfast: Cottage cheese with pineapple',
-            'Breakfast: Scrambled eggs with spinach and whole-grain toast',
-            'Lunch: Chickpea wrap with avocado and mixed greens',
-            'Dinner: Grilled paneer with roasted sweet potatoes and asparagus',
+            'Pre Breakfast: A glass of warm lemon water',
+            'Breakfast: Idli with coconut chutney and sambar',
+            'Lunch: Rajma with brown rice and a side of mixed vegetable salad',
+            'Dinner: Palak paneer with chapati and a bowl of curd',
           ],
-          snacks: ['Handful of mixed nuts', 'Greek yogurt with honey']
+          snacks: ['Handful of mixed nuts', 'Masala buttermilk']
         },
         '5 meals/day': {
           title: 'Vegetarian Weight Loss Plan (5 meals/day)',
           meals: [
-            'Pre Breakfast: Smoothie with protein powder and spinach',
-            'Breakfast: Smoothie with spinach, banana, and almond milk',
-            'Lunch: Grilled halloumi with quinoa and roasted vegetables',
-            'Evening Snack: Hummus with cucumber slices',
-            'Dinner: Baked tofu with steamed green beans and brown rice',
+            'Pre Breakfast: A glass of jeera water',
+            'Breakfast: Upma with vegetables and a cup of herbal tea',
+            'Lunch: Mixed vegetable curry with quinoa and a side of raita',
+            'Evening Snack:Sprouts chaat with lemon and spices',
+            'Dinner:Moong dal khichdi with a side of steamed vegetables',
           ],
-          snacks: ['Trail mix', 'Handful of almonds']
+          snacks: ['Fox nuts (makhana)', 'A handful of walnuts']
         }
       },
       "high protein": {
         '3 meals/day': {
           title: 'High Protein Weight Loss Plan (3 meals/day)',
           meals: [
-            'Breakfast: Egg white omelette with turkey bacon',
-            'Lunch: Grilled chicken breast with quinoa and steamed broccoli',
-            'Dinner: Baked salmon with sweet potato and asparagus',
+            'Breakfast:  Besan chilla with mint chutney',
+            'Lunch:  Grilled chicken with dal and a side of sautéed vegetables',
+            'Dinner: Fish curry with rice and a side of steamed carrots',
           ],
-          snacks: ['Protein shake', 'Boiled eggs']
+          snacks: ['Boiled eggs', 'Paneer tikka']
         },
         '4 meals/day': {
           title: 'High Protein Weight Loss Plan (4 meals/day)',
           meals: [
-            'Pre Breakfast: Greek yogurt with berries',
-            'Breakfast: Protein pancakes with almond butter',
-            'Lunch: Grilled steak with brown rice and green beans',
-            'Dinner: Chicken stir-fry with mixed vegetables and jasmine rice',
+            'Pre Breakfast:  A glass of warm turmeric milk',
+            'Breakfast: Moong dal dosa with coconut chutney',
+            'Lunch: Grilled fish with rice and a side of vegetable salad',
+            'Dinner: Chicken curry with chapati and sautéed spinach',
           ],
-          snacks: ['Greek yogurt with honey', 'Peanut butter on celery sticks']
+          snacks: ['Boiled eggs', 'Paneer tikka']
         },
         '5 meals/day': {
           title: 'High Protein Weight Loss Plan (5 meals/day)',
           meals: [
-            'Pre Breakfast: Protein smoothie with spinach and banana',
-            'Breakfast: Smoothie with protein powder, oats, and banana',
-            'Lunch: Grilled turkey burger with avocado and sweet potato fries',
-            'Evening Snack: Cottage cheese with pineapple',
-            'Dinner: Lean beef chili with kidney beans and cornbread',
+            'Pre Breakfast: A glass of amla juice',
+            'Breakfast:  Paneer bhurji with multigrain toast',
+            'Lunch: Grilled chicken with dal and a side of steamed vegetables',
+            'Evening Snack: Boiled chickpeas(Chola) with spices',
+            'Dinner:  Egg curry with chapati and a side of sautéed black chana',
           ],
-          snacks: ['Protein bar', 'Cottage cheese with pineapple', 'Almonds']
+          snacks: ['Boiled eggs', 'Paneer tikka', 'Almonds']
         }
       }
     },
     'muscle gain': {
+      "high protein": {
+        '3 meals/day': {
+          title: 'High Protein Muscle gain Plan (3 meals/day)',
+          meals: [
+            'Breakfast:  Besan chilla with mint chutney',
+            'Lunch:  Grilled chicken with dal and a side of sautéed vegetables',
+            'Dinner: Fish curry with rice and a side of steamed carrots',
+          ],
+          snacks: ['Boiled eggs', 'Paneer tikka']
+        },
+        '4 meals/day': {
+          title: 'High Protein Weight Loss Plan (4 meals/day)',
+          meals: [
+            'Pre Breakfast:  A glass of warm turmeric milk',
+            'Breakfast: Moong dal dosa with coconut chutney',
+            'Lunch: Grilled fish with rice and a side of vegetable salad',
+            'Dinner: Chicken curry with chapati and sautéed spinach',
+          ],
+          snacks: ['Boiled eggs', 'Paneer tikka']
+        },
+        '5 meals/day': {
+          title: 'High Protein Weight Loss Plan (5 meals/day)',
+          meals: [
+            'Pre Breakfast: A glass of amla juice',
+            'Breakfast:  Paneer bhurji with multigrain toast',
+            'Lunch: Grilled chicken with dal and a side of steamed vegetables',
+            'Evening Snack: Boiled chickpeas(Chola) with spices',
+            'Dinner:  Egg curry with chapati and a side of sautéed black chana',
+          ],
+          snacks: ['Boiled eggs', 'Paneer tikka', 'Almonds']
+        }
+      },
       vegetarian: {
         '3 meals/day': {
           title: 'Vegetarian Muscle Gain Plan (3 meals/day)',
           meals: [
-            'Breakfast: Scrambled eggs with whole-grain toast and avocado',
-            'Lunch: Grilled paneer with brown rice and steamed broccoli',
-            'Dinner: Lentil curry with mixed vegetables and quinoa',
+            'Breakfast: Paratha with curd and a glass of lassi',
+            'Lunch: Paneer curry with jeera rice and a side of salad',
+            'Dinner: Dal makhani with chapati and sautéed vegetables',
           ],
-          snacks: ['Protein shake', 'Greek yogurt with granola']
+          snacks: ['Banana shake', 'Handful of peanuts']
+          
         },
         '4 meals/day': {
           title: 'Vegetarian Muscle Gain Plan (4 meals/day)',
           meals: [
-            'Pre Breakfast: Overnight oats with chia seeds',
-            'Breakfast: Protein pancakes with banana and peanut butter',
-            'Lunch: Grilled tofu with sweet potatoes and asparagus',
-            'Dinner: Chickpea curry with basmati rice and spinach',
+            'Pre Breakfast: A glass of turmeric milk',
+            'Breakfast: Masala oats with vegetables',
+            'Lunch: Chole with roti and a side of cucumber salad',
+            'Dinner: Vegetable biryani with raita',
           ],
-          snacks: ['Boiled eggs', 'Trail mix', 'Cottage cheese']
+          snacks: ['Boiled eggs', 'Trail mix']
         },
         '5 meals/day': {
           title: 'Vegetarian Muscle Gain Plan (5 meals/day)',
           meals: [
-            'Pre Breakfast: Smoothie with protein powder and spinach',
-            'Breakfast: Smoothie with protein powder, oats, and berries',
-            'Lunch: Grilled halloumi sandwich with avocado and whole-grain bread',
-            'Evening Snack: Greek yogurt with honey and nuts',
-            'Dinner: Grilled paneer with mashed potatoes and green beans',
+            'Pre Breakfast: A glass of warm milk with honey',
+            'Breakfast: Idli with sambar and coconut chutney',
+            'Lunch: Rajma with steamed rice and a side of salad',
+            'Evening Snack: Paneer tikka with mint chutney',
+            'Dinner: soya chunks sabji with chapati and sautéed spinach',
           ],
-          snacks: ['Protein bar', 'Peanut butter on rice cakes', 'Almonds']
+          snacks: ['Protein bar', 'Handful of almonds']
         }
       },
       keto: {
         '3 meals/day': {
           title: 'Keto Muscle Gain Plan (3 meals/day)',
           meals: [
-            'Breakfast: Scrambled eggs with cheese and avocado',
-            'Lunch: Grilled chicken Caesar salad (no croutons)',
-            'Dinner: Pan-seared salmon with zucchini noodles',
+            'Breakfast: Paneer bhurji with tomato slices',
+            'Lunch: Butter chicken with sautéed vegetables',
+            'Dinner: Grilled fish with a side of salad',
           ],
-          snacks: ['Hard-boiled eggs', 'Cheese sticks']
+          snacks: ['Cheese cubes', 'Boiled eggs']
         },
         '4 meals/day': {
           title: 'Keto Muscle Gain Plan (4 meals/day)',
           meals: [
-            'Pre Breakfast: Greek yogurt with chia seeds',
-            'Breakfast: Omelette with spinach and feta cheese',
-            'Lunch: Grilled steak with sautéed mushrooms and asparagus',
-            'Dinner: Roasted chicken thighs with cauliflower mash',
+            'Pre Breakfast: A glass of coconut water',
+            'Breakfast: Masala omelette with cheese',
+            'Lunch: Grilled chicken with cauliflower rice',
+            'Dinner: Mutton curry with salad',
           ],
-          snacks: ['Avocado slices', 'Pork rinds']
+          snacks: ['Cheese cubes', 'Boiled eggs']
         },
         '5 meals/day': {
           title: 'Keto Muscle Gain Plan (5 meals/day)',
           meals: [
             'Pre Breakfast: Bulletproof coffee',
-            'Breakfast: Keto pancakes with butter and sugar-free syrup',
-            'Lunch: Grilled salmon with avocado salad',
-            'Evening Snack: Celery sticks with cream cheese',
-            'Dinner: Beef stir-fry with broccoli and coconut oil',
+            'Breakfast: Keto dosa with coconut chutney',
+            'Lunch: Grilled fish with sautéed vegetables',
+            'Evening Snack: Paneer cubes with spices',
+            'Dinner: Chicken curry with a side of spinach salad',
           ],
-          snacks: ['Macadamia nuts', 'Cheddar cheese cubes', 'Olives']
+          snacks: ['Cheese cubes', 'Boiled eggs']
         }
       },
       vegan: {
         '3 meals/day': {
           title: 'Vegan Muscle Gain Plan (3 meals/day)',
           meals: [
-            'Breakfast: Smoothie with almond milk, spinach, and banana',
-            'Lunch: Quinoa salad with chickpeas and mixed greens',
-            'Dinner: Lentil curry with steamed broccoli and brown rice',
+            'Breakfast: Smoothie ,spinach, and banana',
+            'Lunch: Oats with chickpeas and mixed greens',
+            'Dinner: Dal with rice and salad',
           ],
-          snacks: ['Carrot sticks with hummus', 'Apple slices with almond butter']
+          snacks: ['Roasted chickpeas and foxnut(Makhana) mix']
         },
         '4 meals/day': {
           title: 'Vegan Muscle Gain Plan (4 meals/day)',
           meals: [
-            'Pre Breakfast: Chia pudding with almond milk and berries',
-            'Breakfast: Avocado toast on whole-grain bread',
-            'Lunch: Grilled vegetable wrap with hummus',
-            'Dinner: Stir-fried tofu with mixed vegetables and quinoa',
+            'Pre Breakfast: Chia pudding and berries',
+            'Breakfast: Mixed salad on whole-grain bread',
+            'Lunch: Oats with chickpeas and mixed greens',
+            'Dinner: Dal with rice and salad',
           ],
-          snacks: ['Trail mix', 'Vegan protein bar']
+          snacks: ['Roasted chickpeas and foxnut(Makhana) mix']
         },
         '5 meals/day': {
           title: 'Vegan Muscle Gain Plan (5 meals/day)',
           meals: [
-            'Pre Breakfast: Smoothie with almond milk, spinach, and protein powder',
-            'Breakfast: Oatmeal with almond butter and fresh fruit',
-            'Lunch: Buddha bowl with quinoa, roasted vegetables, and tahini dressing',
-            'Evening Snack: Celery sticks with almond butter',
-            'Dinner: Vegan chili with kidney beans and cornbread',
+            'Pre Breakfast: Warm jeera water',
+            'Breakfast: Mixed salad on whole-grain bread',
+            'Lunch: Oats with chickpeas and mixed greens',
+            'Evening Snack: roasted chickpeas with spices',
+            'Dinner: Dal with rice and salad',
           ],
-          snacks: ['Handful of nuts', 'Vegan yogurt with granola']
+          snacks: ['Roasted chickpeas and foxnut(Makhana) mix']
         }
       }
     },
@@ -187,128 +284,129 @@ const RecommendedNutrition = () => {
         '3 meals/day': {
           title: 'Vegetarian Maintenance Plan (3 meals/day)',
           meals: [
-            'Breakfast: Greek yogurt with granola and fresh fruit',
-            'Lunch: Grilled tofu sandwich with a side salad',
-            'Dinner: Baked cod with roasted vegetables and wild rice',
+            'Breakfast: Paratha with curd and a glass of lassi',
+            'Lunch: Paneer curry with jeera rice and a side of salad',
+            'Dinner: Dal makhani with chapati and sautéed vegetables',
           ],
-          snacks: ['Hummus with carrot sticks', 'Handful of trail mix']
+          snacks: ['Roasted chickpeas and foxnut(Makhana) mix']
         },
         '4 meals/day': {
           title: 'Vegetarian Maintenance Plan (4 meals/day)',
           meals: [
-            'Pre Breakfast: Overnight oats with chia seeds',
-            'Breakfast: Smoothie with spinach, banana, and almond milk',
-            'Lunch: Grilled paneer Caesar wrap with whole-grain tortilla',
-            'Dinner: Roasted tofu with mashed potatoes and green beans',
+            'Pre Breakfast: A glass of turmeric milk',
+            'Breakfast: Masala oats with vegetables',
+            'Lunch: Chole with roti and a side of cucumber salad',
+            'Dinner: Vegetable biryani with raita',
           ],
-          snacks: ['Boiled eggs', 'Apple slices with peanut butter']
+          snacks: ['Boiled eggs']
         },
         '5 meals/day': {
           title: 'Vegetarian Maintenance Plan (5 meals/day)',
           meals: [
-            'Pre Breakfast: Protein smoothie with spinach and banana',
-            'Breakfast: Scrambled eggs with avocado and whole-grain toast',
-            'Lunch: Grilled halloumi with quinoa and roasted vegetables',
-            'Evening Snack: Greek yogurt with honey and nuts',
-            'Dinner: Chickpea stir-fry with brown rice and broccoli',
+            'Pre Breakfast: A glass of warm milk with honey',
+            'Breakfast: Idli with sambar and coconut chutney',
+            'Lunch: Rajma with steamed rice and a side of salad',
+            'Evening Snack: Paneer tikka with mint chutney',
+            'Dinner: Dal tadka with chapati and sautéed spinach',
           ],
-          snacks: ['Protein shake', 'Cottage cheese with pineapple', 'Trail mix']
+          snacks: [ 'Handful of almonds']
         }
       },
       keto: {
         '3 meals/day': {
           title: 'Keto Maintenance Plan (3 meals/day)',
           meals: [
-            'Breakfast: Scrambled eggs with cheese and avocado',
-            'Lunch: Grilled chicken Caesar salad (no croutons)',
-            'Dinner: Pan-seared salmon with zucchini noodles',
+            'Breakfast: Paneer bhurji with tomato slices',
+            'Lunch: Butter chicken with sautéed vegetables',
+            'Dinner: Grilled fish with a side of spinach salad',
           ],
-          snacks: ['Hard-boiled eggs', 'Cheese sticks']
+          snacks: ['Hard-boiled eggs']
         },
         '4 meals/day': {
           title: 'Keto Maintenance Plan (4 meals/day)',
           meals: [
-            'Pre Breakfast: Greek yogurt with chia seeds',
-            'Breakfast: Omelette with spinach and feta cheese',
-            'Lunch: Grilled steak with sautéed mushrooms and asparagus',
-            'Dinner: Roasted chicken thighs with cauliflower mash',
+            'Pre Breakfast: A glass of coconut water',
+            'Breakfast: Masala omelette with cheese',
+            'Lunch: Grilled chicken with cauliflower rice',
+            'Dinner: Mutton curry with sautéed green beans',
           ],
-          snacks: ['Avocado slices', 'Pork rinds']
+          snacks: ['Cheese cubes']
         },
         '5 meals/day': {
           title: 'Keto Maintenance Plan (5 meals/day)',
           meals: [
             'Pre Breakfast: Bulletproof coffee',
-            'Breakfast: Keto pancakes with butter and sugar-free syrup',
-            'Lunch: Grilled salmon with avocado salad',
-            'Evening Snack: Celery sticks with cream cheese',
-            'Dinner: Beef stir-fry with broccoli and coconut oil',
+            'Breakfast: Keto dosa with coconut chutney',
+            'Lunch: Grilled fish with sautéed vegetables',
+            'Evening Snack: Paneer cubes with spices',
+            'Dinner: Chicken curry with a side of spinach salad',
           ],
-          snacks: ['Macadamia nuts', 'Cheddar cheese cubes', 'Olives']
+          snacks: ['Cheese cubes', 'Hard-boiled eggs']
         }
       },
       vegan: {
         '3 meals/day': {
           title: 'Vegan Maintenance Plan (3 meals/day)',
           meals: [
-            'Breakfast: Smoothie with almond milk, spinach, and banana',
-            'Lunch: Quinoa salad with chickpeas and mixed greens',
-            'Dinner: Lentil curry with steamed broccoli and brown rice',
+            'Breakfast: Smoothie with, spinach, and banana',
+            'Lunch: Oats with chickpeas and mixed greens',
+            'Dinner: Dal with rice and salad',
           ],
-          snacks: ['Carrot sticks with hummus', 'Apple slices with almond butter']
+          
+          snacks: ['Roasted chickpeas and foxnut(Makhana) mix']
         },
         '4 meals/day': {
           title: 'Vegan Maintenance Plan (4 meals/day)',
           meals: [
-            'Pre Breakfast: Chia pudding with almond milk and berries',
-            'Breakfast: Avocado toast on whole-grain bread',
-            'Lunch: Grilled vegetable wrap with hummus',
-            'Dinner: Stir-fried tofu with mixed vegetables and quinoa',
+            'Pre Breakfast: Chia pudding and berries',
+            'Breakfast: Mixed salad on whole-grain bread',
+            'Lunch: Oats with chickpeas and mixed greens',
+            'Dinner: Dal with rice and salad',
           ],
-          snacks: ['Trail mix', 'Vegan protein bar']
+          snacks: ['Roasted chickpeas and foxnut(Makhana) mix']
         },
         '5 meals/day': {
           title: 'Vegan Maintenance Plan (5 meals/day)',
           meals: [
-            'Pre Breakfast: Smoothie with almond milk, spinach, and protein powder',
-            'Breakfast: Oatmeal with almond butter and fresh fruit',
-            'Lunch: Buddha bowl with quinoa, roasted vegetables, and tahini dressing',
-            'Evening Snack: Celery sticks with almond butter',
-            'Dinner: Vegan chili with kidney beans and cornbread',
+            'Pre Breakfast: Warm jeera water',
+            'Breakfast: Mixed salad on whole-grain bread',
+            'Lunch: Oats with chickpeas and mixed greens',
+            'Evening Snack: roasted chickpeas with spices',
+            'Dinner: Dal with rice and salad',
           ],
-          snacks: ['Handful of nuts', 'Vegan yogurt with granola']
+          snacks: ['Handful of nuts']
         }
       },
       "high protein": {
         '3 meals/day': {
           title: 'High Protein Maintenance Plan (3 meals/day)',
           meals: [
-            'Breakfast: Egg white omelette with turkey bacon',
-            'Lunch: Grilled chicken breast with quinoa and roasted vegetables',
-            'Dinner: Baked salmon with sweet potato and steamed broccoli',
+            'Breakfast: Besan chilla with mint chutney',
+            'Lunch: Grilled chicken with dal and a side of sautéed vegetables',
+            'Dinner: Fish curry with rice and a side of salad',
           ],
           snacks: ['Protein shake', 'Boiled eggs']
         },
         '4 meals/day': {
           title: 'High Protein Maintenance Plan (4 meals/day)',
           meals: [
-            'Pre Breakfast: Greek yogurt with berries',
-            'Breakfast: Protein pancakes with almond butter',
-            'Lunch: Grilled steak with brown rice and green beans',
-            'Dinner: Chicken stir-fry with mixed vegetables and jasmine rice',
+            'Pre Breakfast: A glass of warm turmeric milk',
+            'Breakfast: Moong dal dosa with coconut chutney',
+            'Lunch: Grilled fish with quinoa and a side of vegetable salad',
+            'Dinner: Chicken curry with chapati and sautéed spinach',
           ],
-          snacks: ['Greek yogurt with honey', 'Peanut butter on celery sticks']
+          snacks: ['Protein shake', 'Boiled eggs']
         },
         '5 meals/day': {
           title: 'High Protein Maintenance Plan (5 meals/day)',
           meals: [
-            'Pre Breakfast: Protein smoothie with spinach and banana',
-            'Breakfast: Smoothie with protein powder, oats, and banana',
-            'Lunch: Grilled turkey burger with avocado and sweet potato fries',
-            'Evening Snack: Cottage cheese with pineapple',
-            'Dinner: Lean beef chili with kidney beans and cornbread',
+            'Pre Breakfast: A glass of amla juice',
+            'Breakfast: Paneer bhurji with multigrain toast',
+            'Lunch: Grilled chicken with dal and a side of steamed vegetables',
+            'Evening Snack: Boiled chickpeas with spices',
+            'Dinner: Egg curry with chapati and a side of sautéed black chana',
           ],
-          snacks: ['Protein bar', 'Cottage cheese with pineapple', 'Almonds']
+          snacks: ['Protein shake', 'Boiled eggs']
         }
       }
     }

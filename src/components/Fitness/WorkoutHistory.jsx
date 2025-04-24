@@ -263,7 +263,7 @@ const WorkoutHistory = () => {
         
         <div className="bottom-buttons">
           <button className="workout-button back" onClick={() => window.history.back()}>Back</button>
-          <button className="workout-button export">Export Data</button>
+          {/* <button className="workout-button export">Export Data</button> */}
         </div>
       </div>
     </div>
