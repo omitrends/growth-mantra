@@ -345,10 +345,11 @@ function Slider() {
           color: #2c3e50;
           margin-bottom: 1.5rem;
           line-height: 1.1;
-          background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
+          background: none;
+          color: #2c3e50;
+          -webkit-background-clip: initial;
+          -webkit-text-fill-color: initial;
+          background-clip: initial;
         }
 
         .slide-description {
@@ -378,14 +379,14 @@ function Slider() {
         }
 
         .cta-button.primary {
-          background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+          background: #7ca982;
           color: white;
-          box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+          box-shadow: 0 8px 25px rgba(124, 169, 130, 0.4);
         }
 
         .cta-button.primary:hover {
           transform: translateY(-3px);
-          box-shadow: 0 12px 35px rgba(255, 107, 107, 0.6);
+          box-shadow: 0 12px 35px rgba(124, 169, 130, 0.6);
         }
 
         .cta-button.secondary {
@@ -503,7 +504,7 @@ function Slider() {
         }
 
         .indicator.active {
-          background: linear-gradient(90deg, #ff6b6b 0%, #ee5a24 100%);
+          background: #7ca982;
           width: 80px;
         }
 
@@ -545,7 +546,7 @@ function Slider() {
 
         .progress-fill {
           height: 100%;
-          background: linear-gradient(90deg, #ff6b6b 0%, #ee5a24 100%);
+          background: #7ca982;
           transition: width 0.6s ease;
         }
 
